@@ -1,8 +1,10 @@
-package com.grishare.grishare;
+package com.grishare;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
+@EntityScan(basePackages = {"com.grishare.domain"})
 @SpringBootApplication
 public class GrishareApplication {
 
