@@ -6,19 +6,16 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Table(name = "Item")
 @Entity @Getter
+@Table(name = "Classification")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Item {
+public class Classification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int item_id;
-
-    @Column(name = "classification_id")
     private int classification_id;
 
-    @Column(name = "ItemName")
-    private char itemName;
+    @Column(name = "classificationName")
+    private char classificationName;
 }
