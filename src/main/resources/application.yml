@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: ${RDS_URL}
+    url: jdbc:mysql://smu-navi.cudr77napabi.ap-northeast-2.rds.amazonaws.com:3306/grishare
     driverClassName: com.mysql.cj.jdbc.Driver
-    username: ${RDS_USERNAME}
-    password: ${RDS_PASSWORD}
+    username: smunavi
+    password: vi!^3na2~15
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:
