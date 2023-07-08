@@ -41,7 +41,6 @@ public class PostController {
     }
 
     @PostMapping("/posts")
-    @PreAuthorize("isAnonymous()")
     public ResponseEntity<Post> createPost(@RequestBody PostRequestDto postRequestDto) {
         try {
             ResponseEntity

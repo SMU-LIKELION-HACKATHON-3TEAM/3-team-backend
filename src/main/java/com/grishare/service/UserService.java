@@ -1,4 +1,4 @@
-package service;
+package com.grishare.service;
 
 import com.grishare.domain.user.User;
 import com.grishare.dto.PwdRequestDto;
