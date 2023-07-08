@@ -1,8 +1,6 @@
 package com.grishare.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,12 +9,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import service.UserServiceImpl;
+import com.grishare.service.UserServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +39,7 @@ public class SecurityConfig  {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/user/register","/api/user/login ")
+                .antMatchers("/api/user/register","/api/user/login ","/**")
                 .permitAll()
                 .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()  //cors로 인한 options 리퀘스트 보낼때 거부당하는거 방지
                 .anyRequest().authenticated();

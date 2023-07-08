@@ -1,14 +1,11 @@
-package service;
+package com.grishare.service;
 
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
-import com.grishare.dto.PwdRequestDto;
 import com.grishare.dto.RegisterRequestDto;
 import com.grishare.dto.UserReturnDto;
 import com.grishare.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.aspectj.apache.bcel.classfile.Module;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.grishare.service.UserService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,11 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.Optional;
-
 @Service
-public class UserServiceImpl implements UserDetailsService ,UserService {
+public class UserServiceImpl implements UserDetailsService , UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
