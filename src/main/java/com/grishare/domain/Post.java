@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+
 
 public class Post {
     @Id //pk
@@ -30,9 +30,9 @@ public class Post {
     @Column(name = "contents")
     private String content;
     @CreatedDate
-    private LocalDate createAt;
+    private LocalDateTime createdAt;
     @LastModifiedDate
-    private LocalDate modifiedAt;
+    private LocalDateTime modifiedAt;
     @Column(name = "views")
     private Long view;
 
