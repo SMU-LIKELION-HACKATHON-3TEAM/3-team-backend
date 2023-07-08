@@ -2,6 +2,7 @@ package com.grishare.service;
 
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
+import com.grishare.dto.PwdRequestDto;
 import com.grishare.dto.RegisterRequestDto;
 import com.grishare.dto.UserReturnDto;
 import com.grishare.repository.UserRepository;
@@ -12,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 public class UserServiceImpl implements UserDetailsService , UserService {
@@ -51,6 +54,11 @@ public class UserServiceImpl implements UserDetailsService , UserService {
     }
 //    @Override
 //    @Transactional
+//    public User getPwd(User user, PwdRequestDto pwdRequestDto);{    // 비밀번호 가져오기
+//        Optional
+// }
+//    @Override
+//    @Transactional
 //    public UserReturnDto getUser(User user);{   // 회원정보 가져오기
 //        Optional<User> byId = userRepository.findById(user.getUserId);
 //
@@ -63,7 +71,5 @@ public class UserServiceImpl implements UserDetailsService , UserService {
 //    public User updateUser(User user, UserReturnDto userReturnDto);{    // 회원정보 수정
 //
 //    }
-//    public User getPwd(User user, PwdRequestDto pwdRequestDto);{    // 비밀번호 가져오기
-//
-//    }
+
 }
