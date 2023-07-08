@@ -13,9 +13,3 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
-
-server:
-  port: 8080
-  error:
-    whitelabel:
-      enabled: false
