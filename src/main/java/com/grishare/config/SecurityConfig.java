@@ -41,8 +41,7 @@ public class SecurityConfig  {
                 .authorizeRequests()
                 .antMatchers("/api/user/register","/api/user/login ","/**")
                 .permitAll()
-                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()  //cors로 인한 options 리퀘스트 보낼때 거부당하는거 방지
-                .anyRequest().authenticated();
+                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll();  //cors로 인한 options 리퀘스트 보낼때 거부당하는거 방지
         // 로그인 설정
         http
                 .formLogin()
