@@ -3,8 +3,10 @@ package com.grishare;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.ComponentScan;
 
 @EntityScan(basePackages = {"com.grishare.domain"})
+@ComponentScan(basePackages={"service"})
 @SpringBootApplication
 public class GrishareApplication {
 

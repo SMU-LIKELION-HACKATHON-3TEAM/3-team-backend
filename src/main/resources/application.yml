@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://smu-navi.cudr77napabi.ap-northeast-2.rds.amazonaws.com:3306/grishare
+    url: ${RDS_URL_GRISHARE}
     driverClassName: com.mysql.cj.jdbc.Driver
-    username: smunavi
-    password: vi!^3na2~15
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:
@@ -13,9 +13,3 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
-
-server:
-  port: 8080
-  error:
-    whitelabel:
-      enabled: false

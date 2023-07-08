@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_PK; //사용자 PK
+    private Long id; //사용자 PK -> id
     @Column(name="user_id")
     private String userId; // 사용자가 입력하는 ID
     @Column(unique = true)
@@ -27,14 +27,13 @@ public class User {
     private String nickName; // 닉네임
     private String userName;    // 사용자 이름
     @CreatedDate
-    private LocalDateTime joinedAt; // 가입날짜
+    private LocalDateTime createdAt; // 가입날짜
     private Long birthDay; // 회원 생년월일 erd에 없음
-    private String picture; // 프로필 이미지
+    private String picture; // 프로필 이미지 -> 배포여부에 따라 -> 일단 배포는 미정 안할
+    // 이미지 경로를 저장하는 변수
     private String address;
     //@Embedded
     //private NotificationSetting notificationSetting; // 알림 설정
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
 
     public User encodePassword(PasswordEncoder passwordEncoder){
         password = passwordEncoder.encode(password);

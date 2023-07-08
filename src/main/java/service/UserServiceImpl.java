@@ -1,29 +1,48 @@
 package service;
 
+import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
-import com.grishare.domain.user.UserRole;
+import com.grishare.dto.PwdRequestDto;
 import com.grishare.dto.RegisterRequestDto;
 import com.grishare.dto.UserReturnDto;
 import com.grishare.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Optional;
+
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserDetailsService ,UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(@Lazy UserRepository userRepository,@Lazy PasswordEncoder passwordEncoder){
+    public UserServiceImpl(@Lazy UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        User user = userRepository.findByUserId(userId).orElse(null);
+
+        if (user == null){
+            throw new UsernameNotFoundException("UsernameNotFoundException");
+        }
+
+        return new CustomUserDetail(user);
 
     }
 
-
-    @Autowired
+    @Override
     public User saveUser(RegisterRequestDto registerRequestDto){
         User user = User.builder()
                 .email(registerRequestDto.getEmail())
@@ -31,10 +50,26 @@ public class UserServiceImpl implements UserService{
                 .userId(registerRequestDto.getUserId())
                 .birthDay(registerRequestDto.getBirthDay())
                 .nickName(registerRequestDto.getNickName())
-                .role(UserRole.ROLE_USER)
                 .build();
-        UserReturnDto userReturnDto = new UserReturnDto(user); // userReturnDto 수정 필요
+        UserReturnDto userReturnDto = new UserReturnDto(user); // userReturnDto 수정 필ㅑ
 
         return userRepository.save(user);
     }
+//    @Override
+//    @Transactional
+//    public UserReturnDto getUser(User user);{   // 회원정보 가져오기
+//        Optional<User> byId = userRepository.findById(user.getUserId);
+//
+//        UserReturnDto userReturnDto = UserReturnDto.builder()
+//                .build();
+//
+//        return userReturnDto;
+//
+//    }
+//    public User updateUser(User user, UserReturnDto userReturnDto);{    // 회원정보 수정
+//
+//    }
+//    public User getPwd(User user, PwdRequestDto pwdRequestDto);{    // 비밀번호 가져오기
+//
+//    }
 }

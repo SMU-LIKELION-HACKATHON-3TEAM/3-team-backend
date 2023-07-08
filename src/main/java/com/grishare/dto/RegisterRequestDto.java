@@ -11,15 +11,17 @@ public class RegisterRequestDto {
     private String password;
     private String email;
     private String userName;
-    private String NickName;
+    private String nickName;
     private Long birthDay;
 
-    public RegisterRequestDto(String userId, String password, String email, String userName, String NickName, Long birthDay) {
+    public RegisterRequestDto(String userId, String password, String email, String userName, String nickName, Long birthDay) {
         this.userId = userId;
         this.password = password;
         this.email = email;
         this.userName = userName;
-        this.NickName = NickName;
+        this.nickName = nickName;
         this.birthDay = birthDay;
     }
+
+
 }
