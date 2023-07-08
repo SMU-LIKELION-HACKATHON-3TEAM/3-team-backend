@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${RDS_URL}
+    url: ${RDS_URL_GRISHARE}
     driverClassName: com.mysql.cj.jdbc.Driver
     username: ${RDS_USERNAME}
     password: ${RDS_PASSWORD}
@@ -13,9 +13,3 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
-
-server:
-  port: 8080
-  error:
-    whitelabel:
-      enabled: false
