@@ -32,9 +32,9 @@ public class NationReturnDto {
 
     public NationReturnDto(Nation nation){
         this.id = nation.getId();
-        this.ISO_3166_1_alpha_2 = nation.getISO_3166_1_alpha_2();
-        this.ISO_3166_1_alpha_3 = nation.getISO_3166_1_alpha_3();
-        this.ISO_3166_1_numeric = nation.getISO_3166_1_numeric();
+        this.ISO_3166_1_alpha_2 = nation.getIso2();
+        this.ISO_3166_1_alpha_3 = nation.getIso3();
+        this.ISO_3166_1_numeric = nation.getIsoN();
         this.countryName = nation.getCountryName();
         this.countryEnName = nation.getCountryEnName();
         this.continentCode = nation.getContinentCode();

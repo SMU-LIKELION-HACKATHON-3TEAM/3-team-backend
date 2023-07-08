@@ -1,12 +1,8 @@
 package com.grishare.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name="exchangerate")
@@ -14,7 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Builder
 public class ExchangeRate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,15 +19,20 @@ public class ExchangeRate {
     @Column(name = "nation_id")
     private Long nationId;
 
-    @Column(name = "bank_id")
-    private Long bankId;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "bank")
+    private Bank bank;
 
-    @Column(name = "exchange_Rate")
+    @Column(name = "cur_unit")
+    private String curUnit;
+
+    @Column(name = "exchange_rate")
     private float exchangeRate;
 
-    public ExchangeRate(Long nationId, Long bankId, float exchangeRate) {
+    public ExchangeRate(Long nationId, Bank bank, String curUnit, float exchangeRate) {
         this.nationId = nationId;
-        this.bankId = bankId;
+        this.bank = bank;
+        this.curUnit = curUnit;
         this.exchangeRate = exchangeRate;
     }
 }

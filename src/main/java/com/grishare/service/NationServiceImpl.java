@@ -7,12 +7,14 @@ import com.grishare.repository.NationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class NationServiceImpl implements NationService{
 
     @Autowired
@@ -37,9 +39,9 @@ public class NationServiceImpl implements NationService{
             Optional<Nation> nationData = nationRepository.findById(id);
             if(nationData.isPresent()){
                 Nation _nation = nationData.get();
-                _nation.setISO_3166_1_alpha_2(nationRequestDto.getISO_3166_1_alpha_2());
-                _nation.setISO_3166_1_alpha_3(nationRequestDto.getISO_3166_1_alpha_3());
-                _nation.setISO_3166_1_numeric(nationRequestDto.getISO_3166_1_numeric());
+                _nation.setIso2(nationRequestDto.getISO_3166_1_alpha_2());
+                _nation.setIso3(nationRequestDto.getISO_3166_1_alpha_3());
+                _nation.setIsoN(nationRequestDto.getISO_3166_1_numeric());
                 _nation.setCountryName(nationRequestDto.getCountryName());
                 _nation.setCountryEnName(nationRequestDto.getCountryEnName());
                 _nation.setContinentCode(nationRequestDto.getContinentCode());

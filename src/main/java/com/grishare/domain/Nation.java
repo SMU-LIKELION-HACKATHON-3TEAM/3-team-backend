@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name="nation")
@@ -21,13 +20,13 @@ public class Nation {
     private Long id;
 
     @Column(name = "ISO_3166_1_alpha_2")
-    private String ISO_3166_1_alpha_2;
+    private String iso2;
 
     @Column(name = "ISO_3166_1_alpha_3")
-    private String ISO_3166_1_alpha_3;
+    private String iso3;
 
     @Column(name = "ISO_3166_1_numeric")
-    private int ISO_3166_1_numeric;
+    private int isoN;
 
     @Column(name = "country_name")
     private String countryName;
@@ -48,10 +47,10 @@ public class Nation {
     @JoinColumn(name="nation_id")
     private Collection<ExchangeRate> er;
 
-    public Nation(String ISO_3166_1_alpha_2, String ISO_3166_1_alpha_3, int ISO_3166_1_numeric, String countryName, String countryEnName, String continentCode, int travelWarning, String warningHistory) {
-        this.ISO_3166_1_alpha_2 = ISO_3166_1_alpha_2;
-        this.ISO_3166_1_alpha_3 = ISO_3166_1_alpha_3;
-        this.ISO_3166_1_numeric = ISO_3166_1_numeric;
+    public Nation(String iso2, String iso3, int isoN, String countryName, String countryEnName, String continentCode, int travelWarning, String warningHistory) {
+        this.iso2 = iso2;
+        this.iso3 = iso3;
+        this.isoN = isoN;
         this.countryName = countryName;
         this.countryEnName = countryEnName;
         this.continentCode = continentCode;
