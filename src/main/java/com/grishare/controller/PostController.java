@@ -21,31 +21,26 @@ public class PostController {
     @Autowired
     PostServiceImpl postService;
 
-    @GetMapping("/posts/{id}")
-    @PreAuthorize("isAnonymous()")
-    public ResponseEntity<PostReturnDto> getPostById(@PathVariable("id") long id) {
-        try {
-            return ResponseEntity.ok(postService.findById(id));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     @GetMapping("/posts")
-    @PreAuthorize("isAnonymous()")
     public ResponseEntity<List<PostReturnDto>> getAllPost() {
         List<PostReturnDto> posts = postService.findAll();
 
         return ResponseEntity.ok(posts);
     }
 
-    @PostMapping("/posts")
-    public ResponseEntity<Post> createPost(@RequestBody PostRequestDto postRequestDto) {
+    @GetMapping("/posts/{nationId}")
+    public ResponseEntity<List<PostReturnDto>> getPostById(@PathVariable("nationId") long nationId) {
+        return ResponseEntity.ok(postService.findByNationId(nationId));
+    }
+
+    @PostMapping("/posts/{nationId}")
+    public ResponseEntity<Post> createPost(
+            @PathVariable("nationId") long nationId,
+            @RequestBody PostRequestDto postRequestDto) {
         try {
             ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(postService.save(postRequestDto));
+                    .body(postService.save(nationId, postRequestDto));
         } catch (Exception e) {
             e.printStackTrace();
         }

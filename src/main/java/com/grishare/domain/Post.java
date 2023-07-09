@@ -35,10 +35,15 @@ public class Post {
     private LocalDateTime modifiedAt;
     @Column(name = "views")
     private Long view;
+    @ManyToOne
+    @JoinColumn(name = "nationId")
+    private Nation nation;
 
-    public Post(String title, String content) {
+
+    public Post(String title, String content, Nation nation) {
         this.title = title;
         this.content = content;
+        this.nation = nation;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.grishare.dto;
 
+import com.grishare.domain.Nation;
 import com.grishare.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,10 +17,11 @@ public class PostRequestDto {
     private String title;
     private String content;
 
-    public Post toEntity() {
+    public Post toEntity(Nation nation) {
         Post post = new Post(
                 this.title,
-                this.content
+                this.content,
+                nation
         );
         return post;
     }
