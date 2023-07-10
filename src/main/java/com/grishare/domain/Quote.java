@@ -22,11 +22,14 @@ public class Quote {
     @Column(name = "price")
     private int price;
 
-    @Column(name = "ISO_3166_2")
-    private char ISO_3166_2;
+    @OneToOne
+    @JoinColumn (name = "ISO_3166_2")
+    private AdministrativeDivision administrativeDivision;
 
-    @Column(name = "item_id")
-    private int item_id;
+
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private Item item;
 
 
 }

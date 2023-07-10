@@ -16,8 +16,9 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int item_id;
 
-    @Column(name = "classification_id")
-    private int classification_id;
+    @ManyToOne
+    @JoinColumn(name = "classification_id")
+    private Classification classification;
 
     @Column(name = "ItemName")
     private char itemName;
