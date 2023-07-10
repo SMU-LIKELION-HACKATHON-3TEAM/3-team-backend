@@ -7,6 +7,7 @@ import com.grishare.domain.Quote;
 import com.grishare.exception.CustomException;
 import com.grishare.exception.ErrorCode;
 import com.grishare.repository.AdministrativeDivisionRepository;
+import com.grishare.repository.NationRepository;
 import com.grishare.repository.QuoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,14 @@ public class QuoteServiceImpl implements QuoteService {
     private QuoteRepository quoteRepository;
 
     @Autowired
+    private NationRepository nationRepository;
+
+    @Autowired
     private AdministrativeDivisionRepository administrativeDivisionRepository;
 
     public BaseResponse<?> getCountry() {
-        List<Quote> quoteList = quoteRepository.findAll();
-        return BaseResponse.ok(quoteList);
+        List<Nation> nationList = nationRepository.findAll();
+        return BaseResponse.ok(nationList);
     }
 
     public BaseResponse<?> getDivision(char iso) {
