@@ -1,8 +1,11 @@
 package com.grishare.controller;
 
+import com.grishare.base.BaseResponse;
+import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
-import com.grishare.dto.LoginRequestDto;
-import com.grishare.dto.RegisterRequestDto;
+import com.grishare.dto.*;
+import com.grishare.service.MailServiceImpl;
+import com.grishare.service.PostServiceImpl;
 import com.grishare.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +16,20 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.grishare.service.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -33,12 +38,17 @@ public class UserController {
 
     @Autowired
     UserServiceImpl userService;
+    @Autowired
+    MailServiceImpl mailService;
+    @Autowired
+    PostServiceImpl postService;
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping(value="/user/register")
-    public ResponseEntity<User> register(@RequestBody RegisterRequestDto registerRequestDto){
+    // 회원가입
+    @PostMapping(value = "/user/register")
+    public ResponseEntity<User> register(@RequestBody RegisterRequestDto registerRequestDto) {
         registerRequestDto.setPassword(passwordEncoder.encode(registerRequestDto.getPassword()));
 
         User user = userService.saveUser(registerRequestDto);
@@ -46,6 +56,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    // 로그인
     @PostMapping("/user/login")
     public ResponseEntity<?> login(HttpServletRequest request, HttpServletResponse response,
                                    @RequestBody LoginRequestDto loginRequestDto) {
@@ -64,13 +75,47 @@ public class UserController {
         session.setAttribute
                 (HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
                         SecurityContextHolder.getContext());
-        Cookie cookie = new Cookie("JSESSIONID",session.getId());
+        Cookie cookie = new Cookie("JSESSIONID", session.getId());
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(30000*60);
+        cookie.setMaxAge(30000 * 60);
         cookie.setSecure(true);
         response.addCookie(cookie);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    // 회원정보 수정
+    @PutMapping("/mypage")
+    public ResponseEntity<UserReturnDto> updateUser(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserRequestDto userRequestDto) {
+        User user = userService.updateUser(customUserDetail.getUser(), userRequestDto);
+        UserReturnDto userReturn = userService.getUser(user);
+
+        return ResponseEntity.ok(userReturn);
+    }
+
+
+    // 비밀번호 찾기 -> 이메일 보내기
+    @ResponseBody
+    @PostMapping("/user/findPw")
+    public String sendPwdEmail(@RequestParam("memberEmail") String memberEmail) {
+        // 임시 비밀번호 생성
+        String tmpPassword = userService.getTmpPassword();
+        // 임시 비밀번호 저장
+        userService.updatePassword(tmpPassword, memberEmail);
+        // 메일 생성, 전송
+        MailDto mail = mailService.createMail(tmpPassword, memberEmail);
+        mailService.sendMail(mail);
+
+        return "user/login";
+
+
+    }
+    // 내가 쓴 글 목록 상세 보기
+//    @GetMapping("/mypage/scrap")
+//    public String myPage(@PathVariable String category, Authentication auth, Model model){
+//
+//    }
+    // 스크랩한 글 상세 보기
+
 }

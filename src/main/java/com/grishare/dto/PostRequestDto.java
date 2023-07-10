@@ -1,6 +1,7 @@
 package com.grishare.dto;
 
 import com.grishare.domain.Post;
+import com.grishare.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,16 @@ import java.time.LocalDate;
 public class PostRequestDto {
     private String title;
     private String content;
+    private User writer;
 
     public Post toEntity() {
         Post post = new Post(
                 this.title,
-                this.content
+                this.content,
+                this.writer
         );
+
         return post;
     }
 }
+//                this.writer
