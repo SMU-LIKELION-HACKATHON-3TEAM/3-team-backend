@@ -36,12 +36,15 @@ import java.util.ArrayList;
 @RequestMapping("/api")
 public class UserController {
 
-    @Autowired
-    UserServiceImpl userService;
-    @Autowired
-    MailServiceImpl mailService;
-    @Autowired
-    PostServiceImpl postService;
+//    @Autowired
+//    UserServiceImpl userService;
+//    @Autowired
+//    MailServiceImpl mailService;
+//    @Autowired
+//    PostServiceImpl postService;
+    private final UserServiceImpl userService;
+    private final   MailServiceImpl mailService;
+    private final PostServiceImpl postService;
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
@@ -79,7 +82,6 @@ public class UserController {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(30000 * 60);
-        cookie.setSecure(true);
         response.addCookie(cookie);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -98,7 +100,10 @@ public class UserController {
     // 비밀번호 찾기 -> 이메일 보내기
     @ResponseBody
     @PostMapping("/user/findPw")
-    public String sendPwdEmail(@RequestParam("memberEmail") String memberEmail) {
+    public String sendPwdEmail(@RequestBody MailRequestDto mailRequestDto) {
+
+        String memberEmail = mailRequestDto.getEmail();
+        System.out.println("memberEmail = " + memberEmail);
         // 임시 비밀번호 생성
         String tmpPassword = userService.getTmpPassword();
         // 임시 비밀번호 저장
