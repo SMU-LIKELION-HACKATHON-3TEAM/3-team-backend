@@ -14,11 +14,11 @@ public class NationReturnDto {
 
     private Long id;
 
-    private String ISO_3166_1_alpha_2;
+    private String iso2;
 
-    private String ISO_3166_1_alpha_3;
+    private String iso3;
 
-    private int ISO_3166_1_numeric;
+    private int isoN;
 
     private String countryName;
 
@@ -26,19 +26,22 @@ public class NationReturnDto {
 
     private String continentCode;
 
-    private int travelWarning;
+    private Integer travelWarning;
 
     private String warningHistory;
 
+    private String currency;
+
     public NationReturnDto(Nation nation){
         this.id = nation.getId();
-        this.ISO_3166_1_alpha_2 = nation.getIso2();
-        this.ISO_3166_1_alpha_3 = nation.getIso3();
-        this.ISO_3166_1_numeric = nation.getIsoN();
+        this.iso2 = nation.getIso2();
+        this.iso3 = nation.getIso3();
+        this.isoN = nation.getIsoN();
         this.countryName = nation.getCountryName();
         this.countryEnName = nation.getCountryEnName();
         this.continentCode = nation.getContinentCode();
         this.travelWarning = nation.getTravelWarning();
         this.warningHistory = nation.getWarningHistory();
+        this.currency = nation.getCurrency();
     }
 }

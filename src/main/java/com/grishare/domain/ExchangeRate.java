@@ -16,22 +16,26 @@ public class ExchangeRate {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "nation_id")
-    private Long nationId;
+    @Column(name = "contry_name")
+    private String contryName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "bank")
     private Bank bank;
 
+    @Column(name = "contry_code")
+    private String contryCode;
+
     @Column(name = "cur_unit")
     private String curUnit;
 
     @Column(name = "exchange_rate")
-    private float exchangeRate;
+    private Float exchangeRate;
 
-    public ExchangeRate(Long nationId, Bank bank, String curUnit, float exchangeRate) {
-        this.nationId = nationId;
+    public ExchangeRate(String contryName, Bank bank, String contryCode, String curUnit, Float exchangeRate) {
+        this.contryName = contryName;
         this.bank = bank;
+        this.contryCode = contryCode;
         this.curUnit = curUnit;
         this.exchangeRate = exchangeRate;
     }
