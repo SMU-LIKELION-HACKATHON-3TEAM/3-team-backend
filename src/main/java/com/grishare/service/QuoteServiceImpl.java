@@ -2,6 +2,8 @@ package com.grishare.service;
 
 import com.grishare.base.BaseResponse;
 import com.grishare.domain.AdministrativeDivision;
+import com.grishare.domain.Nation;
+import com.grishare.domain.Quote;
 import com.grishare.exception.CustomException;
 import com.grishare.exception.ErrorCode;
 import com.grishare.repository.AdministrativeDivisionRepository;
@@ -22,13 +24,13 @@ public class QuoteServiceImpl implements QuoteService {
     private AdministrativeDivisionRepository administrativeDivisionRepository;
 
     public BaseResponse<?> getCountry() {
-        List<Country> countryList = quoteRepository.findAll();
-        return BaseResponse.ok(countryList);
+        List<Quote> quoteList = quoteRepository.findAll();
+        return BaseResponse.ok(quoteList);
     }
 
     public BaseResponse<?> getDivision(char iso) {
         try {
-            List<AdministrativeDivision> adList = administrativeDivisionRepository.findAllByIso_3166_2(iso);
+            List<AdministrativeDivision> adList = administrativeDivisionRepository.findAllById(iso);
             if (!adList.isEmpty()) {
                 return BaseResponse.ok(adList);
             } else return BaseResponse.fail(ErrorCode.NOT_FOUND);

@@ -9,7 +9,8 @@ import javax.persistence.*;
 public class AdministrativeDivision {
 
     @Id
-    private char iso_3166_2;
+    @Column(name = "iso_3166_2")
+    private char id;
 
     @ManyToOne
     @JoinColumn(name = "nation_pk")
