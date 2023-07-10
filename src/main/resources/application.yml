@@ -14,6 +14,7 @@ spring:
     hibernate:
       ddl-auto: update
 
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -26,3 +27,10 @@ spring:
           timeout: 5000
           starttls:
             enable: true
+
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+
