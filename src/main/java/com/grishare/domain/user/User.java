@@ -1,5 +1,8 @@
 package com.grishare.domain.user;
 
+import com.grishare.domain.Comment;
+import com.grishare.domain.Post;
+import com.grishare.domain.Scrap;
 import com.grishare.dto.RegisterRequestDto;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -7,11 +10,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
 @Table(name="users")
-@Getter @Builder @ToString
+@Getter @Builder
+@ToString @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
@@ -32,6 +37,12 @@ public class User {
     private String picture; // 프로필 이미지 -> 배포여부에 따라 -> 일단 배포는 미정 안할
     // 이미지 경로를 저장하는 변수
     private String address;
+    @OneToMany(mappedBy = "user",orphanRemoval = true)
+    private List<Post> posts;
+    @OneToMany(mappedBy = "user",orphanRemoval = true)
+    private List<Scrap> scraps; // 스크랩(찜)한 게시물
+    @OneToMany(mappedBy = "user",orphanRemoval = true)
+    private List<Comment> comments;
     //@Embedded
     //private NotificationSetting notificationSetting; // 알림 설정
 
@@ -40,13 +51,10 @@ public class User {
         return this;
     }
 
-    public  void updatePassword(PasswordEncoder passwordEncoder, String password){
-        this.password = passwordEncoder.encode(password);
+    public  void updatePassword(String password){
+        this.password = password;
     }
 
-    public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword){
-        return passwordEncoder.matches(checkPassword, getPassword());
-    }
 //    public User(String userId, String email, String password, String nickName, String userName, Integer birthDay) {
 //        this.userId = userId;
 //        this.email = email;
