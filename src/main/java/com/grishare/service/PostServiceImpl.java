@@ -1,9 +1,15 @@
 package com.grishare.service;
 
+import com.grishare.domain.Nation;
 import com.grishare.domain.Post;
+import com.grishare.domain.user.User;
 import com.grishare.dto.PostRequestDto;
 import com.grishare.dto.PostReturnDto;
+import com.grishare.exception.CustomNotFoundException;
+import com.grishare.exception.ErrorCode;
+import com.grishare.repository.NationRepository;
 import com.grishare.repository.PostRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,37 +19,39 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
-    @Autowired
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
+    private final NationRepository nationRepository;
 
     @Override
-    public Post save(PostRequestDto postRequestDto) {
-        try {
-            return postRepository
-                    .save(
-                            postRequestDto.toEntity()
-                    );
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public Post save(User user, Long nationId, PostRequestDto postRequestDto) {
+        Nation nation = nationRepository.findById(nationId).orElseThrow(() -> {
+            throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
+        });
+        return postRepository
+                .save(
+                        postRequestDto.toEntity(user, nation)
+                );
     }
 
     @Override
-    public PostReturnDto findById(Long id) {
-        try {
-            Optional<Post> postData = postRepository.findById(id);
-            if (postData.isPresent()) {
-                return new PostReturnDto(postData.get());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public List<PostReturnDto> findByNationId(Long nationId) {
+        List<Post> postList = postRepository.findAllByNationId(nationId);
+        return postList.stream().map(PostReturnDto::new).collect(Collectors.toList());
+    }
 
-        return null;
+    @Override
+    @Transactional
+    public PostReturnDto findByPostId(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> {
+            throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
+        });
+
+        post.setView(post.getView() + 1);
+
+        return new PostReturnDto(post);
     }
 
     @Override

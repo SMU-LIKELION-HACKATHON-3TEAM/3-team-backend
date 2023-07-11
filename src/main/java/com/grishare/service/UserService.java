@@ -1,11 +1,10 @@
 package com.grishare.service;
 
 import com.grishare.domain.user.User;
-import com.grishare.dto.RegisterRequestDto;
-import com.grishare.dto.UserRequestDto;
-import com.grishare.dto.UserReturnDto;
+import com.grishare.dto.*;
 
 import javax.mail.internet.MimeMessage;
+import java.util.List;
 
 public interface UserService {
 
@@ -16,6 +15,9 @@ public interface UserService {
 
     public String getTmpPassword();
     public void updatePassword(String tmpPassword, String memberEmail);
+
+    public List<PostSimpleDto> getMyScrap(Long userId);
+    public List<PostReturnDto> getMyPost(Long userId);
 
 
 

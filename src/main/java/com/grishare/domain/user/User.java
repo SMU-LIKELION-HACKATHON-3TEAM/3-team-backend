@@ -24,7 +24,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //사용자 PK -> id
     @Column(name="user_id")
-    private String userId; // 사용자가 입력하는 ID
+    private String userLoginId; // 사용자가 입력하는 ID
     @Column(unique = true)
     private String email;
     private String password;

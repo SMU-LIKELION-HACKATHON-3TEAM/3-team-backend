@@ -1,10 +1,7 @@
 package com.grishare.domain;
 
 import com.grishare.domain.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,6 +15,7 @@ import java.util.List;
 @Table(name = "post")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -37,17 +35,33 @@ public class Post {
     private LocalDateTime modifiedAt;
     @Column(name = "views")
     private Long view;
+    @ManyToOne
+    @JoinColumn(name = "nationId")
+    private Nation nation;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     @OneToMany(mappedBy = "post",orphanRemoval = true)
     private List<Comment> comments;
-    @OneToMany(mappedBy = "post",orphanRemoval = true)
-    private List<Scrap> scraps;
-    // 카테고리 , 작성자 , 좋아요 , 댓글, 이미지 관련 변수 필요함
-    public Post(String title, String content, User user) {
-        this.title = title;
-        this.content = content;
-        this.user = user;
+    @Column(nullable = true)
+    private int liked;
+    @Column(nullable = true)
+    private int scraped;
+
+    public void increaseLikeCount(){
+        this.liked += 1;
     }
+    public void decreaseLikeCount(){
+        this.liked -= 1;
+    }
+
+    public void increaseScrapCount(){
+        this.scraped += 1;
+    }
+    public void decreaseScrapCount(){
+        this.scraped -= 1;
+    }
+
+
+
 
 }

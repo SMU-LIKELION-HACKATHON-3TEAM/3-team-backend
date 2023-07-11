@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -36,12 +38,6 @@ import java.util.ArrayList;
 @RequestMapping("/api")
 public class UserController {
 
-//    @Autowired
-//    UserServiceImpl userService;
-//    @Autowired
-//    MailServiceImpl mailService;
-//    @Autowired
-//    PostServiceImpl postService;
     private final UserServiceImpl userService;
     private final   MailServiceImpl mailService;
     private final PostServiceImpl postService;
@@ -63,7 +59,7 @@ public class UserController {
     @PostMapping("/user/login")
     public ResponseEntity<?> login(HttpServletRequest request, HttpServletResponse response,
                                    @RequestBody LoginRequestDto loginRequestDto) {
-        UserDetails userDetails = userService.loadUserByUsername(loginRequestDto.getUserId());
+        UserDetails userDetails = userService.loadUserByUsername(loginRequestDto.getUserLoginId());
         // 인증 객체 생성
         Authentication authentication
                 = new UsernamePasswordAuthenticationToken(userDetails, loginRequestDto.getPassword(), new ArrayList<>());
@@ -100,7 +96,7 @@ public class UserController {
     // 비밀번호 찾기 -> 이메일 보내기
     @ResponseBody
     @PostMapping("/user/findPw")
-    public String sendPwdEmail(@RequestBody MailRequestDto mailRequestDto) {
+    public ResponseEntity<MailDto> sendPwdEmail(@RequestBody MailRequestDto mailRequestDto) {
 
         String memberEmail = mailRequestDto.getEmail();
         System.out.println("memberEmail = " + memberEmail);
@@ -112,15 +108,21 @@ public class UserController {
         MailDto mail = mailService.createMail(tmpPassword, memberEmail);
         mailService.sendMail(mail);
 
-        return "user/login";
+        return ResponseEntity.ok(mail);
 
 
     }
-    // 내가 쓴 글 목록 상세 보기
-//    @GetMapping("/mypage/scrap")
-//    public String myPage(@PathVariable String category, Authentication auth, Model model){
-//
-//    }
-    // 스크랩한 글 상세 보기
+    // 내가 쓴 글 목록 전체 보기
+    @GetMapping("/myPost")
+    public ResponseEntity<List<PostReturnDto>> getMyPosts (@AuthenticationPrincipal CustomUserDetail customUserDetail){
+        List<PostReturnDto> myPostList = userService.getMyPost(customUserDetail.getUser().getId());
+        return ResponseEntity.status(HttpStatus.OK).body(myPostList);
+    }
+    // 스크랩한 글 조회
+    @GetMapping("/posts/scrap")
+    public ResponseEntity<List<PostSimpleDto>> getScrapPosts(@AuthenticationPrincipal CustomUserDetail customuserDetail) {
+        List<PostSimpleDto> scrapPostList = userService.getMyScrap(customuserDetail.getUser().getId());
 
+        return ResponseEntity.status(HttpStatus.OK).body(scrapPostList);
+    }
 }

@@ -12,13 +12,13 @@ public class UserRequestDto {
     private String password;
     private String nickName;
     private String picture;
-    private String userId;
+    private String userLoginId;
 
     public UserRequestDto(User user) {
         this.password = password;
         this.nickName = nickName;
         this.picture = picture;
-        this.userId = userId;
+        this.userLoginId = userLoginId;
     }
 }
 

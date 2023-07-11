@@ -22,4 +22,16 @@ public class Scrap {
     private User user;
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
+
+    @Column(nullable = false)
+    private boolean status; // true = 스크랩, false = 스크랩 취소
+
+    public Scrap(Post post, User user){
+        this.post = post;
+        this.user = user;
+        this.status = true;
+    }
+    public void unScrap(Post post) {
+        this.status = false;
+    }
 }

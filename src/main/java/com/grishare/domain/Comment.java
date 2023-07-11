@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -29,8 +31,7 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post; // 댓글이 달린 게시판
 
-    @CreatedDate
-    @Column(updatable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
 

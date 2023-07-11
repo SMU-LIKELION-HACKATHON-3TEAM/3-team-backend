@@ -1,12 +1,12 @@
 package com.grishare.service;
 
 import com.grishare.domain.Post;
+import com.grishare.domain.Scrap;
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
-import com.grishare.dto.RegisterRequestDto;
-import com.grishare.dto.UserRequestDto;
-import com.grishare.dto.UserReturnDto;
+import com.grishare.dto.*;
 import com.grishare.repository.PostRepository;
+import com.grishare.repository.ScrapRepository;
 import com.grishare.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -34,22 +35,24 @@ public class UserServiceImpl implements UserDetailsService , UserService {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final ScrapRepository scrapRepository;
     private final PasswordEncoder passwordEncoder;
 
     private final JavaMailSender javaMailSender;
 
 
-    public UserServiceImpl(@Lazy UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, @Lazy JavaMailSender javaMailSender, @Lazy PostRepository postRepository){
+    public UserServiceImpl(@Lazy UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, @Lazy ScrapRepository scrapRepository, @Lazy JavaMailSender javaMailSender, @Lazy PostRepository postRepository){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.javaMailSender = javaMailSender;
         this.postRepository = postRepository;
+        this.scrapRepository = scrapRepository;
     }
 
     // spring security 관련 UserDetailsService implement 부분
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        User user = userRepository.findByUserId(userId).orElse(null);
+        User user = userRepository.findByUserLoginId(userId).orElse(null);
 
         if (user == null){
             throw new UsernameNotFoundException("UsernameNotFoundException");
@@ -65,7 +68,7 @@ public class UserServiceImpl implements UserDetailsService , UserService {
                 .userName(registerRequestDto.getUserName())
                 .email(registerRequestDto.getEmail())
                 .password(registerRequestDto.getPassword())
-                .userId(registerRequestDto.getUserId())
+                .userLoginId(registerRequestDto.getUserLoginId())
                 .birthDay(registerRequestDto.getBirthDay())
                 .nickName(registerRequestDto.getNickName())
                 .build();
@@ -104,7 +107,7 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         String encryptPassword = passwordEncoder.encode(userRequestDto.getPassword());
         me.setNickName(userRequestDto.getNickName());
         me.setPicture(userRequestDto.getPicture());
-        me.setUserId(userRequestDto.getUserId());
+        me.setUserLoginId(userRequestDto.getUserLoginId());
 
         userRepository.save(me);
         // 비밀번호 변경 -> passwordEncoder 적용
@@ -118,27 +121,23 @@ public class UserServiceImpl implements UserDetailsService , UserService {
 ////        return post.getCategory().toString().toLowerCase();
 //    }
     // 내가 쓴 리뷰 전체 조회
-    public List<Post> findMyPost(String category,String userId){
-        if(category.equals("post")){
-            return postRepository.findAllByUserId(userId);
-        }
-        return null;
+    @Override
+    public List<PostReturnDto> getMyPost(Long userId){ // userId에 로그인한 회원 Pk가 들어가야 됨
+
+       List<Post> myPosts = postRepository.findAllByUserId(userId);
+
+        return myPosts.stream().map(PostReturnDto::new).collect(Collectors.toList());
     }
 
-    // 스크랩하기 기능
-
     // 스크랩한 글 전체 조회
-//    public List<Post> findMyScrap(String category, String userId){
-//        if(category.equals("scrap")) {
-//            List<Scrap> scraps = scrapRepository.findAllByUserID(userId);
-//            List<Post> posts = new ArrayList<>();
-//            for (Scrap scrap : scraps) {
-//                posts.add(scrap.getPost());
-//            }
-//            return posts;
-//        }
-//        return null;
-//    }
+    @Override
+    public List<PostSimpleDto> getMyScrap(Long userId){ // userId에 로그인한 회원 Id가 들어가야 됨
+
+            return scrapRepository.findAllByUserId(userId).stream()
+                    .map(scrap -> PostSimpleDto.toDto(scrap.getPost()))
+                    .collect(Collectors.toList());
+
+    }
 
     // 메일 보내기
     // 임시 비밀번호 생성
@@ -162,7 +161,7 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         return pwd;
     }
 
-    // 임시 비밀번호로 업데이ㅇ
+    // 임시 비밀번호로 업데이에
     @Override
     public void updatePassword(String tmpPassword, String memberEmail) {
 
