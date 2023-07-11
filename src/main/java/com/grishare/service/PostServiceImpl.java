@@ -35,47 +35,53 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostReturnDto> findByNationId(Long nationID) {
-        List<Post> postList = postRepository.findAllByNationId(nationID);
+    public List<PostReturnDto> findByNationId(Long nationId) {
+        List<Post> postList = postRepository.findAllByNationId(nationId);
         return postList.stream().map(PostReturnDto::new).collect(Collectors.toList());
     }
 
-        @Override
-        public List<PostReturnDto> findAll () {
-            List<Post> posts = postRepository.findAll();
+    @Override
+    public List<PostReturnDto> findByPostId(Long id) {
+        List<Post> postList = postRepository.findAllByPostId(id);
+        return postList.stream().map(PostReturnDto::new).collect(Collectors.toList());
+    }
 
-            List<PostReturnDto> postReturnDtoList =
-                    posts.stream().map(post -> new PostReturnDto(post))
-                            .collect(Collectors.toList());
-            return postReturnDtoList;
+    @Override
+    public List<PostReturnDto> findAll() {
+        List<Post> posts = postRepository.findAll();
+
+        List<PostReturnDto> postReturnDtoList =
+                posts.stream().map(post -> new PostReturnDto(post))
+                        .collect(Collectors.toList());
+        return postReturnDtoList;
+    }
+
+    @Transactional
+    @Override
+    public PostReturnDto update(Long id, PostRequestDto postRequestDto) {
+        try {
+            Optional<Post> postData = postRepository.findById(id);
+            if (postData.isPresent()) {
+                Post _post = postData.get();
+                _post.setTitle(postRequestDto.getTitle());
+                _post.setContent(postRequestDto.getContent());
+                return new PostReturnDto(_post);
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        @Transactional
-        @Override
-        public PostReturnDto update (Long id, PostRequestDto postRequestDto){
-            try {
-                Optional<Post> postData = postRepository.findById(id);
-                if (postData.isPresent()) {
-                    Post _post = postData.get();
-                    _post.setTitle(postRequestDto.getTitle());
-                    _post.setContent(postRequestDto.getContent());
-                    return new PostReturnDto(_post);
-                } else {
-                    return null;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        return null;
+    }
 
-            return null;
-        }
-
-        @Override
-        public void delete (Long id){
-            try {
-                postRepository.deleteById(id);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    @Override
+    public void delete(Long id) {
+        try {
+            postRepository.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+}

@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
     public List<Post> findAllByNationId(long nationId);
+    public List<Post> findAllByPostId(long postId);
 }

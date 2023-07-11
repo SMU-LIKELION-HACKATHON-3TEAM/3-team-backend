@@ -29,8 +29,18 @@ public class PostController {
     }
 
     @GetMapping("/posts/{nationId}")
-    public ResponseEntity<List<PostReturnDto>> getPostById(@PathVariable("nationId") long nationId) {
+    public ResponseEntity<List<PostReturnDto>> getPostByNationId(@PathVariable("nationId") long nationId) {
         return ResponseEntity.ok(postService.findByNationId(nationId));
+    }
+
+    @GetMapping("/posts/{nationId}/{postId}")
+    public ResponseEntity<List<PostReturnDto>> getPostByPostId(@PathVariable("postId") long postId) {
+        try {
+            return ResponseEntity.ok(postService.findByPostId(postId));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @PostMapping("/posts/{nationId}")
@@ -47,27 +57,25 @@ public class PostController {
         return null;
     }
 
-    @PutMapping("/posts/{id}")
-    @PreAuthorize("isAnonymous()")
+    @PutMapping("/posts/{postId}")
     public ResponseEntity<PostReturnDto> updatePost(
-            @PathVariable("id") long id,
+            @PathVariable("postId") long postId,
             @RequestBody PostRequestDto postRequestDto
     ) {
         try {
             ResponseEntity
                     .status(HttpStatus.ACCEPTED)
-                    .body(postService.update(id, postRequestDto));
+                    .body(postService.update(postId, postRequestDto));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    @DeleteMapping("/posts/{id}")
-    @PreAuthorize("isAnonymous()")
-    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") long id) {
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("postId") long postId) {
         try {
-            postService.delete(id);
+            postService.delete(postId);
             ResponseEntity.noContent();
         } catch (Exception e) {
             e.printStackTrace();
