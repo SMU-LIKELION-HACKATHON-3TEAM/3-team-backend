@@ -46,8 +46,7 @@ public class Nation {
     @Column(name = "currency")
     private String currency;
 
-    @OneToMany
-    @JoinColumn(name="nation_id")
+    @OneToMany(mappedBy = "nation",orphanRemoval = true)
     private Collection<ExchangeRate> er;
 
     public Nation(String iso2, String iso3, int isoN, String countryName, String countryEnName, String continentCode, Integer travelWarning, String warningHistory, String currency) {

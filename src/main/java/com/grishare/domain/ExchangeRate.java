@@ -23,6 +23,10 @@ public class ExchangeRate {
     @Column(name = "bank")
     private Bank bank;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nation_id")
+    private Nation nation;
+
     @Column(name = "contry_code")
     private String contryCode;
 

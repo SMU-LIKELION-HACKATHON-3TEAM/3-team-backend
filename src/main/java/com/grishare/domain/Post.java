@@ -43,6 +43,8 @@ public class Post {
     private List<Comment> comments;
     @OneToMany(mappedBy = "post",orphanRemoval = true)
     private List<Scrap> scraps;
+    @OneToMany(mappedBy = "post",orphanRemoval = true)
+    private List<ReportPost> reportPosts;
     // 카테고리 , 작성자 , 좋아요 , 댓글, 이미지 관련 변수 필요함
     public Post(String title, String content, User user) {
         this.title = title;
