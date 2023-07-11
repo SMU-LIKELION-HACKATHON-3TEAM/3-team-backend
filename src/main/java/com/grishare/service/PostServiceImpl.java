@@ -2,6 +2,7 @@ package com.grishare.service;
 
 import com.grishare.domain.Nation;
 import com.grishare.domain.Post;
+import com.grishare.domain.user.User;
 import com.grishare.dto.PostRequestDto;
 import com.grishare.dto.PostReturnDto;
 import com.grishare.exception.CustomNotFoundException;
@@ -10,8 +11,8 @@ import com.grishare.repository.NationRepository;
 import com.grishare.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,13 +25,13 @@ public class PostServiceImpl implements PostService {
     private final NationRepository nationRepository;
 
     @Override
-    public Post save(Long nationId, PostRequestDto postRequestDto) {
+    public Post save(User user, Long nationId, PostRequestDto postRequestDto) {
         Nation nation = nationRepository.findById(nationId).orElseThrow(() -> {
             throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
         });
         return postRepository
                 .save(
-                        postRequestDto.toEntity(nation)
+                        postRequestDto.toEntity(user, nation)
                 );
     }
 
@@ -41,9 +42,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostReturnDto> findByPostId(Long id) {
-        List<Post> postList = postRepository.findAllById(id);
-        return postList.stream().map(PostReturnDto::new).collect(Collectors.toList());
+    @Transactional
+    public PostReturnDto findByPostId(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> {
+            throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
+        });
+
+        post.setView(post.getView() + 1);
+
+        return new PostReturnDto(post);
     }
 
     @Override

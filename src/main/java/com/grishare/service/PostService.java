@@ -1,6 +1,7 @@
 package com.grishare.service;
 
 import com.grishare.domain.Post;
+import com.grishare.domain.user.User;
 import com.grishare.dto.PostRequestDto;
 import com.grishare.dto.PostReturnDto;
 
@@ -8,13 +9,14 @@ import java.util.List;
 
 public interface PostService {
 
-    Post save(Long nationId, PostRequestDto postRequestDto);
+    Post save(User user, Long nationId, PostRequestDto postRequestDto);
+
 
 //    public PostReturnDto findById(Long postId);
 
     List<PostReturnDto> findByNationId(Long nationID);
 
-    List<PostReturnDto> findByPostId(Long postId);
+    PostReturnDto findByPostId(Long postId);
 
     public List<PostReturnDto> findAll();
     public PostReturnDto update(Long id, PostRequestDto postRequestDto);
