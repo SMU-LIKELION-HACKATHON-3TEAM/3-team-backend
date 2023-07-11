@@ -1,5 +1,6 @@
 package com.grishare.domain;
 
+import com.grishare.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -38,12 +40,18 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "nationId")
     private Nation nation;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+    @OneToMany(mappedBy = "post",orphanRemoval = true)
+    private List<Comment> comments;
+    @OneToMany(mappedBy = "post",orphanRemoval = true)
+    private List<Scrap> scraps;
+    @OneToMany(mappedBy = "post",orphanRemoval = true)
+    private List<ReportPost> reportPosts;
 
     public Post(String title, String content, Nation nation) {
         this.title = title;
         this.content = content;
         this.nation = nation;
-    }
 
 }

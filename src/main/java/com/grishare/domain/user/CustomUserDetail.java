@@ -1,14 +1,15 @@
 package com.grishare.domain.user;
 
+import lombok.Getter;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+    @Getter
     public class CustomUserDetail implements UserDetails {
         private User user;
-
 
 
         public CustomUserDetail(User user) {

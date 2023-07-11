@@ -12,9 +12,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ExchangeRateReturnDto {
 
-    private float exchangeRate;
+    private String contryName;
+
+    private Float exchangeRate;
 
     public ExchangeRateReturnDto(ExchangeRate ex){
+
+        this.contryName = ex.getContryName();
         this.exchangeRate = ex.getExchangeRate();
     }
 }

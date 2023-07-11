@@ -6,16 +6,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class GrishareApplicationTests {
-
-//	@Test
-//	void contextLoads() {
-//	}
-	@Value("${RDS_USERNAME}")
-	String userName;
-
-	@Test
-	public void username () throws Exception {
-		System.out.println(userName);
-	}
-
 }

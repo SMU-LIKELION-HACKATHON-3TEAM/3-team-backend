@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface NationRepository extends JpaRepository<Nation, Long> {
     List<Nation> findByIso2(String iso2);
+
 }

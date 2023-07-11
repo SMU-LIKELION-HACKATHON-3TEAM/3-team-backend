@@ -1,61 +1,30 @@
 package com.grishare.controller;
 
-import com.grishare.domain.Bank;
-import com.grishare.domain.ExchangeRate;
-import com.grishare.dto.ExchangeRateRequestDto;
 import com.grishare.dto.ExchangeRateReturnDto;
 import com.grishare.service.ExchangeRateServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin("*")
+@RestController
+@RequestMapping("/api")
 public class ExchangeRateController {
 
     @Autowired
     ExchangeRateServiceImpl exService;
 
-    @PostMapping("/exchangeRate/ExchangeRate")
-    public ResponseEntity<ExchangeRate> createExchangeRate(@RequestBody ExchangeRateRequestDto exRequestDto) {
-        try {
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(exService.save(exRequestDto));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-//    @PutMapping("/exchangeRate/ExchangeRate/{id}")
-//    public ResponseEntity<ExchangeRateReturnDto> updateExchangeRate(
-//            @PathVariable("id") long id,
-//            @RequestBody ExchangeRateRequestDto exRequestDto
-//    ) {
-//        try {
-//            ResponseEntity
-//                    .status(HttpStatus.ACCEPTED)
-//                    .body(exService.update(id, exRequestDto));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
-    @DeleteMapping("/exchangeRate/ExchangeRate/{id}")
-    public ResponseEntity<HttpStatus> deleteExchangeRate(@PathVariable("id") long id) {
-        try {
-            exService.delete(id);
-            ResponseEntity.noContent();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @GetMapping("/exchangeRate/{nationId}/{bank}")
-    public ResponseEntity<ExchangeRateReturnDto> getExchangeRate(@PathVariable("nationId") long nationId, @PathVariable("bank") String bank){
-        ExchangeRateReturnDto exReturnDto = exService.findByNationIdAndBank(nationId, bank);
+    @GetMapping("/exchangeRate/{contryName}/{bank}")
+    public ResponseEntity<ExchangeRateReturnDto> getExchangeRate(@PathVariable("contryName") String contryName, @PathVariable("bank") String bank){
+        ExchangeRateReturnDto exReturnDto = exService.findByContryNameAndBank(contryName, bank);
         return ResponseEntity.ok(exReturnDto);
+    }
+
+    @GetMapping("/exchangeRate")
+    public ResponseEntity<List<ExchangeRateReturnDto>> getExchangeRates(){
+        List<ExchangeRateReturnDto> exReturnDtoList = exService.findAll();
+        return ResponseEntity.ok(exReturnDtoList);
     }
 }
