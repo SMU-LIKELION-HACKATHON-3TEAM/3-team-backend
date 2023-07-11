@@ -21,58 +21,61 @@ public class PostController {
     @Autowired
     PostServiceImpl postService;
 
-    @GetMapping("/posts/{id}")
-    @PreAuthorize("isAnonymous()")
-    public ResponseEntity<PostReturnDto> getPostById(@PathVariable("id") long id) {
-        try {
-            return ResponseEntity.ok(postService.findById(id));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     @GetMapping("/posts")
-    @PreAuthorize("isAnonymous()")
     public ResponseEntity<List<PostReturnDto>> getAllPost() {
         List<PostReturnDto> posts = postService.findAll();
 
         return ResponseEntity.ok(posts);
     }
 
-    @PostMapping("/posts")
-    public ResponseEntity<Post> createPost(@RequestBody PostRequestDto postRequestDto) {
+    @GetMapping("/posts/{nationId}")
+    public ResponseEntity<List<PostReturnDto>> getPostByNationId(@PathVariable("nationId") long nationId) {
+        return ResponseEntity.ok(postService.findByNationId(nationId));
+    }
+
+    @GetMapping("/posts/{nationId}/{postId}")
+    public ResponseEntity<List<PostReturnDto>> getPostByPostId(@PathVariable("postId") long postId) {
         try {
-            ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(postService.save(postRequestDto));
+            return ResponseEntity.ok(postService.findByPostId(postId));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    @PutMapping("/posts/{id}")
-    @PreAuthorize("isAnonymous()")
+    @PostMapping("/posts/{nationId}")
+    public ResponseEntity<Post> createPost(
+            @PathVariable("nationId") long nationId,
+            @RequestBody PostRequestDto postRequestDto) {
+        try {
+            ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(postService.save(nationId, postRequestDto));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @PutMapping("/posts/{postId}")
     public ResponseEntity<PostReturnDto> updatePost(
-            @PathVariable("id") long id,
+            @PathVariable("postId") long postId,
             @RequestBody PostRequestDto postRequestDto
     ) {
         try {
             ResponseEntity
                     .status(HttpStatus.ACCEPTED)
-                    .body(postService.update(id, postRequestDto));
+                    .body(postService.update(postId, postRequestDto));
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    @DeleteMapping("/posts/{id}")
-    @PreAuthorize("isAnonymous()")
-    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") long id) {
+    @DeleteMapping("/posts/{postId}")
+    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("postId") long postId) {
         try {
-            postService.delete(id);
+            postService.delete(postId);
             ResponseEntity.noContent();
         } catch (Exception e) {
             e.printStackTrace();

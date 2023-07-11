@@ -37,6 +37,9 @@ public class Post {
     private LocalDateTime modifiedAt;
     @Column(name = "views")
     private Long view;
+    @ManyToOne
+    @JoinColumn(name = "nationId")
+    private Nation nation;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     @OneToMany(mappedBy = "post",orphanRemoval = true)
@@ -45,11 +48,10 @@ public class Post {
     private List<Scrap> scraps;
     @OneToMany(mappedBy = "post",orphanRemoval = true)
     private List<ReportPost> reportPosts;
-    // 카테고리 , 작성자 , 좋아요 , 댓글, 이미지 관련 변수 필요함
-    public Post(String title, String content, User user) {
+
+    public Post(String title, String content, Nation nation) {
         this.title = title;
         this.content = content;
-        this.user = user;
-    }
+        this.nation = nation;
 
 }
