@@ -53,5 +53,5 @@ public class Post {
         this.title = title;
         this.content = content;
         this.nation = nation;
-
+    }
 }
