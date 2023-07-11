@@ -79,13 +79,13 @@ public class ExchangeRateServiceImpl implements ExchangeRateService{
                     if (!erList.isEmpty()) {
                         ExchangeRate er = erList.get(0);
                         er.setExchangeRate(ex.getExchangeRate());
+                        er.setNation(nationList.get(0));
                         ResponseEntity
                                 .status(HttpStatus.ACCEPTED)
                                 .body(er);
-                        System.out.println("update");
                     } else {
+                        ex.setNation(nationList.get(0));
                         exRepository.save(ex);
-                        System.out.println("save");
                     }
                 }
             }
