@@ -42,7 +42,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostReturnDto> findByPostId(Long id) {
-        List<Post> postList = postRepository.findAllByPostId(id);
+        List<Post> postList = postRepository.findAllById(id);
         return postList.stream().map(PostReturnDto::new).collect(Collectors.toList());
     }
 
