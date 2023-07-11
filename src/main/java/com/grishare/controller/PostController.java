@@ -1,6 +1,7 @@
 package com.grishare.controller;
 
 import com.grishare.domain.Post;
+import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.dto.PostRequestDto;
 import com.grishare.dto.PostReturnDto;
 import com.grishare.service.PostService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +36,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/{nationId}/{postId}")
-    public ResponseEntity<List<PostReturnDto>> getPostByPostId(@PathVariable("postId") long postId) {
+    public ResponseEntity<PostReturnDto> getPostByPostId(@PathVariable("postId") long postId) {
         try {
             return ResponseEntity.ok(postService.findByPostId(postId));
         } catch (Exception e) {
@@ -45,12 +47,13 @@ public class PostController {
 
     @PostMapping("/posts/{nationId}")
     public ResponseEntity<Post> createPost(
+            @AuthenticationPrincipal CustomUserDetail customUserDetail,
             @PathVariable("nationId") long nationId,
             @RequestBody PostRequestDto postRequestDto) {
         try {
             ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(postService.save(nationId, postRequestDto));
+                    .body(postService.save(customUserDetail.getUser(), nationId, postRequestDto));
         } catch (Exception e) {
             e.printStackTrace();
         }
