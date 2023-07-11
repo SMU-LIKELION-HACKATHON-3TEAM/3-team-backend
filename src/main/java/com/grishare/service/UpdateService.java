@@ -12,8 +12,8 @@ public class UpdateService {
     @Autowired
     ExchangeRateServiceImpl exService;
 
-//    @Scheduled(cron = "0 1 9-22 * * 1-5", zone = "Asia/Seoul")
-    @Scheduled(cron = "0 * * * * 1-5", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 1 9-22 * * 1-5", zone = "Asia/Seoul")
+//    @Scheduled(cron = "0 * * * * 1-5", zone = "Asia/Seoul")
     public void updateExchangeRate() throws IOException {
         exService.update();
     }
