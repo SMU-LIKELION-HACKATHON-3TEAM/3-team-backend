@@ -1,5 +1,6 @@
 package com.grishare.service;
 
+import com.grishare.domain.Comment;
 import com.grishare.domain.Nation;
 import com.grishare.domain.Post;
 import com.grishare.domain.user.User;
@@ -32,7 +33,7 @@ public class PostServiceImpl implements PostService {
         });
         return postRepository
                 .save(
-                        postRequestDto.toEntity(user, nation)
+                        postRequestDto.toEntity(user, nation, Comment.builder().build())
                 );
     }
 
