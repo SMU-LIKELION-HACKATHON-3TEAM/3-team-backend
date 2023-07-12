@@ -10,7 +10,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("http://grishare.ap-northeast-2.elasticbeanstalk.com/")
+@RequestMapping("/api")
 public class ExchangeRateController {
 
     @Autowired
