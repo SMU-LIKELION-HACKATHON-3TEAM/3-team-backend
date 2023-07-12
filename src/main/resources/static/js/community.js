@@ -39,7 +39,7 @@ $(document).ready(function() {
         var $views = $('<div>').addClass('views');
         
         var $likes = $('<div>').addClass('likes').text(item.like);
-        var $likes_image = $('<img>').attr("id", `likes_image${item.post_id}`).attr("src","../img/🦆\ icon\ _heart_.png").addClass('likes_image');
+        var $likes_image = $('<img>').attr("id", `likes_image${item.post_id}`).attr("src","../img/ icon _heart_.png").addClass('likes_image');
 
         var $comment = $('<div>').addClass('comment').text(item.comment);
         var $comment_image = $('<div>').addClass('comment_image');
@@ -47,7 +47,7 @@ $(document).ready(function() {
 
 
         var $scrap = $('<div>').addClass('scrap').text("스크랩");
-        var $scrap_image = $('<img>').attr("id", `scrap_image${item.post_id}`).attr("src","../img/🦆 icon _star outline_.png").addClass('scrap_image');
+        var $scrap_image = $('<img>').attr("id", `scrap_image${item.post_id}`).attr("src","../img/ icon _star outline_.png").addClass('scrap_image');
 
         var $share = $("<div>").addClass("share").attr("id", `share${item.post_id}`).text("공유");
         var $share_image = $('<div>').attr("id", `share${item.post_id}`).addClass('share_image');

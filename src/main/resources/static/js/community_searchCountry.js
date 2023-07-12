@@ -36,13 +36,13 @@ $(document).ready(function() {
   console.log("nationId",nationId);
 
   if (nationId) {
-    var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${nationId}`;
+    var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/nation/${nationId}`;
     $.ajax({
       type: 'GET',
       dataType: 'json',
       url: url,
       success: function(data) {
-        console.log('hi');  //아직 안나온듯? 이따 이어서
+        console.log('searchCountry_connecting');  //아직 안나온듯? 이따 이어서
         console.log(data);
 
           var createdAt = new Date(data.created_at);
