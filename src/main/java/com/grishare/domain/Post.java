@@ -47,7 +47,4 @@ public class Post {
     private List<LikePost> likePosts;
     @OneToMany(mappedBy = "post",orphanRemoval = true)
     private List<ReportPost> reportPosts;
-
-
-
 }
