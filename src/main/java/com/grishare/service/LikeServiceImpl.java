@@ -47,10 +47,9 @@ public class LikeServiceImpl implements LikeService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(null);
         if(!checkLike(user.getUserLoginId(),postId)) {
-            post.increaseLikeCount();
             addLike(user.getUserLoginId(), postId);
+
         }else {
-            post.decreaseLikeCount();
             deleteLike(user.getUserLoginId(), postId);
         }
     }

@@ -31,7 +31,5 @@ public class Scrap {
         this.user = user;
         this.status = true;
     }
-    public void unScrap(Post post) {
-        this.status = false;
-    }
+
 }

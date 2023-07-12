@@ -42,24 +42,14 @@ public class Post {
     private User user;
     @OneToMany(mappedBy = "post",orphanRemoval = true)
     private List<Comment> comments;
-    @Column(nullable = true)
-    private int liked;
-    @Column(nullable = true)
-    private int scraped;
+    @OneToMany(mappedBy = "post",orphanRemoval = true)
+    private List<Scrap> scraps;
+    @OneToMany(mappedBy = "post",orphanRemoval = true)
+    private List<Like> likes;
 
-    public void increaseLikeCount(){
-        this.liked += 1;
-    }
-    public void decreaseLikeCount(){
-        this.liked -= 1;
-    }
 
-    public void increaseScrapCount(){
-        this.scraped += 1;
-    }
-    public void decreaseScrapCount(){
-        this.scraped -= 1;
-    }
+
+
 
 
 

@@ -77,6 +77,7 @@ public class UserController {
         Cookie cookie = new Cookie("JSESSIONID", session.getId());
         cookie.setPath("/");
         cookie.setHttpOnly(true);
+        cookie.setDomain("localhost");
         cookie.setMaxAge(30000 * 60);
         response.addCookie(cookie);
 
@@ -120,8 +121,8 @@ public class UserController {
     }
     // 스크랩한 글 조회
     @GetMapping("/posts/scrap")
-    public ResponseEntity<List<PostSimpleDto>> getScrapPosts(@AuthenticationPrincipal CustomUserDetail customuserDetail) {
-        List<PostSimpleDto> scrapPostList = userService.getMyScrap(customuserDetail.getUser().getId());
+    public ResponseEntity<List<PostReturnDto>> getScrapPosts(@AuthenticationPrincipal CustomUserDetail customuserDetail) {
+        List<PostReturnDto> scrapPostList = userService.getMyScrap(customuserDetail.getUser().getId());
 
         return ResponseEntity.status(HttpStatus.OK).body(scrapPostList);
     }

@@ -16,7 +16,7 @@ public interface UserService {
     public String getTmpPassword();
     public void updatePassword(String tmpPassword, String memberEmail);
 
-    public List<PostSimpleDto> getMyScrap(Long userId);
+    public List<PostReturnDto> getMyScrap(Long userId);
     public List<PostReturnDto> getMyPost(Long userId);
 
 

@@ -23,10 +23,12 @@ public class ScrapServiceImpl implements ScrapService{
     @Override
     @Transactional
     public void addScrap(String userLoginId, Long postId){
-        System.out.println("postId 3번째 확인! = " + postId);
         Post post = postRepository.findById(postId).orElse(null);
         User loginUSer = userRepository.findByUserLoginId(userLoginId).orElse(null);
-        Scrap scrap = new Scrap(post,loginUSer);
+        Scrap scrap = new Scrap(post,loginUSer); // 문제 부분
+        scrapRepository.save(scrap);
+        System.out.println("스크랩아이디 = " + scrap.getId());
+
     }
 
     @Override
@@ -42,22 +44,17 @@ public class ScrapServiceImpl implements ScrapService{
     public Boolean checkScrap(String userLoginId, Long postId){
 
         User loginUser = userRepository.findByUserLoginId(userLoginId).orElse(null);
-        System.out.println("loginUserId 3트! = " + loginUser.getUserLoginId());
         return scrapRepository.findByPostIdAndUserId(postId,loginUser.getId())
                 .isPresent();
     }
     @Override
     public void updateOfScrapPost(Long postId, User user){
-        System.out.println("postId 2번째 확인!= " + postId);
-        System.out.println("userloginId 2번째 확인! = " + user.getUserLoginId());
 
         Post post = postRepository.findById(postId)
                 .orElseThrow(null);
         if(!checkScrap(user.getUserLoginId(),postId)) {
-            post.increaseScrapCount();
             addScrap(user.getUserLoginId(), postId);
         }else if(checkScrap(user.getUserLoginId(),postId)){
-            post.decreaseScrapCount();
             deleteScrap(user.getUserLoginId(), postId);
         }
     }
