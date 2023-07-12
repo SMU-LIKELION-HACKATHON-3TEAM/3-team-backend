@@ -173,7 +173,7 @@ ul.login-bar>li:hover {
     overflow: hidden;
 }
 
-.profile {
+.wrap_memberInfor img {
     position: absolute;
     width: 100px;
     height: 100px;
@@ -303,6 +303,11 @@ ul.login-bar>li:hover {
     overflow: hidden;
 }
 
+.review_contents a:link,
+.review_contents a:visited {
+    color: black;
+}
+
 .review_infor {
     width: 940px;
     height: 25px;
@@ -383,6 +388,11 @@ ul.login-bar>li:hover {
     overflow: hidden;
 }
 
+.clipping_content a:link,
+.clipping_content a:visited {
+    color: black;
+}
+
 .clipping {
     width: 940px;
     margin-bottom: 103px;
@@ -433,8 +443,9 @@ ul.login-bar>li:hover {
 
 .post_content img {
     margin: 0px;
-    width: 940px;
-    height: 281px;
+    width: 376px;
+    height: 201px;
+    margin-left: 282px;
 }
 
 .clipping_modify {

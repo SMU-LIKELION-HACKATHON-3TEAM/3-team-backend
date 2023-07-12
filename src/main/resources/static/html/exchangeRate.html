@@ -59,16 +59,16 @@
         <div class="wrap_er">
             <section class="nav_er">
                 <select name="country1" id="country1">
-                    <option value="ko">대한민국</option>
+                    <option value="대한민국">대한민국</option>
                     <!--대한민국고정-->
                 </select>
-                <form class="wrap_country" action="http://grishare.ap-northeast-2.elasticbeanstalk.com/api/exchangeRate/country"  method="get">
+                <form class="wrap_country">
                 <select name="country2" id="country2" >
                     <option disabled selected >비교할 나라 선택</option>
                 </select>
                 <!-- <input id = "country_submit" type = "submit" style = "display:none"> -->
                 </form>
-                <form class="wrap_bank" action="http://grishare.ap-northeast-2.elasticbeanstalk.com/api/exchangeRate/bank" method="get">
+                <form class="wrap_bank">
                 <select name="banks" id="banks">
                     <option disabled selected >은행 선택</option>
                 </select>
@@ -77,7 +77,7 @@
             </section>
             <section class="main_er">
                 <div class="money1">
-                    <input type="number" id="money1" onkeyup="calculate()">
+                    <input type="number" id="money1" onkeyup="calculate()"/>
                     <p>₩</p>
                     <!--화폐단위 구현-->
                 </div>

@@ -248,40 +248,46 @@ ul.login-bar>li:hover {
 /* comparison */
 
 .wrap_comparison {
-    width: 559px;
+    width: 1513px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrap_ment {
+    display: inline-flex;
+    width: auto;
     height: 62px;
-    margin: 0 auto;
     margin-top: 186px;
     margin-bottom: 328px;
     border-bottom: 1px solid black;
 }
 
-.wrap_comparison p {
-    position: absolute;
-    display: inline-block;
-}
-
-.ment1 {
-    position: relative;
+.ment {
     font-size: 28px;
     margin: 0px;
     margin-left: 20px;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+.wrap_cheap {
+    display: inline-flex;
+    width: auto;
+    height: 62px;
+    margin-top: 186px;
+    margin-bottom: 328px;
+    border-bottom: 1px solid black;
 }
 
 .cheapCoun {
-    position: relative;
     font-size: 40px;
     margin: 0px;
-    margin-left: 190px;
-    line-height: 35px;
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 40px;
     color: #83A07F;
-}
-
-.ment2 {
-    position: relative;
-    font-size: 28px;
-    margin: 0px;
-    margin-left: 330px;
     white-space: nowrap;
 }
 

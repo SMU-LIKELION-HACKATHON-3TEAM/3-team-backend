@@ -1,9 +1,5 @@
-{
-    "code": 200,
-    "httpStatus": "OK",
-    "message": "요청에 성공하였습니다.",
-		"data": [{
-			"post_id" : "24",
+[{
+			"post_id" : "1",
 			"title" : "미국 갱스터 피하는 법",
 			"contents" : "오늘은 갱스터 피하는 법을 알아볼텐데요! 저도 궁금하네요 ~~",
 			"userName" : "김동현",
@@ -48,4 +44,3 @@
 				"like" : "4",
 				"comment" : "none"
     		}]
-	}
