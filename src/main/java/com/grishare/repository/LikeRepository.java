@@ -1,14 +1,11 @@
 package com.grishare.repository;
 
-import com.grishare.domain.Like;
-import com.grishare.domain.Post;
-import com.grishare.domain.user.User;
+import com.grishare.domain.LikePost;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface LikeRepository extends JpaRepository<Like,Long> {
-    Optional<Like> findByPostAndUser(Post post, User user);
-    List<Like> findAllByPostAndUser(Post post, User user);
+public interface LikeRepository extends JpaRepository<LikePost,Long> {
+
+    Optional<LikePost> findByPostIdAndUserId(Long postId, Long userId);
 }

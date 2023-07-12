@@ -1,12 +1,10 @@
 package com.grishare.service;
 
-import com.grishare.domain.Like;
+import com.grishare.domain.LikePost;
 import com.grishare.domain.Post;
-import com.grishare.domain.Scrap;
 import com.grishare.domain.user.User;
 import com.grishare.repository.LikeRepository;
 import com.grishare.repository.PostRepository;
-import com.grishare.repository.ScrapRepository;
 import com.grishare.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,29 +21,27 @@ public class LikeServiceImpl implements LikeService {
     public void addLike(String userLoginId, Long postId){
         Post post = postRepository.findById(postId).orElse(null);
         User loginUSer = userRepository.findByUserLoginId(userLoginId).orElse(null);
-        Like like = new Like(post,loginUSer);
+        LikePost likePost = new LikePost(post,loginUSer);
+        likeRepository.save(likePost);
+        System.out.println("조아요아이디! = " + likePost.getId());
     }
 
     @Override
     public void deleteLike(String userLoginId, Long postId){
-        Post post = postRepository.findById(postId).orElse(null);
         User loginUser = userRepository.findByUserLoginId(userLoginId).orElse(null);
-        Like like = likeRepository.findByPostAndUser(post,loginUser)
+        LikePost likePost = likeRepository.findByPostIdAndUserId(postId,loginUser.getId())
                 .orElseThrow(null);
 
-        likeRepository.delete(like);
+        likeRepository.delete(likePost);
     }
     @Override
-    public boolean checkLike(String userLoginId, Long postId){
-        Post post = postRepository.findById(postId).orElse(null);
+    public Boolean checkLike(String userLoginId, Long postId){
         User loginUser = userRepository.findByUserLoginId(userLoginId).orElse(null);
-        return likeRepository.findByPostAndUser(post,loginUser)
+        return likeRepository.findByPostIdAndUserId(postId,loginUser.getId())
                 .isPresent();
     }
     @Override
     public void updateOfLikePost(Long postId, User user){
-        Post post = postRepository.findById(postId)
-                .orElseThrow(null);
         if(!checkLike(user.getUserLoginId(),postId)) {
             addLike(user.getUserLoginId(), postId);
 
