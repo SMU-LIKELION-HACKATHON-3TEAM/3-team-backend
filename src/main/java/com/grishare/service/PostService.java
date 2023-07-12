@@ -5,15 +5,15 @@ import com.grishare.domain.Post;
 import com.grishare.domain.user.User;
 import com.grishare.dto.*;
 import com.grishare.repository.CommentRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface PostService {
 
-    Post save(User user, Long nationId, PostRequestDto postRequestDto);
-
-
 //    public PostReturnDto findById(Long postId);
+
+    PostReturnDto save(User user, Long nationId, PostRequestDto postRequestDto, List<MultipartFile> imageFiles);
 
     List<PostReturnDto> findByNationId(Long nationID);
 

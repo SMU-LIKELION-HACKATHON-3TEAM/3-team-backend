@@ -32,7 +32,7 @@ public class PostReturnDto {
         this.userName = post.getUser().getNickName(); // 글쓰기 닉네임표시
         this.create_at = post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.views = post.getView();
-        this.like_count = post.getLikePosts().size();
-        this.comment_count = post.getComments().size();
+        this.like_count = post.getLikePosts() == null ? 0 : post.getLikePosts().size();
+        this.comment_count = post.getComments() == null ? 0 : post.getComments().size();
     }
 }
