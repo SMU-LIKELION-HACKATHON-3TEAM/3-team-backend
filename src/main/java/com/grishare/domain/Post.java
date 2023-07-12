@@ -7,7 +7,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class Post {
     @OneToMany(mappedBy = "post",orphanRemoval = true)
     private List<Scrap> scraps;
     @OneToMany(mappedBy = "post",orphanRemoval = true)
-    private List<Like> likes;
+    private List<LikePost> likePosts;
 
 
 

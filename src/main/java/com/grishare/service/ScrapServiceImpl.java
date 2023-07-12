@@ -50,8 +50,6 @@ public class ScrapServiceImpl implements ScrapService{
     @Override
     public void updateOfScrapPost(Long postId, User user){
 
-        Post post = postRepository.findById(postId)
-                .orElseThrow(null);
         if(!checkScrap(user.getUserLoginId(),postId)) {
             addScrap(user.getUserLoginId(), postId);
         }else if(checkScrap(user.getUserLoginId(),postId)){

@@ -21,7 +21,7 @@ public class LikeController {
     @PostMapping("/posts/{postId}/like")
     public ResponseEntity<HttpStatus> Like(@PathVariable Long postId, @AuthenticationPrincipal CustomUserDetail customUserDetail){
         try {
-            User user = userRepository.findByUserLoginId(customUserDetail.getUser().getUserLoginId()).orElse(null);
+            User user = customUserDetail.getUser();
             likeService.updateOfLikePost(postId,user);
             ResponseEntity
                     .status(HttpStatus.ACCEPTED);
