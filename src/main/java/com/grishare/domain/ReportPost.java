@@ -33,14 +33,14 @@ public class ReportPost {
 
     @Column(name = "reason")
     private String reason;
-
+//
 //    public ReportPost(Post post, User user,String reason) {
 //        this.post = post;
 //        this.user = user;
 //        this.reason = reason;
 //    }
-public ReportPost(Post post, String reason) {
-    this.post = post;
-    this.reason = reason;
-}
+    public ReportPost(Post post, String reason) {
+        this.post = post;
+        this.reason = reason;
+    }
 }

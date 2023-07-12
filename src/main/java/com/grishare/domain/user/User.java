@@ -48,6 +48,7 @@ public class User {
     private List<Comment> comments;
     @OneToMany(mappedBy = "user",orphanRemoval = true)
     private List<ReportPost> reportPosts;
+
     //@Embedded
     //private NotificationSetting notificationSetting; // 알림 설정
 
