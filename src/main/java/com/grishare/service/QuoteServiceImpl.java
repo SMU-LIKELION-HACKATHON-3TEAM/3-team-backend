@@ -4,6 +4,7 @@ import com.grishare.base.BaseResponse;
 import com.grishare.domain.AdministrativeDivision;
 import com.grishare.domain.Nation;
 import com.grishare.domain.Quote;
+import com.grishare.dto.QuoteADReturnDto;
 import com.grishare.dto.QuoteNationReturnDto;
 import com.grishare.exception.CustomException;
 import com.grishare.exception.ErrorCode;
@@ -39,11 +40,14 @@ public class QuoteServiceImpl implements QuoteService {
         return BaseResponse.ok(quoteNationReturnDtoList);
     }
 
-    public BaseResponse<?> getDivision(char iso) {
+    public BaseResponse<?> getDivision(Long nationId) {
         try {
-            List<AdministrativeDivision> adList = administrativeDivisionRepository.findAllById(iso);
+            List<AdministrativeDivision> adList = administrativeDivisionRepository.findAllByNation_Id(nationId);
             if (!adList.isEmpty()) {
-                return BaseResponse.ok(adList);
+                List<QuoteADReturnDto> adReturnDtoList = adList.stream()
+                        .map(administrativeDivision -> new QuoteADReturnDto
+                                (administrativeDivision.getId(), administrativeDivision.getAdName())).toList();
+                return BaseResponse.ok(adReturnDtoList);
             } else return BaseResponse.fail(ErrorCode.NOT_FOUND);
         } catch (Exception e) {
             throw new CustomException(ErrorCode.BAD_REQUEST);

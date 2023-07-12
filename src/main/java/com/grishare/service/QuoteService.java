@@ -6,5 +6,5 @@ public interface QuoteService {
 
     public BaseResponse<?> getCountry();
 
-    public BaseResponse<?> getDivision(char iso);
+    public BaseResponse<?> getDivision(Long nationId);
 }
