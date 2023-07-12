@@ -1,18 +1,18 @@
       // 네비바 이동
       $('.a-community').click(function() {
-        var url = 'http://127.0.0.1:5500/html/community.html';
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
         window.location.href = url;
     });
       $('.a-exchange').click(function() {
-        var url = 'http://127.0.0.1:5500/html/exchangeRate.html';
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/exchangeRate.html';
         window.location.href = url;
     });
       $('.a-price').click(function() {
-        var url = 'http://127.0.0.1:5500/html/pricecomparison.html';
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/pricecomparison.html';
         window.location.href = url;
     });
       $('.a-customer').click(function() {
-        var url = 'http://127.0.0.1:5500/html/고객지원.html';
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/고객지원.html';
         window.location.href = url;
     });
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
     var nationId = $(this).val();
     localStorage.setItem('nationId', nationId);
     if (nationId !== "") {
-      window.location.href = 'http://127.0.0.1:5500/html/community_searchCountry.html';
+      window.location.href = `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/nation/${nationId}`;
     }
   });
 });
