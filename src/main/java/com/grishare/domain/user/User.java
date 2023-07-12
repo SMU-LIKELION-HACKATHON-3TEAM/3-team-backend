@@ -3,6 +3,7 @@ package com.grishare.domain.user;
 import com.grishare.domain.Comment;
 import com.grishare.domain.Like;
 import com.grishare.domain.Post;
+import com.grishare.domain.ReportPost;
 import com.grishare.domain.Scrap;
 import com.grishare.dto.RegisterRequestDto;
 import lombok.*;
@@ -46,6 +47,8 @@ public class User {
     private List<Like> likes; // 스크랩(찜)한 게시물
     @OneToMany(mappedBy = "user",orphanRemoval = true)
     private List<Comment> comments;
+    @OneToMany(mappedBy = "user",orphanRemoval = true)
+    private List<ReportPost> reportPosts;
     //@Embedded
     //private NotificationSetting notificationSetting; // 알림 설정
 

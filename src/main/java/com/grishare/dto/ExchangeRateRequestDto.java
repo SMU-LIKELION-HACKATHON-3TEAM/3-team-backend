@@ -16,14 +16,19 @@ public class ExchangeRateRequestDto {
 
     private String bank;
 
-    private float exchangeRate;
+    private Float exchangeRate;
+
+    private String contryName;
+
+    private String contryCode;
 
     private String curUnit;
 
     public ExchangeRate toEntity(){
         ExchangeRate ex = new ExchangeRate(
-                this.nationId,
+                this.contryName,
                 Bank.valueOf(this.bank),
+                this.contryCode,
                 this.curUnit,
                 this.exchangeRate
         );

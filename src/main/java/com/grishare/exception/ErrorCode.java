@@ -18,6 +18,16 @@ public enum ErrorCode {
     INVALID_PARAMETER(40001, "요청 파라미터 오류"),
 
     /**
+    * 202 ACCEPTED
+    */
+    ACCEPT(202, "이미 신고한 게시글입니다."),
+
+    /**
+     * 403 FORBIDDEN
+     */
+    FORBIDDEN(403, "권한이 없습니다."),
+
+    /**
      * 404 NOT FOUND
      */
     NOT_FOUND(404, "요청한 자원을 찾을 수 없습니다."),

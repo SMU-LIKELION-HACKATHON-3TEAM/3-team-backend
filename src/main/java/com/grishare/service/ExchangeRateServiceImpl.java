@@ -13,14 +13,13 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -51,69 +50,61 @@ public class ExchangeRateServiceImpl implements ExchangeRateService{
     @Override
     public void update() throws IOException {
         JSONArray jsonArray = ecaApi.getApi();
-        List<ExchangeRate> exList = new ArrayList<>();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-            String curUnit = jsonObject.getString("cur_unit");
-            String deal_bas_r = jsonObject.getString("deal_bas_r");
-            ExchangeRate exchangeRate = ExchangeRate.builder()
-                    .bank(Bank.ECA)
-                    .curUnit(curUnit.substring(0, 2))
-                    .exchangeRate(Float.parseFloat(deal_bas_r))
-                    .build();
-            exList.add(exchangeRate);
-        }
-
-        //for문 (데이터 유무 구분)
-        for(int i = 0; i < exList.size(); i++){
-            List<Nation> nationList = nationRepository.findByIso2(exList.get(i).getCurUnit());
-            if(!nationList.isEmpty()){
-                List<ExchangeRate> erList = exRepository.findByNationIdAndBank(nationList.get(0).getId(), exList.get(i).getBank());
-                if(!erList.isEmpty()){
-                    ResponseEntity
-                        .status(HttpStatus.ACCEPTED)
-                        .body(exList.get(i));
-                }else {
-                    exRepository.save(exList.get(i));
+        if(jsonArray != null) {
+            List<ExchangeRate> exList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                String curUnit = jsonObject.getString("cur_unit");
+                String contryName = curUnit.substring(0, 2);
+                String deal_bas_r = jsonObject.getString("deal_bas_r");
+                Float rate = Float.parseFloat(deal_bas_r.replaceAll(",", ""));
+                if(curUnit.substring(curUnit.length()-1) == ")"){
+                    rate /= Float.parseFloat(curUnit.substring(curUnit.length()-3, curUnit.length()-2));
+                }
+                ExchangeRate exchangeRate = ExchangeRate.builder()
+                        .bank(Bank.ECA)
+                        .contryCode(contryName)
+                        .curUnit((curUnit))
+                        .exchangeRate(1000 / rate)
+                        .build();
+                exList.add(exchangeRate);
+            }
+            //for문 (데이터 유무 구분)
+            for (int i = 0; i < exList.size(); i++) {
+                List<Nation> nationList = nationRepository.findByIso2(exList.get(i).getContryCode());
+                if (!nationList.isEmpty()) {
+                    List<ExchangeRate> erList = exRepository.findByContryNameAndBank(nationList.get(0).getCountryName(), exList.get(i).getBank());
+                    ExchangeRate ex = exList.get(i);
+                    ex.setContryName(nationList.get(0).getCountryName());
+                    if (!erList.isEmpty()) {
+                        ExchangeRate er = erList.get(0);
+                        er.setExchangeRate(ex.getExchangeRate());
+                        er.setNation(nationList.get(0));
+                        ResponseEntity
+                                .status(HttpStatus.ACCEPTED)
+                                .body(er);
+                    } else {
+                        ex.setNation(nationList.get(0));
+                        exRepository.save(ex);
+                    }
                 }
             }
         }
     }
 
     @Override
-    public ExchangeRateReturnDto findById(Long id) {
-        try{
-            Optional<ExchangeRate> exData = exRepository.findById(id);
-            if(exData.isPresent()){
-                return  new ExchangeRateReturnDto(exData.get());
-            }
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
+    public List<ExchangeRateReturnDto> findAll() {
+        List<ExchangeRate> exList = exRepository.findAll();
+        List<ExchangeRateReturnDto> exReturnDtoList = new ArrayList<>();
+        return exList.stream().map(ExchangeRateReturnDto::new).collect(Collectors.toList());
     }
 
     @Override
-    public ExchangeRateReturnDto findByNationIdAndBank(Long nationId, String bank) {
-        List<ExchangeRate> ex = exRepository.findByNationIdAndBank(nationId, Bank.valueOf(bank));
+    public ExchangeRateReturnDto findByContryNameAndBank(String contryName, String bank) {
+        List<ExchangeRate> ex = exRepository.findByContryNameAndBank(contryName, Bank.valueOf(bank));
         if(!ex.isEmpty()){
             return new ExchangeRateReturnDto(ex.get(0));
         }
         return null;
     }
-
-    @Override
-    public void delete(Long id) {
-        try{
-            exRepository.deleteById(id);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-//    @Scheduled(cron = "* * * * * *", zone = "Asia/Seoul")
-//    public void updateExchangeRate() throws IOException {
-//        update();
-//        System.out.println("gg");
-//    }
 }
