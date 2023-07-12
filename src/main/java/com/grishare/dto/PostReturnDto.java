@@ -1,7 +1,6 @@
 package com.grishare.dto;
 
 import com.grishare.domain.Post;
-import com.grishare.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

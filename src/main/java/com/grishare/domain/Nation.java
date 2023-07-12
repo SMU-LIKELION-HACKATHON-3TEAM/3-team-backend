@@ -38,16 +38,18 @@ public class Nation {
     private String continentCode;
 
     @Column(name = "travel_warning")
-    private int travelWarning;
+    private Integer travelWarning;
 
     @Column(name = "warning_history")
     private String warningHistory;
 
-    @OneToMany
-    @JoinColumn(name="nation_id")
+    @Column(name = "currency")
+    private String currency;
+
+    @OneToMany(mappedBy = "nation",orphanRemoval = true)
     private Collection<ExchangeRate> er;
 
-    public Nation(String iso2, String iso3, int isoN, String countryName, String countryEnName, String continentCode, int travelWarning, String warningHistory) {
+    public Nation(String iso2, String iso3, int isoN, String countryName, String countryEnName, String continentCode, Integer travelWarning, String warningHistory, String currency) {
         this.iso2 = iso2;
         this.iso3 = iso3;
         this.isoN = isoN;
@@ -56,6 +58,7 @@ public class Nation {
         this.continentCode = continentCode;
         this.travelWarning = travelWarning;
         this.warningHistory = warningHistory;
+        this.currency = currency;
     }
 
 }
