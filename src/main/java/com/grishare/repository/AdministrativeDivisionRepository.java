@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface AdministrativeDivisionRepository extends JpaRepository<AdministrativeDivision, Character> {
     public List<AdministrativeDivision> findAllById(char iso);
+
+    public List<AdministrativeDivision> findAllByNation_Id (Long id);
 }
