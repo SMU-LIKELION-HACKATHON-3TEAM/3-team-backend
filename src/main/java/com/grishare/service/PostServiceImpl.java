@@ -4,6 +4,7 @@ import com.grishare.domain.Comment;
 import com.grishare.domain.Nation;
 import com.grishare.domain.Post;
 import com.grishare.domain.user.User;
+import com.grishare.dto.PostDetailReturnDto;
 import com.grishare.dto.PostRequestDto;
 import com.grishare.dto.PostReturnDto;
 import com.grishare.exception.CustomNotFoundException;
@@ -45,14 +46,14 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public PostReturnDto findByPostId(Long id) {
+    public PostDetailReturnDto findByPostId(Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> {
             throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
         });
 
         post.setView(post.getView() + 1);
 
-        return new PostReturnDto(post);
+        return new PostDetailReturnDto(post);
     }
 
     @Override

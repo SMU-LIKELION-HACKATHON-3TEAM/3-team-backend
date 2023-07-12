@@ -2,6 +2,7 @@ package com.grishare.controller;
 
 import com.grishare.domain.Post;
 import com.grishare.domain.user.CustomUserDetail;
+import com.grishare.dto.PostDetailReturnDto;
 import com.grishare.dto.PostRequestDto;
 import com.grishare.dto.PostReturnDto;
 import com.grishare.service.PostService;
@@ -30,13 +31,13 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
-    @GetMapping("/posts/{nationId}")
+    @GetMapping("/posts/nation/{nationId}")
     public ResponseEntity<List<PostReturnDto>> getPostByNationId(@PathVariable("nationId") long nationId) {
         return ResponseEntity.ok(postService.findByNationId(nationId));
     }
 
-    @GetMapping("/posts/{nationId}/{postId}")
-    public ResponseEntity<PostReturnDto> getPostByPostId(@PathVariable("postId") long postId) {
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<PostDetailReturnDto> getPostByPostId(@PathVariable("postId") long postId) {
         try {
             return ResponseEntity.ok(postService.findByPostId(postId));
         } catch (Exception e) {
