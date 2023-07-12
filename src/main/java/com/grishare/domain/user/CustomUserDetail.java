@@ -32,7 +32,7 @@ import java.util.Collection;
 
         @Override
         public String getUsername() {
-            return user.getUserId();
+            return user.getUserLoginId();
         }
 
         @Override

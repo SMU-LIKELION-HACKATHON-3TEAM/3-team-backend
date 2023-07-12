@@ -27,9 +27,8 @@ public class PostReturnDto {
         this.title = post.getTitle();
         this.contents = post.getContent();
         this.writer = post.getUser().getNickName(); // 글쓰기 닉네임표시
-        this.userId = post.getUser().getUserId(); // 유저 정보 조회
+        this.userId = post.getUser().getUserLoginId(); // 유저 정보 조회
         this.createAt = post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.views = post.getView();
     }
-
 }

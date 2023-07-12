@@ -44,6 +44,8 @@ public class Post {
     @OneToMany(mappedBy = "post",orphanRemoval = true)
     private List<Scrap> scraps;
     @OneToMany(mappedBy = "post",orphanRemoval = true)
+    private List<Like> likes;
     private List<ReportPost> reportPosts;
+
 
 }

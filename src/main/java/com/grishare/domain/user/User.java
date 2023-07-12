@@ -1,6 +1,7 @@
 package com.grishare.domain.user;
 
 import com.grishare.domain.Comment;
+import com.grishare.domain.Like;
 import com.grishare.domain.Post;
 import com.grishare.domain.ReportPost;
 import com.grishare.domain.Scrap;
@@ -25,7 +26,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //사용자 PK -> id
     @Column(name="user_id")
-    private String userId; // 사용자가 입력하는 ID
+    private String userLoginId; // 사용자가 입력하는 ID
     @Column(unique = true)
     private String email;
     private String password;
@@ -42,6 +43,8 @@ public class User {
     private List<Post> posts;
     @OneToMany(mappedBy = "user",orphanRemoval = true)
     private List<Scrap> scraps; // 스크랩(찜)한 게시물
+    @OneToMany(mappedBy = "user",orphanRemoval = true)
+    private List<Like> likes; // 스크랩(찜)한 게시물
     @OneToMany(mappedBy = "user",orphanRemoval = true)
     private List<Comment> comments;
     @OneToMany(mappedBy = "user",orphanRemoval = true)

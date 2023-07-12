@@ -18,6 +18,7 @@ public class PostRequestDto {
     private String title;
     private String content;
 
+
     public Post toEntity(User user, Nation nation) {
         Post post = Post.builder()
                 .title(title)
@@ -29,5 +30,7 @@ public class PostRequestDto {
 
         return post;
     }
+
+
 }
 //                this.writer
