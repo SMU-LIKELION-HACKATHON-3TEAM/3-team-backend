@@ -48,6 +48,7 @@ $.getJSON(jsonLocation, function(data) {
         /* 이름 */
         let p_name = document.createElement("p");
         p_name.innerHTML = userName;
+        p_name.style.fontWeight = 600;
         let p_email = document.createElement("p");
         p_email.setAttribute("class", "memEmail");
         p_email.innerHTML = email;
@@ -78,7 +79,6 @@ $.getJSON(jsonLocation, function(data) {
             const countryName = data.data[i].countryName;
             const imgUrl = data.data[i].ImageUrl;
 
-            console.log(countryName);
             /* 이미지 */
 
             let interestConutry = document.querySelector(".interestConutry");
@@ -201,9 +201,9 @@ $.getJSON(jsonLocation, function(data) {
             length = length - 1;
             const writer = data.data[length].userName;
             // const profileImg = data.data[length].countryInfo.ImageUrl; // 수정 필요
-            const profileImg = "/img/user.png";
+            const profileImg = "../img/user.png";
             // const imgUrl = data.data[length].countryInfo.ImageUrl; // 수정 필요
-            const imgUrl = "/img/earth.jpg";
+            const imgUrl = "../img/earth.jpg";
             const contents = data.data[length].contents;
             const post_id = data.data[length].post_id;
 
@@ -224,10 +224,9 @@ $.getJSON(jsonLocation, function(data) {
             var diff = current - createdTime; // 차이
             var diffM = Math.floor(diff / (1000 * 60)); //분으로 환산
 
-            /* 이미지 */
+            /* 구조 */
             let clipping_content = document.querySelector(".clipping_content");
 
-            /* 구조 */
             let clipping = document.createElement("div");
             clipping.setAttribute("class", "clipping");
             link.appendChild(clipping);
@@ -251,9 +250,29 @@ $.getJSON(jsonLocation, function(data) {
             p_writer.setAttribute("class", "writer");
             p_writer.innerHTML = writer;
 
+            /* 시간 표시 */
+
             let p_time = document.createElement("p");
             p_time.setAttribute("class", "time");
-            p_time.innerHTML = diffM + "분 전";
+
+            if (diffM < 60) {
+                p_time.innerHTML = diffM + "분 전";
+            } else if (diffM < 1440) {
+                diffM = Math.floor(diffM / 60);
+                p_time.innerHTML = diffM + "시간 전";
+            } else if (diffM < 10080) {
+                diffM = Math.floor(diffM / 1440);
+                p_time.innerHTML = diffM + "일 전";
+            } else if (diffM < 43800) {
+                diffM = Math.floor(diffM / 10080);
+                p_time.innerHTML = diffM + "주 전";
+            } else if (diffM < 525600) {
+                diffM = Math.floor(diffM / 43800);
+                p_time.innerHTML = diffM + "달 전";
+            } else {
+                diffM = Math.floor(diffM / 525600);
+                p_time.innerHTML = diffM + "년 전";
+            }
 
             post_infor.appendChild(profilImgge);
             post_infor.appendChild(p_writer);
@@ -262,12 +281,14 @@ $.getJSON(jsonLocation, function(data) {
             /* content */
             let p_contents = document.createElement("p");
             p_contents.innerHTML = contents;
-
-            let img = document.createElement("img");
-            img.src = imgUrl;
-
             post_content.appendChild(p_contents);
-            post_content.appendChild(img);
+
+            /* 이미지 */
+            let img = document.createElement("img");
+            if (!(imgUrl == "")) {
+                post_content.appendChild(img);
+            }
+            img.src = imgUrl;
         }
         showData();
     }

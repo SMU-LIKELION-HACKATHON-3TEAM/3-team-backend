@@ -2,8 +2,8 @@
 
 // $.ajax({
 //     type: 'GET',
-//     url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/country',
-//     success: function() {
+//     url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/nation',
+//     success: function(data) {
 //         alert('통신 성공시에만 실행');
 //         console.log("성공");
 //     },
@@ -17,7 +17,7 @@ var average1 = 100000000;
 var average2 = 100000000;
 var average3 = 100000000;
 
-var wrap_cheap = document.querySelector(".wrap_cheap");
+var wrapCheap = document.querySelector(".wrap_cheap");
 
 const averageCalc = () => {
 
@@ -25,49 +25,52 @@ const averageCalc = () => {
     let country1 = document.createElement("p");
     country1.setAttribute("class", "cheapCoun");
     country1.innerHTML = "나라1";
+    country1.style.color = "#F87DC0";
 
     let country2 = document.createElement("p");
     country2.setAttribute("class", "cheapCoun");
     country2.innerHTML = "나라2";
+    country2.style.color = "#83A07F";
 
     let country3 = document.createElement("p");
     country3.setAttribute("class", "cheapCoun");
     country3.innerHTML = "나라3";
+    country3.style.color = "#F5D8A0";
 
     var cheacpCountry = 0;
 
     cheacpCountry = ((average1 < average2) && (average1 < average3)) ? average1 : (((average2 < average3) ? average2 : average3));
 
-    console.log(average1);
-    console.log(average2);
-    console.log(average3);
+    while (wrapCheap.firstChild) {
+        wrapCheap.removeChild(wrapCheap.firstChild)
+    }
 
     if (cheacpCountry == average1) {
         if (average1 == average2) {
             if (average2 == average3) {
-                wrap_cheap.appendChild(country1);
-                wrap_cheap.appendChild(country2);
-                wrap_cheap.appendChild(country3);
+                wrapCheap.appendChild(country1);
+                wrapCheap.appendChild(country2);
+                wrapCheap.appendChild(country3);
             } else {
-                wrap_cheap.appendChild(country1);
-                wrap_cheap.appendChild(country2);
+                wrapCheap.appendChild(country1);
+                wrapCheap.appendChild(country2);
             }
         } else if (average1 == average3) {
-            wrap_cheap.appendChild(country1);
-            wrap_cheap.appendChild(country3);
+            wrapCheap.appendChild(country1);
+            wrapCheap.appendChild(country3);
         } else {
-            wrap_cheap.appendChild(country1);
+            wrapCheap.appendChild(country1);
 
         }
     } else if (cheacpCountry == average2) {
         if (average2 == average3) {
-            wrap_cheap.appendChild(country2);
-            wrap_cheap.appendChild(country3);
+            wrapCheap.appendChild(country2);
+            wrapCheap.appendChild(country3);
         } else {
-            wrap_cheap.appendChild(country2);
+            wrapCheap.appendChild(country2);
         }
     } else if (cheacpCountry == average3) {
-        wrap_cheap.appendChild(country3);
+        wrapCheap.appendChild(country3);
 
     }
 }
@@ -95,8 +98,22 @@ $.getJSON(jsonLocation, function(data) {
 
 var dropdownC1 = document.getElementById("country1");
 dropdownC1.addEventListener("change", function() {
-    if (wrap_cheap.childElementCount > 0)
-        wrap_cheap.replaceChild();
+    var dv1 = document.getElementById("division1");
+    /* 지역 초기화 */
+    while (dv1.childElementCount > 1) {
+        dv1.removeChild(dv1.lastChild);
+    }
+
+    /* 평균 초기화 */
+    while (wrapCheap.firstChild) {
+        wrapCheap.removeChild(wrapCheap.firstChild)
+    }
+
+    average1 = 100000000;
+    /* 평균 내기 */
+    if (!(((average1 == average2) && (average2 == average3)) && (average1 == 100000000))) {
+        averageCalc();
+    }
 
     /* 차트 초기화 */
 
@@ -105,6 +122,10 @@ dropdownC1.addEventListener("change", function() {
     barChartData.datasets[0].data[2] = 0;
     barChartData.datasets[0].data[3] = 0;
     window.theChart.update();
+
+    if (dropdownC1.selectedIndex == 0) {
+        return;
+    }
 
     /* 지역 찾기 */
 
@@ -154,8 +175,22 @@ $.getJSON(jsonLocation, function(data) {
 
 var dropdownC2 = document.getElementById("country2");
 dropdownC2.addEventListener("change", function() {
-    if (wrap_cheap.childElementCount > 0)
-        wrap_cheap.replaceChild();
+    var dv2 = document.getElementById("division2");
+    /* 지역 초기화 */
+    while (dv2.childElementCount > 1) {
+        dv2.removeChild(dv2.lastChild);
+    }
+
+    /* 평균 초기화 */
+    while (wrapCheap.firstChild) {
+        wrapCheap.removeChild(wrapCheap.firstChild)
+    }
+
+    average2 = 100000000;
+    /* 평균 내기 */
+    if (!(((average1 == average2) && (average2 == average3)) && (average1 == 100000000))) {
+        averageCalc();
+    }
 
     /* 차트 초기화 */
 
@@ -164,6 +199,10 @@ dropdownC2.addEventListener("change", function() {
     barChartData.datasets[1].data[2] = 0;
     barChartData.datasets[1].data[3] = 0;
     window.theChart.update();
+
+    if (dropdownC2.selectedIndex == 0) {
+        return;
+    }
 
     /* 지역 찾기 */
 
@@ -213,8 +252,22 @@ $.getJSON(jsonLocation, function(data) {
 
 var dropdownC3 = document.getElementById("country3");
 dropdownC3.addEventListener("change", function() {
-    if (wrap_cheap.childElementCount > 0)
-        wrap_cheap.replaceChild();
+    var dv3 = document.getElementById("division3");
+    /* 지역 초기화 */
+    while (dv3.childElementCount > 1) {
+        dv3.removeChild(dv3.lastChild);
+    }
+
+    /* 평균 초기화 */
+    while (wrapCheap.firstChild) {
+        wrapCheap.removeChild(wrapCheap.firstChild)
+    }
+
+    average3 = 100000000;
+    /* 평균 내기 */
+    if (!(((average1 == average2) && (average2 == average3)) && (average1 == 100000000))) {
+        averageCalc();
+    }
 
     /* 차트 초기화 */
 
@@ -223,6 +276,10 @@ dropdownC3.addEventListener("change", function() {
     barChartData.datasets[2].data[2] = 0;
     barChartData.datasets[2].data[3] = 0;
     window.theChart.update();
+
+    if (dropdownC3.selectedIndex == 0) {
+        return;
+    }
 
     /* 지역 찾기 */
 
@@ -257,6 +314,18 @@ dropdownC3.addEventListener("change", function() {
 /* 물가 찾기1 */
 var dropdownD1 = document.getElementById("division1");
 dropdownD1.addEventListener("change", function() {
+    /* 차트, 물가 초기화 */
+    barChartData.datasets[0].data[0] = 0;
+    barChartData.datasets[0].data[1] = 0;
+    barChartData.datasets[0].data[2] = 0;
+    barChartData.datasets[0].data[3] = 0;
+    window.theChart.update();
+    average1 = 100000000;
+    averageCalc();
+
+    if (dropdownD1.selectedIndex == 0) {
+        return;
+    }
 
     selectedOption = dropdownD1.value;
 
@@ -287,6 +356,18 @@ dropdownD1.addEventListener("change", function() {
 /* 물가 찾기2 */
 var dropdownD2 = document.getElementById("division2");
 dropdownD2.addEventListener("change", function() {
+    /* 차트 초기화 */
+    barChartData.datasets[1].data[0] = 0;
+    barChartData.datasets[1].data[1] = 0;
+    barChartData.datasets[1].data[2] = 0;
+    barChartData.datasets[1].data[3] = 0;
+    window.theChart.update();
+    average2 = 100000000;
+    averageCalc();
+
+    if (dropdownD2.selectedIndex == 0) {
+        return;
+    }
 
     selectedOption = dropdownD2.value;
 
@@ -317,6 +398,18 @@ dropdownD2.addEventListener("change", function() {
 /* 물가 찾기3 */
 var dropdownD3 = document.getElementById("division3");
 dropdownD3.addEventListener("change", function() {
+    /* 차트 초기화 */
+    barChartData.datasets[2].data[0] = 0;
+    barChartData.datasets[2].data[1] = 0;
+    barChartData.datasets[2].data[2] = 0;
+    barChartData.datasets[2].data[3] = 0;
+    window.theChart.update();
+    average3 = 100000000;
+    averageCalc();
+
+    if (dropdownD3.selectedIndex == 0) {
+        return;
+    }
 
     selectedOption = dropdownD3.value;
 

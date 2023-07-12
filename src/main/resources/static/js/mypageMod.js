@@ -40,6 +40,15 @@ $.getJSON(jsonLocation, function(data) {
 
 $('#modify').on('click', function() {
     $('#picture_input').click();
+
+    // var selection = prompt("이미지 수정하시려면 '1', 삭제하시려면 '2'를 입력하세요.");
+
+    // if (selection == 1) {
+    //     $('#picture_input').click();
+    // } else if (selection == 2) {
+    //     // 삭제
+    // }
+
 });
 
 $('#picture_input').on('change', function() {
