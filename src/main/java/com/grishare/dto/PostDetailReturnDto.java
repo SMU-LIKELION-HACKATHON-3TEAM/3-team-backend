@@ -9,12 +9,13 @@ import lombok.Setter;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostReturnDto {
+public class PostDetailReturnDto {
     private Long post_id;
     private String title;
     private String contents;
@@ -22,10 +23,12 @@ public class PostReturnDto {
     private String userName;
     private String create_at;
     private long views;
+    private boolean like;
     private int like_count;
-    private int comment_count;
 
-    public PostReturnDto(Post post) {
+    private List<CommentReturnDto> comment;
+
+    public PostDetailReturnDto(Post post) {
         this.post_id = post.getId();
         this.title = post.getTitle();
         this.contents = post.getContent();
@@ -33,6 +36,6 @@ public class PostReturnDto {
         this.create_at = post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.views = post.getView();
         this.like_count = post.getLikePosts().size();
-        this.comment_count = post.getComments().size();
+        this.comment = post.getComments().stream().map(CommentReturnDto::new).collect(Collectors.toList());
     }
 }

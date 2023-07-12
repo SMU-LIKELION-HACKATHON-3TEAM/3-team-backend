@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostRequestDto {
+public class PostDetailRequestDto {
     private String title;
     private String content;
 
