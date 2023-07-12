@@ -344,7 +344,7 @@ i.fas.fa-pen {
     float:right;
     margin-top:-30px;
 }
-.postId {
+.userName {
     font-family: 'Inter', sans-serif;
     margin-left:70px;
     margin-top :-30px;
@@ -632,5 +632,5 @@ i.fas.fa-pen {
 }
 
 
-/* text-area 문제  + 드롭다운 (피그마 나오면) + search_community나라 배너 (API 나오면) + reply ajax로 수정*/
+/* search_community나라 배너 (API 나오면) + cm.js, cm_SearchCountry, cm_reply 데이터 받아와야댐 + 좋아요, 댓글 수 업다운, 스크랩 백엔드 상호작용, 공유는?/
 

@@ -12,11 +12,11 @@
 // });
 
 $.getJSON("../json/intnation.json", function(data) {
-    $.each(data , function(index, item){
+    $.each(data, function(index, item) {
 
         var $a = $("<a>").addClass("per-intnation");
 
-        var $countryCode = $('<div>').addClass('countryCode')
+        var $countryCode = $('<div>').addClass('countryCode').text(item.countryCode)
         var $countryImg = $('<div>').addClass('countryImg')
         var $countryName = $('<div>').addClass('countryName').text(item.countryName);
 
@@ -24,11 +24,12 @@ $.getJSON("../json/intnation.json", function(data) {
 
         $a.attr("href", "../html/community_searchCountry.html");
 
+
         $a.click(function () {
-            localStorage.setItem("countryCode", item.countrtCode);
+            localStorage.setItem("countryCode", item.countryCode);
         });
 
-        
+
         $('#wrap-intnation').append($a);
 
     })

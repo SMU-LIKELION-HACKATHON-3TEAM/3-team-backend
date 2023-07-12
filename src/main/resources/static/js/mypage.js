@@ -1,3 +1,33 @@
+/* 내가 쓴 리뷰 */
+// $.ajax({
+//     type: 'GET',
+//     url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/mypost',
+//     success: function() {
+//         alert('통신 성공시에만 실행');
+//         console.log("성공");
+//     },
+//     error: function() {
+//         alert('통신 실패시에만 실행');
+//         console.log("왜 실패?");
+//     }
+// });
+
+
+/* 스크랩 게시물 */
+// $.ajax({
+//     type: 'GET',
+//     url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/scrap',
+//     success: function() {
+//         alert('통신 성공시에만 실행');
+//         console.log("성공");
+//     },
+//     error: function() {
+//         alert('통신 실패시에만 실행');
+//         console.log("왜 실패?");
+//     }
+// });
+
+
 /*** 회원 정보 ***/
 var jsonLocation = "../json/userInfor.json";
 $.getJSON(jsonLocation, function(data) {
@@ -7,13 +37,13 @@ $.getJSON(jsonLocation, function(data) {
         const userName = data.data.userName;
         const email = data.data.email;
         const nickName = data.data.nickName;
-        const picture = data.data.nickName;
+        const picture = data.data.picture;
 
         let wrap_infor = document.querySelector(".wrap_infor");
 
         /* 이미지 */
-        // let img = document.createElement("img");
-        // img.src = picture;
+        let img = document.createElement("img");
+        img.src = picture;
 
         /* 이름 */
         let p_name = document.createElement("p");
@@ -25,7 +55,7 @@ $.getJSON(jsonLocation, function(data) {
         p_nickName.setAttribute("class", "memNick");
         p_nickName.innerHTML = nickName;
 
-        // wrap_infor.appendChild(img); // 없어서 보류
+        wrap_infor.appendChild(img); // 없어서 보류
         wrap_infor.appendChild(p_name);
         wrap_infor.appendChild(p_email);
         wrap_infor.appendChild(p_nickName);
@@ -57,14 +87,18 @@ $.getJSON(jsonLocation, function(data) {
             country.setAttribute("class", "country");
             interestConutry.appendChild(country);
 
+            let link = document.createElement("a");
+            link.href = "../html/community_searchCountry.html";
+
             let img = document.createElement("img");
             img.src = imgUrl;
+            link.appendChild(img);
 
             /* 이름 */
             let p = document.createElement("p");
             p.innerHTML = countryName;
 
-            country.appendChild(img);
+            country.appendChild(link);
             country.appendChild(p);
         }
         showData();
@@ -92,14 +126,24 @@ $.getJSON(jsonLocation, function(data) {
             const countryName = data.data[length].countryInfo.countryName;
             const imgUrl = data.data[length].countryInfo.ImageUrl;
             const contents = data.data[length].contents;
+            const postID = data.data[length].post_id;
             var createdAt = data.data[length].created_at;
 
             let review_contents = document.querySelector(".review_contents");
 
+            let link = document.createElement("a");
+
             /* 구조 */
             let review = document.createElement("div");
             review.setAttribute("class", "review");
-            review_contents.appendChild(review);
+            link.appendChild(review);
+            review_contents.appendChild(link);
+
+            link.href = "../html/community_comment.html";
+
+            link.addEventListener("click", function(event) {
+                localStorage.setItem("postID", postID);
+            });
 
             let review_infor = document.createElement("div");
             review_infor.setAttribute("class", "review_infor");
@@ -155,10 +199,21 @@ $.getJSON(jsonLocation, function(data) {
     for (i = 0; i < forNum; i++) {
         const showData = () => {
             length = length - 1;
-            const writer = data.data[length].countryInfo.countryName; //수정 필요
-            const profileImg = data.data[length].countryInfo.ImageUrl; // 수정 필요
-            const imgUrl = data.data[length].countryInfo.ImageUrl; // 수정 필요
+            const writer = data.data[length].userName;
+            // const profileImg = data.data[length].countryInfo.ImageUrl; // 수정 필요
+            const profileImg = "/img/user.png";
+            // const imgUrl = data.data[length].countryInfo.ImageUrl; // 수정 필요
+            const imgUrl = "/img/earth.jpg";
             const contents = data.data[length].contents;
+            const post_id = data.data[length].post_id;
+
+            let link = document.createElement("a");
+
+            link.href = "../html/community_comment.html";
+
+            link.addEventListener("click", function(event) {
+                localStorage.setItem("post_id", post_id);
+            });
 
             /* 시간 계산 */
             var createdAt = data.data[length].created_at;
@@ -175,7 +230,8 @@ $.getJSON(jsonLocation, function(data) {
             /* 구조 */
             let clipping = document.createElement("div");
             clipping.setAttribute("class", "clipping");
-            clipping_content.appendChild(clipping);
+            link.appendChild(clipping);
+            clipping_content.appendChild(link);
 
             let post_infor = document.createElement("div");
             post_infor.setAttribute("class", "post_infor");

@@ -3,74 +3,86 @@ var postsByPostID = {};
 // 메인 API 만들어지면 JSON으로 처리
 $(document).ready(function() {
   $("#wrap_search_country").change(function() {
-    var countryId = $(this).val();
-    localStorage.setItem('query', countryId);
-    if (countryId !== "") {
+    var nationId = $(this).val();
+    localStorage.setItem('nationId', nationId);
+    if (nationId !== "") {
       window.location.href = 'http://127.0.0.1:5500/html/community_searchCountry.html';
     }
   });
 });
 
-$.getJSON("../json/data_community.json", function(data) {
-  $.each(data, function(index, item) {
-    var createdAt = new Date(item.time); // "created_at" 값을 Date 객체로 변환
-    var currentTime = new Date(); // 현재 시간
-    var timeDiff = Math.floor((currentTime - createdAt) / (1000 * 60)); // 분 단위로 시간 차이 계산
-    var timeText = timeDiff + "분 전";
+
+$(document).ready(function() {
+  var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts';
+  $.ajax({
+    type: 'GET',
+    dataType: 'json',
+    url: url,
+    success: function(data) {
+        console.log("mainPage connecting");
+      
+        $.each(data, function(index, item) {
+        var createdAt = new Date(item.created_at); // "created_at" 값을 Date 객체로 변환
+        var currentTime = new Date(); // 현재 시간
+        var timeDiff = Math.floor((currentTime - createdAt) / (1000 * 60)); // 분 단위로 시간 차이 계산
+        var timeText = timeDiff + "분 전";
+        
+        // timeDiff 변수에 "time" 클래스를 추가하여 원하는 대상에 적용
+        var resultElement = $("<span>").text(timeText).addClass("time");
+
+        var $postIcon = $('<div>').addClass('postIcon');
+        var $postId = $('<div>').addClass('postId').text(item.post_id);
+        var $userName = $('<div>').addClass('userName').text(item.userName); 
+        var $postContent = $('<div>').addClass('postContent').attr('spellcheck', 'false').text(item.content);
+        
+
+        var $views = $('<div>').addClass('views');
+        
+        var $likes = $('<div>').addClass('likes').text(item.like);
+        var $likes_image = $('<img>').attr("id", `likes_image${item.post_id}`).attr("src","../img/🦆\ icon\ _heart_.png").addClass('likes_image');
+
+        var $comment = $('<div>').addClass('comment').text(item.comment);
+        var $comment_image = $('<div>').addClass('comment_image');
+
+
+
+        var $scrap = $('<div>').addClass('scrap').text("스크랩");
+        var $scrap_image = $('<img>').attr("id", `scrap_image${item.post_id}`).attr("src","../img/🦆 icon _star outline_.png").addClass('scrap_image');
+
+        var $share = $("<div>").addClass("share").attr("id", `share${item.post_id}`).text("공유");
+        var $share_image = $('<div>').attr("id", `share${item.post_id}`).addClass('share_image');
+
+        var $report = $('<div>').attr("id", `report${item.post_id}`).addClass('report').text("신고");
+        
+        var $file_only = $('<div>').addClass('file_only').text(item.file1);
+        // 이미지 데이터는 어떻게 처리하나요
+
+        if (!postsByPostID[item.postId]) {
+          postsByPostID[item.postId] = $('<div>').addClass('post-container');
+        }
+
+        var $postContainer = $('<div>').addClass('post-container').attr('data-postid', item.post_id);
+        // ID값 다르게 주기
+
+        $postContainer.append($postIcon, resultElement, $postId, $userName, $postContent, $file_only, $views, $likes, $likes_image, $comment, $comment_image, $scrap, $scrap_image, $share, $share_image, $report);
+
+        // wrap_community_box에 게시물 컨테이너 추가
+        $('#wrap_community_box').append($postContainer);
+
+
     
-    // timeDiff 변수에 "time" 클래스를 추가하여 원하는 대상에 적용
-    var resultElement = $("<span>").text(timeText).addClass("time");
-
-    var $postIcon = $('<div>').addClass('postIcon');
-    var $postId = $('<div>').addClass('postId').text(item.postId);
-    var $postContent = $('<div>').addClass('postContent').attr('spellcheck', 'false').text(item.postContent);
-    
-
-    var $views = $('<div>').addClass('views');
-    
-    var $likes = $('<div>').addClass('likes').text(item.likes);
-    var $likes_image = $('<img>').attr("id", `likes_image${item.postId}`).attr("src","../img/🦆\ icon\ _heart_.png").addClass('likes_image');
-
-    var $comment = $('<div>').addClass('comment').text(item.comment);
-    var $comment_image = $('<div>').addClass('comment_image');
-
-
-
-    var $scrap = $('<div>').addClass('scrap').text("스크랩");
-    var $scrap_image = $('<img>').attr("id", `scrap_image${item.postId}`).attr("src","../img/🦆 icon _star outline_.png").addClass('scrap_image');
-
-    var $share = $("<div>").addClass("share").attr("id", `share${item.postId}`).text("공유");
-    var $share_image = $('<div>').attr("id", `share${item.postId}`).addClass('share_image');
-
-    var $report = $('<div>').attr("id", `report${item.postId}`).addClass('report').text("신고");
-    
-    var $file_only = $('<div>').addClass('file_only').text(item.file1);
-
-    if (!postsByPostID[item.postId]) {
-      postsByPostID[item.postId] = $('<div>').addClass('post-container');
-    }
-
-    var $postContainer = $('<div>').addClass('post-container').attr('data-postid', item.postId);
-    // ID값 다르게 주기
-
-    $postContainer.append($postIcon, resultElement, $postId, $postContent, $file_only, $views, $likes, $likes_image, $comment, $comment_image, $scrap, $scrap_image, $share, $share_image, $report);
-
-    // wrap_community_box에 게시물 컨테이너 추가
-    $('#wrap_community_box').append($postContainer);
-
-
-    
-  })
+  })}})
   
+
+
+
 
 
   //reply 창으로 넘기기
   $('#wrap_community_box').on('click', '.post-container', function() {
     
     var postid = $(this).data('postid');
-    localStorage.setItem('postid', postid);
-    var nationId = $(this).data('nationId', );
-    localStorage.setItem('nationId', nationId); //이거 메인 커뮤니티 화면에서는 nationId가 없지 않나
+    localStorage.setItem('postid', postid); //이거 메인 커뮤니티 화면에서는 nationId가 없지 않나
                                                 // 나라 드롭박스 부분은 countrySearch 화면인데 그러면 메인 -> reply일 때는 어케해야?
 
     var is_clicked_post_container = localStorage.getItem('is_clicked_post_container');
@@ -148,6 +160,9 @@ $.getJSON("../json/data_community.json", function(data) {
   $('.likes_image').click(function(event){
     var id_num = event.target.id.substring(event.target.id.length - 1);
     event.stopPropagation();
+
+    // 이거 뭘로보내야하지
+      localStorage.setItem('postid', postId);
     
     if(!is_clicked_likes){
       $(`#likes_image${id_num}`).attr("src", "../img/🦆 icon _heart_red.png");
@@ -164,6 +179,10 @@ $.getJSON("../json/data_community.json", function(data) {
   $('.scrap_image').click(function(event){
     var id_num = event.target.id.substring(event.target.id.length - 1);
     event.stopPropagation();
+
+    
+    // 이거 뭘로보내야하지
+    localStorage.setItem('postid', postId);
     
     if(!is_clicked_scrap){
       $(`#scrap_image${id_num}`).attr("src", "../img/🦆 icon _yellow_star outline_.png");
