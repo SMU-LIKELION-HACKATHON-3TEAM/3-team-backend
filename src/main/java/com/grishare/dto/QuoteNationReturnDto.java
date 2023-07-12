@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class QuoteNationReturnDto {
 
-    public String code;
+    public Long nationId;
 
-    public String countryName;
+    public String nationName;
 }

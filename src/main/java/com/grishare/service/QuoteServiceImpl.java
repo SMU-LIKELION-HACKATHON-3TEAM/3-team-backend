@@ -33,11 +33,9 @@ public class QuoteServiceImpl implements QuoteService {
 
     public BaseResponse<?> getCountry() {
         List<Nation> nationList = nationRepository.findAll();
-        log.info("nation List 불러오기 완료");
         List<QuoteNationReturnDto> quoteNationReturnDtoList = nationList.stream()
-                .map(nation -> new QuoteNationReturnDto(nation.getIso2(), nation.getCountryName()))
+                .map(nation -> new QuoteNationReturnDto(nation.getId(), nation.getCountryName()))
                 .toList();
-        log.info("dto 변환 완료");
         return BaseResponse.ok(quoteNationReturnDtoList);
     }
 
