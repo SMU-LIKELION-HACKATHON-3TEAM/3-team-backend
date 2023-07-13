@@ -39,6 +39,7 @@ public class ImageService {
 
     public void savePostImage(Post post, MultipartFile imageFile) {
         if (!imageFile.isEmpty()) {
+            System.out.println("ImageService.savePostImage");
             String url = s3Uploader.s3Upload("post", post.getId(), imageFile);
             imageRepository.save(new PostImage(post, url));
         }

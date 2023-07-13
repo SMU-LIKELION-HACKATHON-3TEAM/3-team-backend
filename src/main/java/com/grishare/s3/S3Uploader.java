@@ -34,6 +34,7 @@ public class S3Uploader {
     public String s3Upload(String folderPath, Long domainId, MultipartFile multipartFile) {
         String fileName = createFileName(domainId.toString(), multipartFile.getOriginalFilename());
 
+        System.out.println("S3Uploader.s3Upload");
         File uploadFile = convert(multipartFile)  // 파일 변환할 수 없으면 에러
                 .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail"));
 
@@ -106,6 +107,7 @@ public class S3Uploader {
 
         File convertFile = new File(System.getProperty("user.dir") + "/" + storeFileName);
 
+        System.out.println("S3Uploader.convert");
         try {
             if (convertFile.createNewFile()) { // 바로 위에서 지정한 경로에 File이 생성됨 (경로가 잘못되었다면 생성 불가능)
                 try (FileOutputStream fos = new FileOutputStream(convertFile)) { // FileOutputStream 데이터를 파일에 바이트 스트림으로 저장하기 위함
