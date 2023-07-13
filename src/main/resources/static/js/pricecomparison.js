@@ -134,7 +134,7 @@ dropdownC1.addEventListener("change", function() {
             for (i = 0; i < length; i++) {
 
                 const ADName = data.data[i].adName;
-                const code = data.data[i].adCode;
+                const code = data.data[i].ad_id;
 
                 let divisionList = document.querySelector(".division1");
                 let division = document.createElement("option");
@@ -222,7 +222,7 @@ dropdownC2.addEventListener("change", function() {
             for (i = 0; i < length; i++) {
 
                 const ADName = data.data[i].adName;
-                const code = data.data[i].adCode;
+                const code = data.data[i].ad_id;
 
                 let divisionList = document.querySelector(".division2");
                 let division = document.createElement("option");
@@ -310,7 +310,7 @@ dropdownC3.addEventListener("change", function() {
             for (i = 0; i < length; i++) {
 
                 const ADName = data.data[i].adName;
-                const code = data.data[i].adCode;
+                const code = data.data[i].ad_id;
 
                 let divisionList = document.querySelector(".division3");
                 let division = document.createElement("option");
@@ -354,17 +354,17 @@ dropdownD1.addEventListener("change", function() {
             console.log("성공");
 
             var meal = data.data.meal;
-            var transport = data.data.transport;
-            var accom = data.data.accom;
+            var taxi = data.data.taxi;
             var coffee = data.data.coffee;
+            var rice = data.data.rice;
 
             barChartData.datasets[0].data[0] = meal;
-            barChartData.datasets[0].data[1] = transport;
-            barChartData.datasets[0].data[2] = accom;
-            barChartData.datasets[0].data[3] = coffee;
+            barChartData.datasets[0].data[1] = taxi;
+            barChartData.datasets[0].data[2] = coffee;
+            barChartData.datasets[0].data[3] = rice;
             window.theChart.update();
 
-            average1 = (Number(meal) + Number(transport) + Number(accom) + Number(coffee)) / 4;
+            average1 = (Number(meal) + Number(taxi) + Number(coffee) + Number(rice)) / 4;
 
             averageCalc();
         },
@@ -397,17 +397,17 @@ dropdownD2.addEventListener("change", function() {
         url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare?division=' + selectedOption,
         success: function(data) {
             var meal = data.data.meal;
-            var transport = data.data.transport;
-            var accom = data.data.accom;
+            var taxi = data.data.taxi;
             var coffee = data.data.coffee;
+            var rice = data.data.rice;
 
             barChartData.datasets[1].data[0] = meal;
-            barChartData.datasets[1].data[1] = transport;
-            barChartData.datasets[1].data[2] = accom;
-            barChartData.datasets[1].data[3] = coffee;
+            barChartData.datasets[1].data[1] = taxi;
+            barChartData.datasets[1].data[2] = coffee;
+            barChartData.datasets[1].data[3] = rice;
             window.theChart.update();
 
-            average2 = (Number(meal) + Number(transport) + Number(accom) + Number(coffee)) / 4;
+            average2 = (Number(meal) + Number(taxi) + Number(coffee) + Number(rice)) / 4;
 
             averageCalc();
         },
@@ -440,17 +440,17 @@ dropdownD3.addEventListener("change", function() {
         url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare?division=' + selectedOption,
         success: function(data) {
             var meal = data.data.meal;
-            var transport = data.data.transport;
-            var accom = data.data.accom;
-            var coffee = data.data.coffee;
+            var transport = data.data.taxi;
+            var accom = data.data.coffee;
+            var coffee = data.data.rice;
 
             barChartData.datasets[2].data[0] = meal;
-            barChartData.datasets[2].data[1] = transport;
-            barChartData.datasets[2].data[2] = accom;
-            barChartData.datasets[2].data[3] = coffee;
+            barChartData.datasets[2].data[1] = taxi;
+            barChartData.datasets[2].data[2] = coffee;
+            barChartData.datasets[2].data[3] = rice;
             window.theChart.update();
 
-            average3 = (Number(meal) + Number(transport) + Number(accom) + Number(coffee)) / 4;
+            average3 = (Number(meal) + Number(taxi) + Number(coffee) + Number(rice)) / 4;
 
             averageCalc();
         },
@@ -502,7 +502,32 @@ window.onload = function() {
     window.theChart = new Chart(ctx, {
         type: 'bar',
         data: barChartData,
-        options: {}
+        options: {
+            responsive: false,
+            legend: {
+                display: false
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        fontColor: 'rgba(12, 13, 13, 1)',
+                        fontSize: 24
+                    },
+                    gridLines: {
+                        display: false
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontSize: 16
+                    },
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            }
+        }
     });
 }
 

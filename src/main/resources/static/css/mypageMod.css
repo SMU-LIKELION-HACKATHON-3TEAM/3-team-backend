@@ -190,11 +190,13 @@ ul.login-bar>li:hover {
     margin-top: 45px;
 }
 
-.modify:hover {
+.modify:hover,
+.profileBack:hover {
     cursor: pointer;
 }
 
-#picture_input {
+#picture_input,
+#back_input {
     opacity: 0;
 }
 
