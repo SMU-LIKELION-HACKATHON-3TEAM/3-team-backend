@@ -35,20 +35,23 @@ public class Post {
     private LocalDateTime modifiedAt;
     @Column(name = "views")
     private Long view;
+    @OneToOne(mappedBy = "post")
+    private PostImage postImage;
     @ManyToOne
     @JoinColumn(name = "nationId")
     private Nation nation;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @OneToMany(mappedBy = "post",orphanRemoval = true)
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<Comment> comments;
-    @OneToMany(mappedBy = "post",orphanRemoval = true)
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<Scrap> scraps;
-    @OneToMany(mappedBy = "post",orphanRemoval = true)
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<LikePost> likePosts;
-    @OneToMany(mappedBy = "post",orphanRemoval = true)
+    @OneToMany(mappedBy = "post", orphanRemoval = true)
     private List<ReportPost> reportPosts;
-    @OneToMany(mappedBy = "post")
-    private List<PostImage> postImages;
 
+    public String getPostImageUrl() {
+        return postImage == null ? "" : postImage.getImageUrl();
+    }
 }

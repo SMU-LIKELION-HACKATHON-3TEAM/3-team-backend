@@ -12,7 +12,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserReturnDto {
     private Long id;
-
     private String email;
     private String userName;
     private String nickName;
@@ -28,11 +27,10 @@ public class UserReturnDto {
     public UserReturnDto(User user){
         this.email = user.getEmail();
         this.nickName = user.getNickName();
-        this.userImg = user.getUserImg();
         this.id =user.getId();
-        this.userName = user.getUserName();
-        this.backgroundImg = user.getBackgroundImg();
         this.password = user.getPassword();
-
+        this.userName = user.getUserName();
+        this.backgroundImg = user.getBackgroundImg() == null ? "" : user.getBackgroundImg().getImageUrl();
+        this.userImg = user.getUserImg() == null ? "" : user.getUserImg().getImageUrl();
     }
 }

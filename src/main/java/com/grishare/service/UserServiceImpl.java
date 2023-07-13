@@ -66,9 +66,8 @@ public class UserServiceImpl implements UserDetailsService , UserService {
                 .userLoginId(registerRequestDto.getUserLoginId())
                 .birthDay(registerRequestDto.getBirthDay())
                 .nickName(registerRequestDto.getNickName())
-                .userImg("")
-                .backgroundImg("")
                 .build();
+
         UserReturnDto userReturnDto = new UserReturnDto(user); // userReturnDto 수정 필ㅑ
 
         return userRepository.save(user);
@@ -79,24 +78,7 @@ public class UserServiceImpl implements UserDetailsService , UserService {
     @Override
     @Transactional
     public UserReturnDto getUser(User user){
-        Optional<User> byId = userRepository.findById(user.getId()); // pk값(id) 가져옴
-        User me = byId.orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
-
-        UserReturnDto userReturnDto = UserReturnDto.builder()
-                .email(me.getEmail())
-                .nickName(me.getNickName())
-//                .userImg(me.getUserImg())
-                .userImg(me.getUserImg())
-                .password(me.getPassword())
-                .userName(me.getUserName())
-                .backgroundImg(me.getBackgroundImg())
-                .build();
-//        if (category.equals("nationLike")){ // 관심 국가 설정은 Post에서 좋아요?
-//        List<NationLike> nationLikes = nationLikeRepository.findAllByuserId(userId);
-
-
-        return userReturnDto;
-
+        return new UserReturnDto(user);
     }
     // 회원정보 수정 -> 이미지 어떻게 할 것인가.
     @Override
