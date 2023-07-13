@@ -1,7 +1,6 @@
 package com.grishare.service;
 
 import com.grishare.domain.Post;
-import com.grishare.domain.Scrap;
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
 import com.grishare.dto.*;
@@ -10,23 +9,17 @@ import com.grishare.repository.ScrapRepository;
 import com.grishare.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,16 +30,18 @@ public class UserServiceImpl implements UserDetailsService , UserService {
     private final PostRepository postRepository;
     private final ScrapRepository scrapRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ImageService imageService;
 
     private final JavaMailSender javaMailSender;
 
 
-    public UserServiceImpl(@Lazy UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, @Lazy ScrapRepository scrapRepository, @Lazy JavaMailSender javaMailSender, @Lazy PostRepository postRepository){
+    public UserServiceImpl(@Lazy UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, @Lazy ScrapRepository scrapRepository, @Lazy JavaMailSender javaMailSender, @Lazy PostRepository postRepository, ImageService imageService){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.javaMailSender = javaMailSender;
         this.postRepository = postRepository;
         this.scrapRepository = scrapRepository;
+        this.imageService = imageService;
     }
 
     // spring security 관련 UserDetailsService implement 부분
@@ -90,10 +85,11 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         UserReturnDto userReturnDto = UserReturnDto.builder()
                 .email(me.getEmail())
                 .nickName(me.getNickName())
-                .userImg(me.getUserImg())
+//                .userImg(me.getUserImg())
+                .userImg(me.getUserImg().getImageUrl())
                 .password(me.getPassword())
                 .userName(me.getUserName())
-                .backgroundImg(me.getBackgroundImg())
+                .backgroundImg(me.getBackgroundImg().getImageUrl())
                 .build();
 //        if (category.equals("nationLike")){ // 관심 국가 설정은 Post에서 좋아요?
 //        List<NationLike> nationLikes = nationLikeRepository.findAllByuserId(userId);
@@ -105,11 +101,12 @@ public class UserServiceImpl implements UserDetailsService , UserService {
     // 회원정보 수정 -> 이미지 어떻게 할 것인가.
     @Override
     @Transactional
-    public User updateUser(User user, UserRequestDto userRequestDto){
+    public User updateUser(User user, UserRequestDto userRequestDto, MultipartFile imageFiles, MultipartFile backImageFiles){
 
         Optional<User> byId = userRepository.findById(user.getId()); // pk값(id) 가져옴
         User me = byId.orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
         String encryptPassword = passwordEncoder.encode(userRequestDto.getPassword());
+
         if(userRequestDto.getNickName() != null) {
             me.setNickName(userRequestDto.getNickName());
         } else if (userRequestDto.getUserImg() != null) {
@@ -120,7 +117,10 @@ public class UserServiceImpl implements UserDetailsService , UserService {
             me.setBackgroundImg(userRequestDto.getBackgroundImg());
         }
 
+
         userRepository.save(me);
+        imageService.saveUserImage(me, imageFiles);
+        imageService.savebackImage(me, backImageFiles);
         // 비밀번호 변경 -> passwordEncoder 적용
         me.updatePassword(encryptPassword);
 

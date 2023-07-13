@@ -4,12 +4,13 @@ package com.grishare.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Table(name = "Quote")
-@Entity
+@Entity @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Quote {
@@ -19,16 +20,16 @@ public class Quote {
     private Long id;
 
     @Column(name = "meal")
-    private Float meal;
+    private Integer meal;
 
     @Column(name = "taxi")
-    private Float taxi;
+    private Integer taxi;
 
     @Column(name = "coffee")
-    private Float coffee;
+    private Integer coffee;
 
     @Column(name = "rice")
-    private Float rice;
+    private Integer rice;
 
     @OneToOne
     @JoinColumn(name = "ad_id")

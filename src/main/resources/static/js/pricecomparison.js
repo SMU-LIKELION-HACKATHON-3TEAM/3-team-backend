@@ -134,7 +134,7 @@ dropdownC1.addEventListener("change", function() {
             for (i = 0; i < length; i++) {
 
                 const ADName = data.data[i].adName;
-                const code = data.data[i].ad_id;
+                const code = data.data[i].adId;
 
                 let divisionList = document.querySelector(".division1");
                 let division = document.createElement("option");
@@ -222,7 +222,7 @@ dropdownC2.addEventListener("change", function() {
             for (i = 0; i < length; i++) {
 
                 const ADName = data.data[i].adName;
-                const code = data.data[i].ad_id;
+                const code = data.data[i].adId;
 
                 let divisionList = document.querySelector(".division2");
                 let division = document.createElement("option");
@@ -310,7 +310,7 @@ dropdownC3.addEventListener("change", function() {
             for (i = 0; i < length; i++) {
 
                 const ADName = data.data[i].adName;
-                const code = data.data[i].ad_id;
+                const code = data.data[i].adId;
 
                 let divisionList = document.querySelector(".division3");
                 let division = document.createElement("option");
@@ -348,7 +348,7 @@ dropdownD1.addEventListener("change", function() {
     selectedOption = dropdownD1.value;
     $.ajax({
         type: 'GET',
-        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare?division=' + selectedOption,
+        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/' + selectedOption,
         success: function(data) {
             // alert('통신 성공시에만 실행');
             console.log("성공");
@@ -394,7 +394,7 @@ dropdownD2.addEventListener("change", function() {
     selectedOption = dropdownD2.value;
     $.ajax({
         type: 'GET',
-        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare?division=' + selectedOption,
+        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/' + selectedOption,
         success: function(data) {
             var meal = data.data.meal;
             var taxi = data.data.taxi;
@@ -437,12 +437,12 @@ dropdownD3.addEventListener("change", function() {
     selectedOption = dropdownD3.value;
     $.ajax({
         type: 'GET',
-        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare?division=' + selectedOption,
+        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/' + selectedOption,
         success: function(data) {
             var meal = data.data.meal;
-            var transport = data.data.taxi;
-            var accom = data.data.coffee;
-            var coffee = data.data.rice;
+            var taxi = data.data.taxi;
+            var coffee = data.data.coffee;
+            var rice = data.data.rice;
 
             barChartData.datasets[2].data[0] = meal;
             barChartData.datasets[2].data[1] = taxi;
