@@ -1,4 +1,10 @@
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 128MB
+      max-request-size: 128MB
+
   datasource:
     url: ${RDS_URL_GRISHARE}
     driverClassName: com.mysql.cj.jdbc.Driver
