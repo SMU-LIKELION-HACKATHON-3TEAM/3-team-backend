@@ -1,9 +1,14 @@
 * {
     font-family: 'Inter', sans-serif;
+
 }
 
 body {
     margin: 0px;
+}
+main{
+    width:1513px;
+    margin: 0 auto;
 }
 
 .wrap-map {
@@ -32,15 +37,19 @@ body {
 
 .map-text {
     padding: 10px;
+    color:black;
+
 }
 
 .button-map {
     background-color: rgb(230, 230, 230);
     border: none;
+    color:black;
     width: 270px;
     height: 42px;
     font-size: 20px;
-    border-radius: 5%;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .button {
@@ -72,7 +81,8 @@ body {
 
 .my-whole-see {
     margin-top: 20px;
-    padding-left: 200px;
+    text-decoration: underline;
+    padding-left:180px;
 }
 
 .container-myinfo {
@@ -114,7 +124,7 @@ body {
 
 /* 핫 게시물 */
 .wrap-hot {
-    border-left: solid #393939;
+    border-left:solid 1px #c8c8c8;
     width: 650px;
 }
 
@@ -123,13 +133,16 @@ body {
 }
 
 .hot-whole-see {
-    margin-top: 20px;
+    margin-top: 31px;
     padding-left: 400px;
     font-size: 15px;
+    text-decoration: underline;
+    
 }
 
 .hot {
-    margin: 20px;
+    padding:10px;
+    margin-left: 30px;
 }
 
 #wrap-hot-writes {
@@ -169,11 +182,15 @@ body {
 
 .wrap-monrate {
     margin:20px;
-    border-left: solid #393939;
+    border-left: solid 1px #c8c8c8;
+    padding-left:10px;
 }
 
 .monrate {
     margin:20px;
+}
+.monrate h2{
+    margin-left:8px;
 }
 
 #today-exchangeRate {
