@@ -47,12 +47,10 @@ public class UserController {
 
     // 회원가입
     @PostMapping(value = "/user/register")
-    public ResponseEntity<User> register(@RequestBody RegisterRequestDto registerRequestDto) {
+    public ResponseEntity<UserReturnDto> register(@RequestBody RegisterRequestDto registerRequestDto) {
         registerRequestDto.setPassword(passwordEncoder.encode(registerRequestDto.getPassword()));
 
-        User user = userService.saveUser(registerRequestDto);
-
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(userService.saveUser(registerRequestDto), HttpStatus.OK);
     }
 
     // 로그인
