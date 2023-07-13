@@ -124,6 +124,7 @@ function getImageFiles(e) {
             },
           });
         });
+        alert('등록되었습니다.');
         var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
         window.location.href = url;
       }
