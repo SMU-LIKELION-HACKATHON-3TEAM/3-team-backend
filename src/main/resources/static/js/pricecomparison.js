@@ -134,7 +134,7 @@ dropdownC1.addEventListener("change", function() {
             for (i = 0; i < length; i++) {
 
                 const ADName = data.data[i].adName;
-                const code = data.data[i].ad_id;
+                const code = data.data[i].adId;
 
                 let divisionList = document.querySelector(".division1");
                 let division = document.createElement("option");
@@ -222,7 +222,7 @@ dropdownC2.addEventListener("change", function() {
             for (i = 0; i < length; i++) {
 
                 const ADName = data.data[i].adName;
-                const code = data.data[i].ad_id;
+                const code = data.data[i].adId;
 
                 let divisionList = document.querySelector(".division2");
                 let division = document.createElement("option");
@@ -310,7 +310,7 @@ dropdownC3.addEventListener("change", function() {
             for (i = 0; i < length; i++) {
 
                 const ADName = data.data[i].adName;
-                const code = data.data[i].ad_id;
+                const code = data.data[i].adId;
 
                 let divisionList = document.querySelector(".division3");
                 let division = document.createElement("option");
@@ -348,7 +348,7 @@ dropdownD1.addEventListener("change", function() {
     selectedOption = dropdownD1.value;
     $.ajax({
         type: 'GET',
-        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare?division=' + selectedOption,
+        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/' + selectedOption,
         success: function(data) {
             // alert('통신 성공시에만 실행');
             console.log("성공");
@@ -471,28 +471,28 @@ var barChartData = {
         label: '나라1',
         backgroundColor: "#F87DC0",
         data: [
-            0,
-            0,
-            0,
+            1230,
+            12410,
+            12340,
             0
         ]
     }, {
         label: '나라2',
         backgroundColor: "#83A07F",
         data: [
-            0,
-            0,
-            0,
-            0
+            34520,
+            32520,
+            5450,
+            3460
         ]
     }, {
         label: '나라3',
         backgroundColor: "#F5D8A0",
         data: [
-            0,
-            0,
-            0,
-            0
+            4360,
+            76570,
+            450,
+            4570
         ]
     }]
 };
