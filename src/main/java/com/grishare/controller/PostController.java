@@ -2,6 +2,7 @@ package com.grishare.controller;
 
 import com.grishare.base.BaseResponse;
 import com.grishare.domain.user.CustomUserDetail;
+import com.grishare.dto.NationInfoResponseDto;
 import com.grishare.dto.PostDetailReturnDto;
 import com.grishare.dto.PostRequestDto;
 import com.grishare.dto.PostReturnDto;
@@ -82,4 +83,9 @@ public class PostController {
         return BaseResponse.ok(postService.getHotPosts());
     }
 
+    @GetMapping("/posts/{nationId}/info")
+    public BaseResponse<?> getNationInfo(@PathVariable("nationId") Long nation_id) {
+        NationInfoResponseDto nationInfoResponseDto = postService.getNationInfo(nation_id);
+        return BaseResponse.ok(nationInfoResponseDto);
+    }
 }

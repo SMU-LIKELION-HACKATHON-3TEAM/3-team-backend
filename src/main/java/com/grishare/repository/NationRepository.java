@@ -10,4 +10,5 @@ import java.util.List;
 public interface NationRepository extends JpaRepository<Nation, Long> {
     List<Nation> findByIso2(String iso2);
 
+
 }
