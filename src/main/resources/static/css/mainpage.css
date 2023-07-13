@@ -30,6 +30,14 @@ main{
     height: 330px;
 }
 
+.nationName:before {
+    content: "국가 위험도-";
+}
+
+.nationWarning {
+    margin-top: 10px;
+}
+
 .map-sub {
     background-color: rgb(245, 245, 245);
     width: 348px;

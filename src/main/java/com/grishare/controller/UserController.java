@@ -40,7 +40,7 @@ import java.util.List;
 public class UserController {
 
     private final UserServiceImpl userService;
-    private final   MailServiceImpl mailService;
+    private final MailServiceImpl mailService;
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
@@ -81,9 +81,10 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     //회원정보 조회
     @GetMapping("/myPage")
-    public BaseResponse<UserReturnDto> getUser(@AuthenticationPrincipal CustomUserDetail customUserDetail){
+    public BaseResponse<UserReturnDto> getUser(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
         UserReturnDto userReturnDto = userService.getUser(customUserDetail.getUser());
 
         return BaseResponse.ok(userReturnDto);
@@ -118,12 +119,14 @@ public class UserController {
 
 
     }
+
     // 내가 쓴 글 목록 전체 보기
     @GetMapping("/myPost")
-    public BaseResponse<List<PostReturnDto.naitonInfo>> getMyPosts (@AuthenticationPrincipal CustomUserDetail customUserDetail){
+    public BaseResponse<List<PostReturnDto.naitonInfo>> getMyPosts(@AuthenticationPrincipal CustomUserDetail customUserDetail) {
         List<PostReturnDto.naitonInfo> myPostList = userService.getMyPost(customUserDetail.getUser().getId());
         return BaseResponse.ok(myPostList);
     }
+
     // 스크랩한 글 조회
     @GetMapping("/posts/scrap")
     public BaseResponse<List<PostReturnDto>> getScrapPosts(@AuthenticationPrincipal CustomUserDetail customuserDetail) {
