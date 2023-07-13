@@ -2,6 +2,7 @@ package com.grishare.dto;
 
 import com.grishare.domain.LikePost;
 import com.grishare.domain.Post;
+import com.grishare.domain.image.PostImage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -25,6 +27,8 @@ public class PostReturnDto {
     private int like_count;
     private int comment_count;
 
+    private List<String> imgUrl;
+
     public PostReturnDto(Post post) {
         this.post_id = post.getId();
         this.title = post.getTitle();
@@ -34,5 +38,6 @@ public class PostReturnDto {
         this.views = post.getView();
         this.like_count = post.getLikePosts() == null ? 0 : post.getLikePosts().size();
         this.comment_count = post.getComments() == null ? 0 : post.getComments().size();
+        this.imgUrl = post.getPostImages() == null ? null : post.getPostImages().stream().map(PostImage::getImageUrl).collect(Collectors.toList());
     }
 }
