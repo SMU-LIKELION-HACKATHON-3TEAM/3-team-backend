@@ -1,5 +1,3 @@
-// https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Ghana.svg/22px-Flag_of_Ghana.svg.png
-
 /********** AJAX **********/
 /*** 회원 정보 ***/
 $.ajax({
@@ -13,7 +11,7 @@ $.ajax({
             const nick = data.data.nickName;
             const id = data.data.userId;
             const pw = data.data.userPw;
-            const picture = data.data.userUmg;
+            const picture = data.data.userImg;
             const backImg = data.data.backgroundImg;
 
             /* 배경 이미지 */
