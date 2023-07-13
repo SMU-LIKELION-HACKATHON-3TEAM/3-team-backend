@@ -48,7 +48,7 @@ public class User {
     private List<Comment> comments;
     @OneToMany(mappedBy = "user",orphanRemoval = true)
     private List<ReportPost> reportPosts;
-    @Column(name = "user-background-img")
+    @Column(name = "background_img")
     private String backgroundImg;
 
     //@Embedded
