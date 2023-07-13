@@ -17,9 +17,9 @@ public class ExchangeRateController {
     ExchangeRateServiceImpl exService;
 
 
-    @GetMapping("/exchangeRate/{contryName}/{bank}")
-    public BaseResponse<ExchangeRateReturnDto> getExchangeRate(@PathVariable("contryName") String contryName, @PathVariable("bank") String bank){
-        ExchangeRateReturnDto exReturnDto = exService.findByContryNameAndBank(contryName, bank);
+    @GetMapping("/exchangeRate/{countryName}/{bank}")
+    public BaseResponse<ExchangeRateReturnDto> getExchangeRate(@PathVariable("countryName") String countryName, @PathVariable("bank") String bank){
+        ExchangeRateReturnDto exReturnDto = exService.findByCountryNameAndBank(countryName, bank);
         return BaseResponse.ok(exReturnDto);
 
     }
