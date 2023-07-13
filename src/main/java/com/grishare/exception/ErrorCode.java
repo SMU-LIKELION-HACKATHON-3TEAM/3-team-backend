@@ -16,6 +16,8 @@ public enum ErrorCode {
      */
     BAD_REQUEST(400,"잘못된 요청입니다."),
     INVALID_PARAMETER(40001, "요청 파라미터 오류"),
+    WRONG_IMAGE_FILE_FORM(40002,"잘못된 이미지 파일입니다."),
+
 
     /**
     * 202 ACCEPTED
