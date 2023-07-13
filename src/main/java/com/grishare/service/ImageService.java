@@ -22,21 +22,7 @@ import java.util.List;
 public class ImageService {
     private final ImageRepository imageRepository;
 
-    private String saveImage(String domainName, Long domainId, MultipartFile image) {
-        String filename = image.getOriginalFilename();
-        String projectPath = new File(".").getAbsolutePath();
-        projectPath = projectPath.substring(0, projectPath.length() - 1) + "src/main/resources/static/";
-        String filePath = projectPath + domainName + "/" + domainId.toString() + "_" + filename;
-        try {
-            // 파일 저장
-            byte[] fileBytes = image.getBytes();
-            Path imagePath = Paths.get(filePath);
-            Files.write(imagePath, fileBytes);
-        } catch (IOException e) {
-            throw new CustomBadRequestException(ErrorCode.BAD_REQUEST);
-        }
-        return filePath;
-    }
+
 
     public void savePostImages(Post post, List<MultipartFile> imageList) {
         if (imageList != null) {
@@ -47,5 +33,29 @@ public class ImageService {
                 }
             }
         }
+    }
+
+    private String saveImage(String domainName, Long domainId, MultipartFile image) {
+
+        String relativePath = makeRelativePath(domainName, domainId, image);
+        String entireFilePath = getAbsolutePath() + relativePath;
+        try {
+            // 파일 저장
+            byte[] fileBytes = image.getBytes();
+            Path imagePath = Paths.get(entireFilePath);
+            Files.write(imagePath, fileBytes);
+        } catch (IOException e) {
+            throw new CustomBadRequestException(ErrorCode.BAD_REQUEST);
+        }
+        return relativePath;
+    }
+
+    private String getAbsolutePath() {
+        String projectPath = new File(".").getAbsolutePath();
+        return projectPath.substring(0, projectPath.length() - 1) + "src/main/resources/static";
+    }
+
+    private String makeRelativePath(String domainName, Long domainId, MultipartFile image) {
+        return "/" + domainName + "/" + domainId.toString() + "_" + image.getOriginalFilename();
     }
 }
