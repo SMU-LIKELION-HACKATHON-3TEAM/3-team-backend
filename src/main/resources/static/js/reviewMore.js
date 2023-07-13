@@ -1,7 +1,7 @@
 /********** AJAX ***********/
 $.ajax({
     type: 'GET',
-    url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/country/nation/like',
+    url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/myPost',
     success: function(data) {
 
         var length = data.data.length;

@@ -1,5 +1,6 @@
 package com.grishare.controller;
 
+import com.grishare.base.BaseResponse;
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
 import com.grishare.repository.UserRepository;
@@ -22,12 +23,11 @@ public class ScrapController {
     private PostServiceImpl postService;
     // 스크랩 기능
     @PostMapping("/posts/{postId}/scrap")
-    public ResponseEntity<HttpStatus> Scrap(@PathVariable Long postId, @AuthenticationPrincipal CustomUserDetail customUserDetail){
+    public BaseResponse Scrap(@PathVariable Long postId, @AuthenticationPrincipal CustomUserDetail customUserDetail){
         try {
             User user = customUserDetail.getUser();
             scrapService.updateOfScrapPost(postId,user);
-            ResponseEntity
-                    .status(HttpStatus.ACCEPTED);
+            BaseResponse.ok(null);
             } catch (Exception e) {
             e.printStackTrace();
         }

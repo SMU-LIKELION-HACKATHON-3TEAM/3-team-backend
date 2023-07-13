@@ -86,26 +86,26 @@ public class UserController {
     }
     //회원정보 조회
     @GetMapping("/myPage")
-    public ResponseEntity<UserReturnDto> getUser(@AuthenticationPrincipal CustomUserDetail customUserDetail){
+    public BaseResponse<UserReturnDto> getUser(@AuthenticationPrincipal CustomUserDetail customUserDetail){
         UserReturnDto userReturnDto = userService.getUser(customUserDetail.getUser());
 
-        return ResponseEntity.ok(userReturnDto);
+        return BaseResponse.ok(userReturnDto);
     }
 
     // 회원정보 수정
     @PutMapping("/myPage")
-    public ResponseEntity<UserReturnDto> updateUser(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserRequestDto userRequestDto, @RequestPart(required = false) MultipartFile imageFiles, @RequestPart(required = false) MultipartFile backImageFiles) {
-        User user = userService.updateUser(customUserDetail.getUser(), userRequestDto, imageFiles, backImageFiles);
+    public BaseResponse<UserReturnDto> updateUser(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserRequestDto userRequestDto) {
+        User user = userService.updateUser(customUserDetail.getUser(), userRequestDto);
         UserReturnDto userReturn = userService.getUser(user);
 
-        return ResponseEntity.ok(userReturn);
+        return BaseResponse.ok(userReturn);
     }
 
 
     // 비밀번호 찾기 -> 이메일 보내기
     @ResponseBody
     @PostMapping("/user/findPw")
-    public ResponseEntity<MailDto> sendPwdEmail(@RequestBody MailRequestDto mailRequestDto) {
+    public BaseResponse<MailDto> sendPwdEmail(@RequestBody MailRequestDto mailRequestDto) {
 
         String memberEmail = mailRequestDto.getEmail();
         System.out.println("memberEmail = " + memberEmail);
@@ -117,21 +117,21 @@ public class UserController {
         MailDto mail = mailService.createMail(tmpPassword, memberEmail);
         mailService.sendMail(mail);
 
-        return ResponseEntity.ok(mail);
+        return BaseResponse.ok(mail);
 
 
     }
     // 내가 쓴 글 목록 전체 보기
     @GetMapping("/myPost")
-    public ResponseEntity<List<PostReturnDto>> getMyPosts (@AuthenticationPrincipal CustomUserDetail customUserDetail){
+    public BaseResponse<List<PostReturnDto>> getMyPosts (@AuthenticationPrincipal CustomUserDetail customUserDetail){
         List<PostReturnDto> myPostList = userService.getMyPost(customUserDetail.getUser().getId());
-        return ResponseEntity.status(HttpStatus.OK).body(myPostList);
+        return BaseResponse.ok(myPostList);
     }
     // 스크랩한 글 조회
     @GetMapping("/posts/scrap")
-    public ResponseEntity<List<PostReturnDto>> getScrapPosts(@AuthenticationPrincipal CustomUserDetail customuserDetail) {
+    public BaseResponse<List<PostReturnDto>> getScrapPosts(@AuthenticationPrincipal CustomUserDetail customuserDetail) {
         List<PostReturnDto> scrapPostList = userService.getMyScrap(customuserDetail.getUser().getId());
 
-        return ResponseEntity.status(HttpStatus.OK).body(scrapPostList);
+        return BaseResponse.ok(scrapPostList);
     }
 }

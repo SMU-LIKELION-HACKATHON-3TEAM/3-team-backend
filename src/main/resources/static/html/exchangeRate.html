@@ -68,8 +68,7 @@
                 </select>
                 </div>
                 <div class="wrap_bank">
-                <select name="banks" id="banks">
-                    <option disabled>은행 선택</option>
+                <select name="banks" id="banks" aria-placeholder="은행선택">
                     <option>은행 선택</option>
                 </select>
                 </div>
@@ -83,7 +82,7 @@
                 </div>
                 <p><b>=</b></p>
                 <div class="money2">
-                <input type="number" id="money2"></input>
+                <input type="number" id="money2" onkeyup="calculate()"></input>
                 <p class="curUnit">KRW</p>
                 <!--화폐단위 구현-->
                 </div>

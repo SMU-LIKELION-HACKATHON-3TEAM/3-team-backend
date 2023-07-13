@@ -1,5 +1,6 @@
 package com.grishare.controller;
 
+import com.grishare.base.BaseResponse;
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.dto.ReportPostRequestDto;
 import com.grishare.service.PostServiceImpl;
@@ -31,12 +32,10 @@ public class ReportPostController {
 //    }
 
     @PostMapping("/post/report/{postId}")
-    public ResponseEntity<?> reportPost(@PathVariable("postId") Long postId, @AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody ReportPostRequestDto reportPostRequestDto){
+    public BaseResponse<?> reportPost(@PathVariable("postId") Long postId, @AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody ReportPostRequestDto reportPostRequestDto){
         try {
 //            System.out.println(customUserDetail.getUser().getId()+"one");
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(reportPostService.save(postId, customUserDetail.getUser().getId(), reportPostRequestDto));
+            return BaseResponse.ok(reportPostService.save(postId, customUserDetail.getUser().getId(), reportPostRequestDto));
         } catch (Exception e) {
             e.printStackTrace();
         }

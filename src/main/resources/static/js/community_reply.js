@@ -19,7 +19,6 @@
 
 var postId = localStorage.getItem('postid');
 
-
 $(document).ready(function() {
     var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}`;
     $.ajax({
@@ -29,66 +28,71 @@ $(document).ready(function() {
       success: function(data) {
           console.log("reply connecting");
           console.log(data);
+        
+          var createdAt = new Date(data.data.create_at);
+          var currentTime = new Date();
+          var timeDiff = Math.floor((currentTime - createdAt) / (1000 * 60));
+          var timeText = timeDiff + "분 전";
+          
+          var resultElement = $("<span>").text(timeText).addClass("time_comment") ;
+        
+
+          var $postIcon = $('<div>').addClass('postIcon_comment');
+          var $userName = $('<div>').addClass('userName_comment').text(data.userName);
+          var $postContent = $('<div>').addClass('postContent').attr('spellcheck', 'false').text(data.contents);
+          
+      
+          var $views = $('<div>').addClass('views');
+
+          var $likes = $('<div>').addClass('likes').text(data.like_count);
+          var $likes_image = $('<img>').attr("id", `likes_image${data.post_id}`).attr("src","../img/icon _heart_.png").addClass('likes_image');
   
-          $.each(data, function(index, item) {
-            var createdAt = new Date(item.created_at);
-            var currentTime = new Date();
-            var timeDiff = Math.floor((currentTime - createdAt) / (1000 * 60));
-            var timeText = timeDiff + "분 전";
-            
-            var resultElement = $("<span>").text(timeText).addClass("time") ;
+      
+          var $comments_count = $('<div>').addClass('comment').text(data.comments_count);
           
+      
+      
+          var $scrap = $('<div>').addClass('scrap_comment').text("스크랩");
+          var $scrap_image = $('<img>').attr("id", `scrap_image${data.post_id}`).attr("src","../img/icon _star outline_.png").addClass('scrap_image_comment');
 
-            var $postId = $('<div>').addClass('postId').text(item.userName);
-        
-            var $postContent = $('<textarea>').addClass('postContent').attr('spellcheck', 'false').text(data.content);
-            // title 말고 userName이 들어가는게 맞나?
-        
-            var $views = $('<div>').addClass('views');
+          var $share = $("<div>").addClass("share_comment").attr("id", `share${data.post_id}`).text("공유");
+          var $share_image = $('<div>').attr("id", `share${data.post_id}`).addClass('share_image_comment');
 
-            var $likes = $('<div>').addClass('likes').text(item.like_count);
-            var $likes_image = $('<img>').attr("id", `likes_image${item.post_id}`).attr("src","../img/icon _heart_.png").addClass('likes_image');
-    
+          var $report = $('<div>').attr("id", `report${data.post_id}`).addClass('report').text("신고");
         
-            var $comments_count = $('<div>').addClass('comment').text(item.comments_count);
-            // 이부분
-        
-        
-            var $scrap = $('<div>').addClass('scrap').text("스크랩");
-            var $scrap_image = $('<img>').attr("id", `scrap_image${item.post_id}`).attr("src","../img/icon _star outline_.png").addClass('scrap_image');
+      
+          var $file_only = $('<div>').addClass('file_only').text(data.file1);
+      
 
-            var $scrap = $('<div>').addClass('scrap').text("스크랩");
-            var $scrap_image = $('<img>').attr("id", `scrap_image${item.post_id}`).attr("src","../img/icon _star outline_.png").addClass('scrap_image');
-
-            var $share = $("<div>").addClass("share").attr("id", `share${item.post_id}`).text("공유");
-            var $share_image = $('<div>').attr("id", `share${item.post_id}`).addClass('share_image');
-
-            var $report = $('<div>').attr("id", `report${item.post_id}`).addClass('report').text("신고");
+          $('#wrap_community_box_comment').append(resultElement).append($userName).append($postIcon).append($postContent).append($file_only).append($views).append($likes).append($likes_image).append($scrap).append($scrap_image).append($share).append($share_image).append($report).trigger("create");
           
-        
-            var $file_only = $('<div>').addClass('file_only').text(item.file1);
-        
+          var $comment_box = $('<div>').addClass('comment_box');
+          var $comment_post = $('<input>').addClass('comment_post_comment').attr('placeholder', '댓글을 작성해 주세요.');
+          var $comment_commit = $('<div>').addClass('comment_commit').text('등록');
 
-            $('#wrap_community').append(resultElement).append($postId).append($postContent).append($file_only).append($views).append($likes).append($likes_image).append($scrap).append($scrap_image).append($share).append($share_image).append($report).trigger("create");
-            
-            var $comment_box = $('<div>').addClass('comment_box');
-            var $comment_post = $('<div>').addClass('comment_post').text('댓글을 작성해 주세요.');
-            var $comment_commit = $('<div>').addClass('comment_commit').text('등록');
+          $('#wrap_comment_box').append($comment_box);
+          $comment_box.append($comment_post);
+          $comment_box.append($comment_commit);
 
-            $('#wrap_comment_box').append($comment_box);
-            $('#wrap_comment_post').append($comment_commit);
+          $.each(data.comment, function(index, item) {
+            console.log(item);
+            var $comment_userIcon = $('<div>').addClass('comment_userIcon');
+            var $comment_userbox = $('<div>').addClass('comment_userbox');
 
-            $.each(data.comment_id, function(index, item){
-              var $comment_userbox = $('<div>').addClass('comment_userbox');
+            var $userName = $('<div>').addClass('comment_userName').text(item.userName);
+            var $comment_contents = $('<div>').addClass('comment_contents').text(item.contents);
 
-              var $userName = $('<div>').addClass('userName').text(item.userName);
-              var $comment_contents = $('<div>').addClass('comment_contents').text(data.contents);
-
-              $('.commentbox').append($comment_post).append($comment_userbox);
-              $('.comment_userbox').appebd($userName).append($comment_contents);
-            });
-          
+            $comment_userbox.append($userName).append($comment_contents).append($comment_userIcon);
+            $('#wrap_comment_box').append($comment_userbox);
           });
+
+          $(document).ready(function() {
+            $('input').on('mousedown', function() {
+              $(this).css('outline', 'none');
+            });
+          });
+
+
 
           //신고
           let is_clicked_report = false;
@@ -96,37 +100,51 @@ $(document).ready(function() {
           $('.report').click(function(event) {
             
             var id_num = event.target.id.match(/\d+/)[0];
+            var postId = id_num;
             event.stopPropagation();
-
+          
             if (!is_clicked_report) {
-              var $overlay = $('<div>').addClass('overlay');
-              $('body').append($overlay);
+              // var $overlay = $('<div>').addClass('overlay');
+              // $('body').append($overlay);
               
               var $report_click = $('<div>').addClass('report_click').text("신고하기");
-
+          
               $(`#report${id_num}`).append($report_click);
               is_clicked_report = true;
 
             } else {
               $(`#report${id_num}`).find('.report_click').remove();
-              $('.overlay').remove();
+              // $('.overlay').remove();
               is_clicked_report = false;
             }
-          });
+            
+            $.ajax({
+              type: 'POST',
+              dataType: 'json',
+              url: `/api/posts/${postId}/report`,
+              success: function(data) {
+                  console.log("report connecting");
+              }});
 
+          });
+          
           $(document).on('click', '.report_click', function() {
             alert("신고되었습니다.");
-            var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_reply.html';
-
+            localStorage.setItem('is_clicked_report',"1");
+            var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_searchCountry.html';
+          
             window.location.href = url;
           });
-
+              
 
           // 좋아요
           let is_clicked_likes = false;
 
-          $('.likes_image').click(function(event){
+          $('.likes_image').click(function(event) {
             var id_num = event.target.id.match(/\d+/)[0];
+            var postId = id_num;
+            console.log(postId); // 이따 체크
+            
             event.stopPropagation();
 
             if(!is_clicked_likes){
@@ -136,20 +154,26 @@ $(document).ready(function() {
               $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_.png");
               is_clicked_likes = false;
             }
+
+            $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: `/api/posts/${postId}/like`,
+            success: function(data) {
+                console.log("like connecting"); //이부분 필요한건가?
+                
+                }
+            });
           });
 
           //스크랩
           let is_clicked_scrap = false;
             
-          $('.scrap_image').click(function(event){
-            
+          $('.scrap_image_comment').click(function(event){
             var id_num = event.target.id.match(/\d+/)[0];
+            var postId = id_num;
             event.stopPropagation();
 
-            
-            // // 이거 뭘로보내야하지
-            // localStorage.setItem('postid', post_id);
-            
             if(!is_clicked_scrap){
               $(`#scrap_image${id_num}`).attr("src", "../img/icon _yellow_star outline_.png");
               is_clicked_scrap = true;
@@ -157,13 +181,22 @@ $(document).ready(function() {
               $(`#scrap_image${id_num}`).attr("src", "../img/icon _star outline_.png");
               is_clicked_scrap = false;
             }
+
+            $.ajax({
+              type: 'POST',
+              dataType: 'json',
+              url: `/api/posts/${postId}/scrap`,
+              data : { json: JSON.stringify( jsonData ) },
+              success: function(data) {
+                  console.log("scrap connecting");
+                }})
           });
 
 
           // 공유
           let is_clicked_share = false;
 
-          $(".share").click(function (event) {
+          $(".share_comment").click(function (event) {
             
             var id_num = event.target.id.match(/\d+/)[0];
             
@@ -210,8 +243,14 @@ $(document).ready(function() {
 
 
 
-           }});
+           },error: function() {
+            // alert('통신 실패시에만 실행');
+            console.log("왜 실패?");
+        }
+          
+          });
     }
+  
   );
 
   

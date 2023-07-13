@@ -6,6 +6,7 @@ import com.grishare.domain.Nation;
 import com.grishare.domain.Quote;
 import com.grishare.dto.QuoteADReturnDto;
 import com.grishare.dto.QuoteNationReturnDto;
+import com.grishare.dto.QuoteReturnDto;
 import com.grishare.exception.CustomException;
 import com.grishare.exception.ErrorCode;
 import com.grishare.repository.AdministrativeDivisionRepository;
@@ -49,6 +50,17 @@ public class QuoteServiceImpl implements QuoteService {
                                 (administrativeDivision.getId(), administrativeDivision.getAdName())).toList();
                 return BaseResponse.ok(adReturnDtoList);
             } else return BaseResponse.fail(ErrorCode.NOT_FOUND);
+        } catch (Exception e) {
+            throw new CustomException(ErrorCode.BAD_REQUEST);
+        }
+    }
+
+    public QuoteReturnDto getQuote(Long ad_id) {
+        try {
+            Optional<Quote> quote = quoteRepository.findById(ad_id);
+            if (quote.isPresent()) {
+                return new QuoteReturnDto(quote.get());
+            } else throw new CustomException(ErrorCode.NOT_FOUND);
         } catch (Exception e) {
             throw new CustomException(ErrorCode.BAD_REQUEST);
         }

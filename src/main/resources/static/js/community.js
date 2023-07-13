@@ -22,8 +22,8 @@ $(document).ready(function() {
         console.log("mainPage connecting");
         console.log(data);
       
-        $.each(data, function(index, item) {
-        var createdAt = new Date(item.created_at); // "created_at" 값을 Date 객체로 변환
+        $.each(data.data, function(index, item) {
+        var createdAt = new Date(item.create_at); // "created_at" 값을 Date 객체로 변환
         var currentTime = new Date(); // 현재 시간
         var timeDiff = Math.floor((currentTime - createdAt) / (1000 * 60)); // 분 단위로 시간 차이 계산
         var timeText = timeDiff + "분 전";
@@ -32,9 +32,8 @@ $(document).ready(function() {
         var resultElement = $("<span>").text(timeText).addClass("time");
 
         var $postIcon = $('<div>').addClass('postIcon');
-        var $postId = $('<div>').addClass('postId').text(item.post_id);
         var $userName = $('<div>').addClass('userName').text(item.userName); 
-        var $postContent = $('<div>').addClass('postContent').attr('spellcheck', 'false').text(item.content);
+        var $postContent = $('<div>').addClass('postContent').attr('spellcheck', 'false').text(item.contents);
         
 
         var $views = $('<div>').addClass('views');
@@ -42,7 +41,7 @@ $(document).ready(function() {
         var $likes = $('<div>').addClass('likes').text(item.like_count);
         var $likes_image = $('<img>').attr("id", `likes_image${item.post_id}`).attr("src","../img/icon _heart_.png").addClass('likes_image');
 
-        //css
+
         var $comment = $('<div>').addClass('comment').text(item.comment_count);
         var $comment_image = $('<div>').addClass('comment_image');
 
@@ -57,7 +56,7 @@ $(document).ready(function() {
         // var $report = $('<div>').attr("id", `report${item.post_id}`).addClass('report').text("신고");
         
         var $file_only = $('<div>').addClass('file_only').text(item.file1);
-        // 이미지 데이터는 어떻게 처리하나요
+  
 
         if (!postsByPostID[item.postId]) {
           postsByPostID[item.postId] = $('<div>').addClass('post-container');
@@ -66,7 +65,7 @@ $(document).ready(function() {
         var $postContainer = $('<div>').addClass('post-container').attr('data-postid', item.post_id);
         // ID값 다르게 주기
 
-        $postContainer.append($postIcon, resultElement, $postId, $userName, $postContent, $file_only, $views, $likes, $likes_image, $comment, $comment_image, $scrap, $scrap_image, $share, $share_image,);//report 없임
+        $postContainer.append($postIcon, resultElement, $userName, $postContent, $file_only, $views, $likes, $likes_image, $comment, $comment_image, $scrap, $scrap_image, $share, $share_image,);//report 없임
 
         // wrap_community_box에 게시물 컨테이너 추가
         $('#wrap_community_box').append($postContainer);
@@ -76,17 +75,11 @@ $(document).ready(function() {
   })}})
   
 
-
-
-
-
   //reply 창으로 넘기기
   $('#wrap_community_box').on('click', '.post-container', function() {
     
     var postid = $(this).data('postid');
-    localStorage.setItem('postid', postid); //이거 메인 커뮤니티 화면에서는 nationId가 없지 않나
-                                                // 나라 드롭박스 부분은 countrySearch 화면인데 그러면 메인 -> reply일 때는 어케해야?
-
+    localStorage.setItem('postid', postid); 
     var is_clicked_post_container = localStorage.getItem('is_clicked_post_container');
 
     if (is_clicked_post_container === null) {
@@ -96,14 +89,15 @@ $(document).ready(function() {
     if(is_clicked_post_container === '1'){
       is_clicked_post_container = '0';
       localStorage.setItem('is_clicked_post_container',is_clicked_post_container);
-      var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_comment.html';
+      // var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_comment.html';
+      var url = '../html/community_comment.html';
+
       window.location.href = url;
 
     }else{
       is_clicked_post_container = '1';
       localStorage.setItem('is_clicked_post_container',is_clicked_post_container);
-      var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
-      window.location.href = url;
+
     }
 
   });
@@ -126,73 +120,60 @@ $(document).ready(function() {
     });
 
 
-  //신고
-  let is_clicked_report = false;
+    // 좋아요
+    let is_clicked_likes = false;
 
-  $('.report').click(function(event) {
-    var id_num = event.target.id.match(/\d+/)[0];
-    event.stopPropagation();
-  
-    if (!is_clicked_report) {
-      var $overlay = $('<div>').addClass('overlay');
-      $('body').append($overlay);
+    $('.likes_image').click(function(event) {
+      var id_num = event.target.id.match(/\d+/)[0];
+      var postId = id_num;
+      console.log(postId); // 이따 체크
       
-      var $report_click = $('<div>').addClass('report_click').text("신고하기");
-  
-      $(`#report${id_num}`).append($report_click);
-      is_clicked_report = true;
+      event.stopPropagation();
 
-    } else {
-      $(`#report${id_num}`).find('.report_click').remove();
-      $('.overlay').remove();
-      is_clicked_report = false;
-    }
-  });
+      if(!is_clicked_likes){
+        $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_red.png");
+        is_clicked_likes = true;
+      }else{
+        $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_.png");
+        is_clicked_likes = false;
+      }
 
-  $(document).on('click', '.report_click', function() {
-    alert("신고되었습니다.");
-    var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
-  
-    window.location.href = url;
-  });
-  
+      $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: `/api/posts/${postId}/like`,
+      success: function(data) {
+          console.log("like connecting");
+          
+          }
+      });
+    });
 
-  // 좋아요
-  let is_clicked_likes = false;
-  
-  $('.likes_image').click(function(event){
-    var id_num = event.target.id.match(/\d+/)[0];
-    event.stopPropagation();
+    //스크랩
+    let is_clicked_scrap = false;
+      
+    $('.scrap_image').click(function(event){
+      var id_num = event.target.id.match(/\d+/)[0];
+      var postId = id_num;
+      event.stopPropagation();
 
-    
-    if(!is_clicked_likes){
-      $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_red.png");
-      is_clicked_likes = true;
-    }else{
-      $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_.png");
-      is_clicked_likes = false;
-    }
-  });
+      if(!is_clicked_scrap){
+        $(`#scrap_image${id_num}`).attr("src", "../img/icon _yellow_star outline_.png");
+        is_clicked_scrap = true;
+      }else{
+        $(`#scrap_image${id_num}`).attr("src", "../img/icon _star outline_.png");
+        is_clicked_scrap = false;
+      }
 
-  //스크랩
-  let is_clicked_scrap = false;
-    
-  $('.scrap_image').click(function(event){
-    var id_num = event.target.id.match(/\d+/)[0];
-    event.stopPropagation();
-
-    
-    // // 이거 뭘로보내야하지
-    // localStorage.setItem('postid', postId);
-    
-    if(!is_clicked_scrap){
-      $(`#scrap_image${id_num}`).attr("src", "../img/icon _yellow_star outline_.png");
-      is_clicked_scrap = true;
-    }else{
-      $(`#scrap_image${id_num}`).attr("src", "../img/icon _star outline_.png");
-      is_clicked_scrap = false;
-    }
-  });
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: `/api/posts/${postId}/scrap`,
+        data : { json: JSON.stringify( jsonData ) },
+        success: function(data) {
+            console.log("scrap connecting");
+          }})
+    });
 
   // 공유
   let is_clicked_share = false;
@@ -242,21 +223,6 @@ $(document).ready(function() {
     $(`#share${id_num}`).click();
   });
 
-  // $('#wrap_search_country').keyup(function(event) {
-  //   if (event.key === 'Enter') {
-  //     var query = $(this).val();
-  //     localStorage.setItem('query', query);
-  //     var url = 'http://127.0.0.1:5500/html/community_searchCountry.html';
-  
-  //     window.location.href = url;
-  //   }});
-
-    $(document).ready(function() {
-      $('#wrap_newPostMade').click(function() {// 이부분
-        window.location.href = 'http://127.0.0.1:5500/html/community_post.html';
-      });
-    });
- 
     
 
   
