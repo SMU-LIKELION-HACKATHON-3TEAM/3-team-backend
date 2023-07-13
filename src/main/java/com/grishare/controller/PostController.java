@@ -1,16 +1,14 @@
 package com.grishare.controller;
 
 import com.grishare.base.BaseResponse;
-import com.grishare.base.SuccessCode;
-import com.grishare.domain.Post;
 import com.grishare.domain.user.CustomUserDetail;
+import com.grishare.dto.NationInfoResponseDto;
 import com.grishare.dto.PostDetailReturnDto;
 import com.grishare.dto.PostRequestDto;
 import com.grishare.dto.PostReturnDto;
 import com.grishare.service.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,9 +49,9 @@ public class PostController {
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
             @PathVariable("nationId") long nationId,
             @RequestPart PostRequestDto postRequestDto,
-            @RequestPart(required = false) List<MultipartFile> imageFiles) {
+            @RequestPart(required = false) MultipartFile imageFile) {
 
-        return BaseResponse.ok(postService.save(customUserDetail.getUser(), nationId, postRequestDto, imageFiles));
+        return BaseResponse.ok(postService.save(customUserDetail.getUser(), nationId, postRequestDto, imageFile));
     }
 
     @PutMapping("/posts/{postId}")
@@ -78,5 +76,16 @@ public class PostController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @GetMapping("/post/hotview")
+    public BaseResponse<?> getHotPosts() {
+        return BaseResponse.ok(postService.getHotPosts());
+    }
+
+    @GetMapping("/posts/{nationId}/info")
+    public BaseResponse<?> getNationInfo(@PathVariable("nationId") Long nation_id) {
+        NationInfoResponseDto nationInfoResponseDto = postService.getNationInfo(nation_id);
+        return BaseResponse.ok(nationInfoResponseDto);
     }
 }
