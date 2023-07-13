@@ -34,7 +34,7 @@ public class PostServiceImpl implements PostService {
         });
         return postRepository
                 .save(
-                        postRequestDto.toEntity(user, nation, Comment.builder().build())
+                        postRequestDto.toEntity(user, nation)
                 );
     }
 
