@@ -111,11 +111,11 @@ public class UserServiceImpl implements UserDetailsService , UserService {
 //    }
     // 내가 쓴 리뷰 전체 조회
     @Override
-    public List<PostReturnDto> getMyPost(Long userId){ // userId에 로그인한 회원 Pk가 들어가야 됨
+    public List<PostReturnDto.naitonInfo> getMyPost(Long userId){ // userId에 로그인한 회원 Pk가 들어가야 됨
 
        List<Post> myPosts = postRepository.findAllByUserId(userId);
 
-        return myPosts.stream().map(PostReturnDto::new).collect(Collectors.toList());
+        return myPosts.stream().map(PostReturnDto.naitonInfo::new).collect(Collectors.toList());
     }
 
     // 스크랩한 글 전체 조회
