@@ -30,7 +30,7 @@ $(document).ready(function() {
           console.log("reply connecting");
           console.log(data);
         
-          var createdAt = new Date(data.data.create_at);
+          var createdAt = new Date(data.data.created_at);
           var currentTime = new Date();
           var timeDiff = Math.floor((currentTime - createdAt) / (1000 * 60));
           var timeText = timeDiff + "분 전";
@@ -248,7 +248,8 @@ $(document).ready(function() {
           //여기
           
     $(".comment_commit").click(function() {
-      var comment_post_comment = $('.comment_post_comment').val();
+      var comment_post_comment = $('.comment_post_comment').val();  // contents 안들어감.
+      console.log(comment_post_comment);  //여기 해보기
 
       if (comment_post_comment === ""){
           alert("내용을 입력해 주세요.");
