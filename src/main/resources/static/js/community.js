@@ -20,6 +20,7 @@ $(document).ready(function() {
     url: url,
     success: function(data) {
         console.log("mainPage connecting");
+        console.log(data);
       
         $.each(data, function(index, item) {
         var createdAt = new Date(item.created_at); // "created_at" 값을 Date 객체로 변환
@@ -53,7 +54,7 @@ $(document).ready(function() {
         var $share = $("<div>").addClass("share").attr("id", `share${item.post_id}`).text("공유");
         var $share_image = $('<div>').attr("id", `share${item.post_id}`).addClass('share_image');
 
-        var $report = $('<div>').attr("id", `report${item.post_id}`).addClass('report').text("신고");
+        // var $report = $('<div>').attr("id", `report${item.post_id}`).addClass('report').text("신고");
         
         var $file_only = $('<div>').addClass('file_only').text(item.file1);
         // 이미지 데이터는 어떻게 처리하나요
@@ -65,7 +66,7 @@ $(document).ready(function() {
         var $postContainer = $('<div>').addClass('post-container').attr('data-postid', item.post_id);
         // ID값 다르게 주기
 
-        $postContainer.append($postIcon, resultElement, $postId, $userName, $postContent, $file_only, $views, $likes, $likes_image, $comment, $comment_image, $scrap, $scrap_image, $share, $share_image, $report);
+        $postContainer.append($postIcon, resultElement, $postId, $userName, $postContent, $file_only, $views, $likes, $likes_image, $comment, $comment_image, $scrap, $scrap_image, $share, $share_image,);//report 없임
 
         // wrap_community_box에 게시물 컨테이너 추가
         $('#wrap_community_box').append($postContainer);

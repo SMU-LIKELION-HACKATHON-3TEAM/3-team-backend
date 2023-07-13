@@ -57,7 +57,23 @@
     </nav>
     <div id="wrap_newPost">
         <div>
-            <input type="text" id="wrap_newPost_country" placeholder="게시물을 쓸 나라를 입력해주세요."></input>
+            <select id="wrap_newPost_country">  
+                <option value="main">나라를 검색해 주세요.</option> 
+                <option value="1">뉴질랜드</option> 
+                <option value="2">대만</option> 
+                <option value="3">대한민국</option> 
+                <option value="0">덴마크</option> 
+                <option value="apple">러시아</option> 
+                <option value="banana">마카오</option> 
+                <option value="orange">말레이시아</option> 
+                <option value="orange">멕시코</option> 
+                <option value="orange">몽골</option> 
+                <option value="orange">미국</option> 
+                <option value="orange">바레인</option> 
+                <option value="orange">방글라데시</option> 
+                <option value="orange">베트남</option> 
+                <option value="orange">브라질</option>
+              </select>
         </div>
         
         <div id="wrap_newPost_main">
@@ -72,7 +88,7 @@
             
             <textarea id="wrap_newPost_content"  placeholder="이 곳에 글을 작성해주세요. (최소 20글자 이상 입력)"></textarea>
             <ul class="image-preview"></ul>
-            <a href="http://127.0.0.1:5500/html/community.html" id="wrap_newPost_save">작성완료</a>
+            <div id="wrap_newPost_save">작성완료</div>
         
     </div>
     
