@@ -170,7 +170,7 @@ $.ajax({
                 /* 기능은 추후 추가 */
 
                 $(document).on('click', '.report_click', function() {
-                    alert("신고되었습니다.");
+                    //alert("신고되었습니다.");
                     localStorage.setItem('is_clicked_report', "1");
                     var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_searchCountry.html';
 
@@ -240,7 +240,7 @@ $.ajax({
         }
     },
     error: function() {
-        // alert('통신 실패시에만 실행');
+        // //alert('통신 실패시에만 실행');
         console.log("왜 실패?");
     }
 });
@@ -416,7 +416,7 @@ $.ajax({
 //             /* 기능은 추후 추가 */
 
 //             $(document).on('click', '.report_click', function() {
-//                 alert("신고되었습니다.");
+//                 //alert("신고되었습니다.");
 //                 localStorage.setItem('is_clicked_report', "1");
 //                 var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_searchCountry.html';
 

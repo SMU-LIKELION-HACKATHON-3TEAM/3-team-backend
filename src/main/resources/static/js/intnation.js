@@ -48,7 +48,7 @@ $.ajax({
 
 //     $('#wrap-intnation').append($a);
 
-// alert('통신 성공시에만 실행');
+// //alert('통신 성공시에만 실행');
 // console.log("성공");
 
 // $.getJSON("../json/intnation.json", function(data) {

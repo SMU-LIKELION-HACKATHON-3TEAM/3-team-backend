@@ -28,19 +28,19 @@ function getImageFiles(e) {
     const docFrag = new DocumentFragment();
   
     if (imagePreview.childElementCount >= 1) {
-        alert("이미지는 최대 1개 까지 업로드가 가능합니다.");
+        //alert("이미지는 최대 1개 까지 업로드가 가능합니다.");
         return;
       }
 
     if ([...files].length >= 2) {
-      alert("이미지는 최대 1개 까지 업로드가 가능합니다.");
+      //alert("이미지는 최대 1개 까지 업로드가 가능합니다.");
       return;
     }
   
     // 파일 타입 검사
     [...files].forEach((file) => {
       if (!file.type.match("image/.*")) {
-        alert("이미지 파일만 업로드가 가능합니다.");
+        //alert("이미지 파일만 업로드가 가능합니다.");
         return;
       }
   
@@ -100,11 +100,11 @@ function getImageFiles(e) {
     
         if (nationId === "main" || title === "" || contents === "") {
           if (nationId === "main") {
-            alert("나라를 선택해 주세요.");
+            //alert("나라를 선택해 주세요.");
           } else if (title === "") {
-            alert("제목을 입력해 주세요.");
+            //alert("제목을 입력해 주세요.");
           } else if (contents === "") {
-            alert("내용을 입력해 주세요.");
+            //alert("내용을 입력해 주세요.");
           }
           var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_post.html';
           window.location.href = url;
@@ -137,7 +137,7 @@ function getImageFiles(e) {
                 enctype: 'multipart/form-data',
                 success: function(response) {
                   // console.log(response);
-                  alert('등록되었습니다.');
+                  //alert('등록되었습니다.');
                   var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
                   window.location.href = url;
                 },

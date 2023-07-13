@@ -19,7 +19,7 @@ $.ajax({
         console.log("나라데이터 가져오기 성공")
     },
     error: function (request, status, error) {
-        alert("잘못된 요청입니다.", error);
+        //alert("잘못된 요청입니다.", error);
     }
 });
 /*은행 선택*/
@@ -72,7 +72,7 @@ $(document).ready(function () {
                     $(".curUnit").text(code);
                 },
                 error: function (request, status, error) {
-                    alert(
+                    //alert(
                         "code:" +
                         request.status +
                         "\n" +

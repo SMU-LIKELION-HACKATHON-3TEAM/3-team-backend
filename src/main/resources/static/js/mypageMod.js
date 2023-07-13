@@ -49,7 +49,7 @@ $.ajax({
         showData();
     },
     error: function() {
-        // alert('통신 실패시에만 실행');
+        // //alert('통신 실패시에만 실행');
         console.log("왜 실패?");
     }
 });
@@ -130,7 +130,7 @@ const sendUpdateRequest = (updatedDate) => {
         contentType: 'application/json',
         data: JSON.stringify(updatedDate),
         success: function() {
-            // alert('통신 성공시에만 실행');
+            // //alert('통신 성공시에만 실행');
             console.log("성공");
         },
         error: function(request, status, error) {
@@ -197,7 +197,7 @@ const sendUpdateRequest = (updatedDate) => {
 //         showData();
 //     },
 //     error: function() {
-//         // alert('통신 실패시에만 실행');
+//         // //alert('통신 실패시에만 실행');
 //         console.log("왜 실패?");
 //     }
 // });
@@ -302,7 +302,7 @@ const sendUpdateRequest = (updatedDate) => {
 //         contentType: 'application/json',
 //         data: JSON.stringify(updatedDate),
 //         success: function() {
-//             // alert('통신 성공시에만 실행');
+//             // //alert('통신 성공시에만 실행');
 //             console.log("성공");
 //         },
 //         error: function(request, status, error) {

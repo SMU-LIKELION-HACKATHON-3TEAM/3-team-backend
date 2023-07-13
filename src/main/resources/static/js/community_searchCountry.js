@@ -198,7 +198,7 @@ $(document).ready(function() {
         });
         
         $(document).on('click', '.report_click', function() {
-          alert("신고되었습니다.");
+          //alert("신고되었습니다.");
           localStorage.setItem('is_clicked_report',"1");
           var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_searchCountry.html';
         

@@ -2,7 +2,7 @@ function onSubmitLogin(){
   var userLoginId = $('#userId').val();
   var password =$('#userPw').val();
   if(userLoginId.trim()==" "||password.trim()==" "){
-    alert("입력되지 않은 항목 존재");
+    //alert("입력되지 않은 항목 존재");
     return false;
   }
   $.ajax({
@@ -20,7 +20,7 @@ function onSubmitLogin(){
       sessionStorage.setItem('loggedIn', 'true');
     },
     error: function (request, status, error) {
-      alert(
+      //alert(
         "code:" +
           request.status +
           "\n" +

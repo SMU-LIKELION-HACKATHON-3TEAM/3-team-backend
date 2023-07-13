@@ -9,11 +9,11 @@
           'email':email,
         }),
         success : function(data){
-          alert("이메일로 아이디를 전송했습니다.")
+          //alert("이메일로 아이디를 전송했습니다.")
         },
         error: function(request, status, error){
           console.error(error);
-          alert("이메일 오류");
+          //alert("이메일 오류");
         }
     })
   }

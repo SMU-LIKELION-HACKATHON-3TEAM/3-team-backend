@@ -130,7 +130,7 @@ $(document).ready(function() {
           });
           
           $(document).on('click', '.report_click', function() {
-            alert("신고되었습니다.");
+            //alert("신고되었습니다.");
             localStorage.setItem('is_clicked_report',"1");
             var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_comment.html';
           
@@ -258,7 +258,7 @@ $(document).ready(function() {
       // console.log(comment_post_comment);  //여기 해보기
 
       if (comment_post_comment === ""){
-          alert("내용을 입력해 주세요.");
+          //alert("내용을 입력해 주세요.");
           var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_comment.html';
           window.location.href = url;
       } else {
@@ -285,7 +285,7 @@ $(document).ready(function() {
       });
 
            },error: function() {
-            // alert('통신 실패시에만 실행');
+            // //alert('통신 실패시에만 실행');
             // console.log("왜 실패?");
         }
           

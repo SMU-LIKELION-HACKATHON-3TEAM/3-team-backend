@@ -31,7 +31,7 @@
       });
     },
     error: function() {
-        alert('통신 실패시에만 실행');
+        //alert('통신 실패시에만 실행');
         console.log("왜 실패?");
     }
 });
