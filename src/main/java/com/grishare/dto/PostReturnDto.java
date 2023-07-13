@@ -20,13 +20,13 @@ public class PostReturnDto {
     private Long post_id;
     private String title;
     private String contents;
-
     private String userName;
-    private String create_at;
+    private String created_at;
     private long views;
     private int like_count;
     private int comment_count;
-
+    // 유저 프로필 이미지 일단 string 으로 넣을게요!
+    private String userImg;
     private List<String> imgUrl;
 
     public PostReturnDto(Post post) {
@@ -34,8 +34,9 @@ public class PostReturnDto {
         this.title = post.getTitle();
         this.contents = post.getContent();
         this.userName = post.getUser().getNickName(); // 글쓰기 닉네임표시
-        this.create_at = post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.created_at = post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.views = post.getView();
+        this.userImg = post.getUser().getUserImg();
         this.like_count = post.getLikePosts() == null ? 0 : post.getLikePosts().size();
         this.comment_count = post.getComments() == null ? 0 : post.getComments().size();
         this.imgUrl = post.getPostImages() == null ? null : post.getPostImages().stream().map(PostImage::getImageUrl).collect(Collectors.toList());
