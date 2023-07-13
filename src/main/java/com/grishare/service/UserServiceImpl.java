@@ -18,12 +18,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -125,24 +123,21 @@ public class UserServiceImpl implements UserDetailsService , UserService {
     // 회원정보 수정 -> 이미지 어떻게 할 것인가.
     @Override
     @Transactional
-    public User updateUser(User user, UserRequestDto userRequestDto, MultipartFile imageFiles, MultipartFile backImageFiles){
+    public User updateUser(User user, UserRequestDto userRequestDto){
 
-        Optional<User> byId = userRepository.findById(user.getId()); // pk값(id) 가져옴
-        User me = byId.orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
-
-        if(userRequestDto.getNickName() != null) {
-            me.setNickName(userRequestDto.getNickName());
-        } else if (userRequestDto.getUserLoginId() != null) {
-            me.setUserLoginId(userRequestDto.getUserLoginId());
-        } else if(userRequestDto.getPassword() != null) {
-            String encryptPassword = passwordEncoder.encode(userRequestDto.getPassword());
-            me.updatePassword(encryptPassword);
+        if(isValid(userRequestDto.getNickName())) {
+            user.setNickName(userRequestDto.getNickName());
         }
-        userRepository.save(me);
-        imageService.saveUserImage(me, imageFiles);
-        imageService.savebackImage(me, backImageFiles);
-        return me;
+        if (isValid(userRequestDto.getUserLoginId())) {
+            user.setUserLoginId(userRequestDto.getUserLoginId());
+        }
+        if(isValid(userRequestDto.getPassword())) {
+            String encryptPassword = passwordEncoder.encode(userRequestDto.getPassword());
+            user.updatePassword(encryptPassword);
+        }
 
+        userRepository.save(user);
+        return user;
     }
 //    public String getCategory(Long postId){
 //        Post post = postRepository.findById(postId).get();
@@ -200,7 +195,9 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         log.info("임시 비밀번호 업데이트");
     }
 
-
+    private boolean isValid(String input) {
+        return input != null && !input.isEmpty();
+    }
 
 
 

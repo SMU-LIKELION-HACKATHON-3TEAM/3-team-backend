@@ -91,8 +91,8 @@ public class UserController {
 
     // 회원정보 수정
     @PutMapping("/myPage")
-    public BaseResponse<UserReturnDto> updateUser(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserRequestDto userRequestDto, @RequestPart(required = false) MultipartFile imageFiles, @RequestPart(required = false) MultipartFile backImageFiles) {
-        User user = userService.updateUser(customUserDetail.getUser(), userRequestDto, imageFiles, backImageFiles);
+    public BaseResponse<UserReturnDto> updateUser(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserRequestDto userRequestDto) {
+        User user = userService.updateUser(customUserDetail.getUser(), userRequestDto);
         UserReturnDto userReturn = userService.getUser(user);
 
         return BaseResponse.ok(userReturn);
