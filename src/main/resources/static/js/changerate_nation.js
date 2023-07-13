@@ -18,15 +18,15 @@
     url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/exchangeRate',
     success: function(data) {
       $.each(data, function (index, item) {
-        console.log(item.contryName)
+        console.log(item.countryName)
         var $div = $("<div>").addClass("wrap");
-        var $contryName = $("<div>")
-          .addClass("contryName")
-          .text(item.contryName);
+        var $countryName = $("<div>")
+          .addClass("countryName")
+          .text(item.countryName);
         var $exchangeRate = $("<div>")
           .addClass("exchangeRate")
           .text(item.exchangeRate);
-        $div.append($contryName).append($exchangeRate);
+        $div.append($countryName).append($exchangeRate);
         $("#today-exchangeRate").append($div);
       });
     },
