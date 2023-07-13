@@ -209,9 +209,13 @@ $(document).ready(function() {
           if(!is_clicked_likes){
             $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_red.png");
             is_clicked_likes = true;
+            var likesCount = parseInt($likes.text()) + 1;
+            $likes.text(likesCount);
           }else{
             $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_.png");
             is_clicked_likes = false;
+            var likesCount = parseInt($likes.text()) - 1;
+            $likes.text(likesCount);
           }
 
           $.ajax({
