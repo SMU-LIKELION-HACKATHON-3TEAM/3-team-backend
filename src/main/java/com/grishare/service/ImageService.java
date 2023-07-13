@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,11 +55,15 @@ public class ImageService {
 
         String relativePath = makeRelativePath(domainName, domainId, image);
         String entireFilePath = getAbsolutePath() + relativePath;
+        System.out.println(entireFilePath);
+        System.out.println(System.getProperty("user.dir"));
         try {
-            // 파일 저장
-            byte[] fileBytes = image.getBytes();
-            Path imagePath = Paths.get(entireFilePath);
-            Files.write(imagePath, fileBytes);
+            File convertFile = new File(entireFilePath);
+
+            if (convertFile.createNewFile()) { // 바로 위에서 지정한 경로에 File이 생성됨 (경로가 잘못되었다면 생성 불가능)
+                FileOutputStream fos = new FileOutputStream(convertFile); // FileOutputStream 데이터를 파일에 바이트 스트림으로 저장하기 위함
+                fos.write(image.getBytes());
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
             throw new CustomBadRequestException(ErrorCode.BAD_REQUEST);
