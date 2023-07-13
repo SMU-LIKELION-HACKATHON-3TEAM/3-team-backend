@@ -59,7 +59,7 @@ $(document).ready(function() {
               
         var $file_only = $('<img>').addClass('file_only').attr('src', item.imgUrl);
       
-  
+        var $delete = $('<div>').addClass("delete").attr("id", `delete${item.post_id}`).text("X");
 
         if (!postsByPostID[item.postId]) {
           postsByPostID[item.postId] = $('<div>').addClass('post-container');
@@ -68,7 +68,7 @@ $(document).ready(function() {
         var $postContainer = $('<div>').addClass('post-container').attr('data-postid', item.post_id);
         // ID값 다르게 주기
 
-        $postContainer.append($postIcon, resultElement, $userName, $postContent, $file_only, $views, $likes, $likes_image, $comment, $comment_image, $scrap, $scrap_image, $share, $share_image,);//report 없임
+        $postContainer.append($postIcon, $delete, resultElement, $userName, $postContent, $file_only, $views, $likes, $likes_image, $comment, $comment_image, $scrap, $scrap_image, $share, $share_image,);//report 없임
 
         // wrap_community_box에 게시물 컨테이너 추가
         $('#wrap_community_box').append($postContainer);
@@ -77,7 +77,15 @@ $(document).ready(function() {
     
   })}})
   
+  $('.delete').click(function(event) {
+    var id_num = event.target.id.match(/\d+/)[0];
+    var postId = id_num;
+    console.log(postId);
+    $(`[data-postid="${postId}"]`).remove();
 
+  })
+
+  
   //reply 창으로 넘기기
   $('#wrap_community_box').on('click', '.post-container', function() {
     
