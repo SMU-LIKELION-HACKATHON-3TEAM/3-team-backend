@@ -114,6 +114,8 @@ $(document).ready(function() {
             
           var $file_only = $('<img>').addClass('file_only').attr('src', item.imgUrl);
       
+          var $delete = $('<div>').addClass("delete").attr("id", `delete${item.post_id}`).text("X");
+
             
           if (!postsByPostID[item.post_id]) {
             postsByPostID[item.post_id] = $('<div>').addClass('post-container');
@@ -122,11 +124,19 @@ $(document).ready(function() {
           var $postContainer = $('<div>').addClass('post-container').attr('data-postid', item.post_id);
 
 
-          $postContainer.append($postIcon).append(resultElement).append($userName).append($postContent).append($file_only).append($views).append($likes).append($likes_image).append($comment).append($comment_image).append($scrap).append($scrap_image).append($share).append($share_image).append($report).trigger("create");
+          $postContainer.append($postIcon).append(resultElement).append($delete).append($userName).append($postContent).append($file_only).append($views).append($likes).append($likes_image).append($comment).append($comment_image).append($scrap).append($scrap_image).append($share).append($share_image).append($report).trigger("create");
         
           $('#wrap_country_box').append($postContainer);
           
         });
+
+        $('.delete').click(function(event) {
+          var id_num = event.target.id.match(/\d+/)[0];
+          var postId = id_num;
+          console.log(postId);
+          $(`[data-postid="${postId}"]`).remove();
+      
+        })
 
         //reply 창으로 넘기기
         $('#wrap_country_box').on('click', '.post-container', function(event) {
