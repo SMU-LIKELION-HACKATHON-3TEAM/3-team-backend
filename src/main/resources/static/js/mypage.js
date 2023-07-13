@@ -198,7 +198,7 @@ $.ajax({
                 const writer = data.data[length].userName;
                 // const profileImg = data.data[length].countryInfo.ImageUrl; // 수정 필요
                 const profileImg = "../img/user.png";
-                const imgUrl = data.data[length]..ImageUrl;
+                const imgUrl = data.data[length].ImageUrl;
                 // const imgUrl = "../img/earth.jpg";
                 const contents = data.data[length].contents;
                 const post_id = data.data[length].post_id;
