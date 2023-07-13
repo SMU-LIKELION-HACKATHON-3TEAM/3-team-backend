@@ -75,8 +75,8 @@ $(document).ready(function() {
       success: function(data) {
         
         var postsByPostID = {};
-        console.log('searchCountry_connecting');
-        console.log(data);
+        // console.log('searchCountry_connecting');
+        // console.log(data);
 
         $.each(data.data, function(index, item) {
           var createdAt = new Date(item.created_at);
@@ -133,7 +133,7 @@ $(document).ready(function() {
         $('.delete').click(function(event) {
           var id_num = event.target.id.match(/\d+/)[0];
           var postId = id_num;
-          console.log(postId);
+          // console.log(postId);
           $(`[data-postid="${postId}"]`).remove();
       
         })
@@ -190,9 +190,9 @@ $(document).ready(function() {
           $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: `/api/posts/${postId}/report`,
+            url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/report`,
             success: function(data) {
-                console.log("report connecting");
+                // console.log("report connecting");
             }});
   
         });
@@ -212,7 +212,7 @@ $(document).ready(function() {
         $('.likes_image').click(function(event) {
           var id_num = event.target.id.match(/\d+/)[0];
           var postId = id_num;
-          console.log(postId); // 이따 체크
+          // console.log(postId); // 이따 체크
           
           event.stopPropagation();
 
@@ -228,9 +228,9 @@ $(document).ready(function() {
           $.ajax({
           type: 'POST',
           dataType: 'json',
-          url: `/api/posts/${postId}/like`,
+          url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/like`,
           success: function(data) {
-              console.log("like connecting");
+              // console.log("like connecting");
               
               }
           });
@@ -256,9 +256,9 @@ $(document).ready(function() {
           $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: `/api/posts/${postId}/scrap`,
+            url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/scrap`,
             success: function(data) {
-                console.log("scrap connecting");
+                // console.log("scrap connecting");
               }})
         });
 
@@ -278,8 +278,8 @@ $(document).ready(function() {
             var $share_image_twitter = $("<img>").attr("src", "../img/twitter.png");
             var $share_image_kakao = $("<img>").attr("src", "../img/kakao.png");
             var $share_image_Vector = $("<img>").addClass("Vector").attr("src", "../img/Vector.png");
-            var $share_link = $("<div>").addClass("share_link")
-            // 링크 추가
+            var $share_link = $("<div>").addClass("share_link").text(`http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${id_num}/share`);
+
             var $share_click = $("<div>").addClass("share_click");
             var $share_copy = $("<div>").addClass("share_copy").text("복사");
             var $share_emoji_box = $("<div>").addClass("share_emoji_box");
@@ -305,6 +305,12 @@ $(document).ready(function() {
             is_clicked_share = false;
           }
         });
+        $(".share_copy").click(function (event) {
+          var id_num = event.target.id.match(/\d+/)[0];
+          event.stopPropagation();
+          url=`http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${id_num}/share`;
+          localStorage.setItem('url',url);
+        });
         $(".share_image").click(function (event) {
           var id_num = event.target.id.match(/\d+/)[0];
           event.stopPropagation();
@@ -322,8 +328,8 @@ $(document).ready(function() {
                 var nationId = data.data[i].nationId;
                 var nationName = data.data[i].nationName;
                 
-                console.log("nationId:", nationId);
-                console.log("nationName:", nationName);
+                // console.log("nationId:", nationId);
+                // console.log("nationName:", nationName);
                 
                 // <select> 요소에 옵션 추가
                 var $select = $('#wrap_search_country');

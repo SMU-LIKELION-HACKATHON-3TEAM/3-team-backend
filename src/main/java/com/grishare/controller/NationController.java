@@ -17,8 +17,13 @@ public class NationController {
     NationServiceImpl nationService;
 
     @GetMapping("/exchangeRate/country")
-    public BaseResponse<List<NationReturnDto>> getNations(){
+    public BaseResponse<List<NationReturnDto>> getNations() {
         List<NationReturnDto> nationReturnDtoList = nationService.findAll();
         return BaseResponse.ok(nationReturnDtoList);
+    }
+
+    @GetMapping("/nation/{nationCode}")
+    public BaseResponse<?> getNationWarning(@PathVariable("nationCode") String nationCode) {
+        return BaseResponse.ok(nationService.getWarning(nationCode));
     }
 }

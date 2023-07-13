@@ -20,8 +20,8 @@ $(document).ready(function() {
     async:false,
     url: url,
     success: function(data) {
-        console.log("mainPage connecting");
-        console.log(data);
+        // console.log("mainPage connecting");
+        // console.log(data);
       
         $.each(data.data, function(index, item) {
         var createdAt = new Date(item.created_at); // "created_at" 값을 Date 객체로 변환
@@ -80,7 +80,7 @@ $(document).ready(function() {
   $('.delete').click(function(event) {
     var id_num = event.target.id.match(/\d+/)[0];
     var postId = id_num;
-    console.log(postId);
+    // console.log(postId);
     $(`[data-postid="${postId}"]`).remove();
 
   })
@@ -137,7 +137,7 @@ $(document).ready(function() {
     $('.likes_image').click(function(event) {
       var id_num = event.target.id.match(/\d+/)[0];
       var postId = id_num;
-      console.log(postId); // 이따 체크
+      // console.log(postId); // 이따 체크
       
       event.stopPropagation();
 
@@ -152,9 +152,9 @@ $(document).ready(function() {
       $.ajax({
       type: 'POST',
       dataType: 'json',
-      url: `/api/posts/${postId}/like`,
+      url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/like`,
       success: function(data) {
-          console.log("like connecting");
+          // console.log("like connecting");
           
           }
       });
@@ -179,9 +179,9 @@ $(document).ready(function() {
       $.ajax({
         type: 'POST',
         dataType: 'json',
-        url: `/api/posts/${postId}/scrap`,
+        url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/scrap`,
         success: function(data) {
-            console.log("scrap connecting");
+            // console.log("scrap connecting");
           }})
     });
 
@@ -193,13 +193,15 @@ $(document).ready(function() {
     var id_num = event.target.id.match(/\d+/)[0];
     event.stopPropagation();
 
+    
+
     if (!is_clicked_share) {
       var $share_image_instagram = $("<img>").attr("src","../img/instagram.png");
       var $share_image_facebook = $("<img>").attr("src", "../img/facebook.png");
       var $share_image_twitter = $("<img>").attr("src", "../img/twitter.png");
       var $share_image_kakao = $("<img>").attr("src", "../img/kakao.png");
       var $share_image_Vector = $("<img>").addClass("Vector").attr("src", "../img/Vector.png");
-      var $share_link = $("<div>").addClass("share_link");
+      var $share_link = $("<div>").addClass("share_link").text(`http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${id_num}/share`);
 
       var $share_click = $("<div>").addClass("share_click");
       var $share_copy = $("<div>").addClass("share_copy").text("복사");
@@ -227,6 +229,13 @@ $(document).ready(function() {
     }
   });
 
+  $(".share_copy").click(function (event) {
+    var id_num = event.target.id.match(/\d+/)[0];
+    event.stopPropagation();
+    url=`http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${id_num}/share`;
+    localStorage.setItem('url',url);
+  });
+
   $(".share_image").click(function (event) {
     var id_num = event.target.id.match(/\d+/)[0];
     event.stopPropagation();
@@ -246,8 +255,8 @@ $(document).ready(function() {
           var nationId = data.data[i].nationId;
           var nationName = data.data[i].nationName;
           
-          console.log("nationId:", nationId);
-          console.log("nationName:", nationName);
+          // console.log("nationId:", nationId);
+          // console.log("nationName:", nationName);
           
           // <select> 요소에 옵션 추가
           var $select = $('#wrap_search_country');

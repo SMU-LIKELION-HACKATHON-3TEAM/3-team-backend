@@ -1,12 +1,15 @@
 package com.grishare.service;
 
 import com.grishare.domain.Post;
+import com.grishare.domain.image.BackImage;
+import com.grishare.domain.image.UserImage;
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
 import com.grishare.dto.*;
 import com.grishare.repository.PostRepository;
 import com.grishare.repository.ScrapRepository;
 import com.grishare.repository.UserRepository;
+import com.grishare.repository.image.ImageRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,18 +35,27 @@ public class UserServiceImpl implements UserDetailsService , UserService {
     private final ScrapRepository scrapRepository;
     private final PasswordEncoder passwordEncoder;
     private final ImageService imageService;
+    private final ImageRepository imageRepository;
 
     private final JavaMailSender javaMailSender;
 
 
-    public UserServiceImpl(@Lazy UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder, @Lazy ScrapRepository scrapRepository, @Lazy JavaMailSender javaMailSender, @Lazy PostRepository postRepository, ImageService imageService){
+    public UserServiceImpl(@Lazy UserRepository userRepository,
+                           @Lazy PasswordEncoder passwordEncoder,
+                           @Lazy ScrapRepository scrapRepository,
+                           @Lazy JavaMailSender javaMailSender,
+                           @Lazy PostRepository postRepository,
+                           ImageService imageService,
+                           ImageRepository imageRepository){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.javaMailSender = javaMailSender;
         this.postRepository = postRepository;
         this.scrapRepository = scrapRepository;
         this.imageService = imageService;
+        this.imageRepository = imageRepository;
     }
+
 
     // spring security 관련 UserDetailsService implement 부분
     @Override
@@ -58,8 +71,10 @@ public class UserServiceImpl implements UserDetailsService , UserService {
     }
     // 회원가입
     @Override
-    public User saveUser(RegisterRequestDto registerRequestDto){
+    @Transactional
+    public UserReturnDto saveUser(RegisterRequestDto registerRequestDto){
         User user = User.builder()
+                .userLoginId(registerRequestDto.getUserLoginId())
                 .userName(registerRequestDto.getUserName())
                 .email(registerRequestDto.getEmail())
                 .password(registerRequestDto.getPassword())
@@ -68,9 +83,36 @@ public class UserServiceImpl implements UserDetailsService , UserService {
                 .nickName(registerRequestDto.getNickName())
                 .build();
 
-        UserReturnDto userReturnDto = new UserReturnDto(user); // userReturnDto 수정 필ㅑ
+        userRepository.save(user);
 
-        return userRepository.save(user);
+        List<String> userStandardImg = new ArrayList<>();
+        userStandardImg.add("https://elasticbeanstalk-ap-northeast-2-670982426569.s3.ap-northeast-2.amazonaws.com/post/276_ffa18c5c-d1a3-448c-b2f2-7673cee2c591_%E1%84%91%E1%85%B3%E1%84%89%E1%85%A11.jpeg");
+        userStandardImg.add("https://elasticbeanstalk-ap-northeast-2-670982426569.s3.ap-northeast-2.amazonaws.com/post/277_1b03f247-c813-43b3-8e0b-4fec02e32b3e_%E1%84%91%E1%85%B3%E1%84%89%E1%85%A12.jpeg");
+        userStandardImg.add("https://elasticbeanstalk-ap-northeast-2-670982426569.s3.ap-northeast-2.amazonaws.com/post/278_ebdac035-5cda-46d8-929c-a7c20bb5e279_images.jpeg");
+
+        double randomValue = Math.random(); // 0.0 이상 1.0 미만의 랜덤 실수 반환
+        int randomNumber = (int) (randomValue * 3);
+
+
+        UserImage userImage = new UserImage(user, userStandardImg.get(randomNumber));
+
+        List<String> userStandardBackImg = new ArrayList<>();
+        userStandardBackImg.add("https://elasticbeanstalk-ap-northeast-2-670982426569.s3.ap-northeast-2.amazonaws.com/post/279_3ab430a4-27de-4b93-8f98-b8dc8da95c7c_back1.webp");
+        userStandardBackImg.add("https://elasticbeanstalk-ap-northeast-2-670982426569.s3.ap-northeast-2.amazonaws.com/post/280_4d8a2bd5-132e-493b-9322-38bd62e32e95_back2.jpeg");
+        userStandardBackImg.add("https://elasticbeanstalk-ap-northeast-2-670982426569.s3.ap-northeast-2.amazonaws.com/post/281_4d503de2-7753-474d-94e7-5f0530e69728_back3.jpeg");
+
+        randomValue = Math.random();
+        randomNumber = (int) (randomValue * 3);
+
+        BackImage backImage = new BackImage(user, userStandardBackImg.get(randomNumber));
+
+        imageRepository.save(userImage);
+        imageRepository.save(backImage);
+
+        user.setUserImg(userImage);
+        user.setBackgroundImg(backImage);
+
+        return new UserReturnDto(user);
     }
 
     // 회원정보 가져오기
