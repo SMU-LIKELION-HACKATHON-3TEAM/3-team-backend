@@ -63,6 +63,13 @@ body {
     margin-top: 20px;
 }
 
+/* my id */
+
+#wrap-myid {
+    width: 350px;
+    height: 150px;
+}
+
 .my-whole-see {
     margin-top: 20px;
     padding-left: 200px;

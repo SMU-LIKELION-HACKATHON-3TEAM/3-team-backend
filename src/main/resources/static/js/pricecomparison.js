@@ -394,7 +394,7 @@ dropdownD2.addEventListener("change", function() {
     selectedOption = dropdownD2.value;
     $.ajax({
         type: 'GET',
-        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare?division=' + selectedOption,
+        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/' + selectedOption,
         success: function(data) {
             var meal = data.data.meal;
             var taxi = data.data.taxi;
@@ -437,12 +437,12 @@ dropdownD3.addEventListener("change", function() {
     selectedOption = dropdownD3.value;
     $.ajax({
         type: 'GET',
-        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare?division=' + selectedOption,
+        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/' + selectedOption,
         success: function(data) {
             var meal = data.data.meal;
-            var transport = data.data.taxi;
-            var accom = data.data.coffee;
-            var coffee = data.data.rice;
+            var taxi = data.data.taxi;
+            var coffee = data.data.coffee;
+            var rice = data.data.rice;
 
             barChartData.datasets[2].data[0] = meal;
             barChartData.datasets[2].data[1] = taxi;
@@ -471,28 +471,28 @@ var barChartData = {
         label: '나라1',
         backgroundColor: "#F87DC0",
         data: [
-            1230,
-            12410,
-            12340,
+            0,
+            0,
+            0,
             0
         ]
     }, {
         label: '나라2',
         backgroundColor: "#83A07F",
         data: [
-            34520,
-            32520,
-            5450,
-            3460
+            0,
+            0,
+            0,
+            0
         ]
     }, {
         label: '나라3',
         backgroundColor: "#F5D8A0",
         data: [
-            4360,
-            76570,
-            450,
-            4570
+            0,
+            0,
+            0,
+            0
         ]
     }]
 };

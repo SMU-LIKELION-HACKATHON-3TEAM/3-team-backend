@@ -22,7 +22,7 @@ $(document).ready(function() {
         console.log("mainPage connecting");
         console.log(data);
       
-        $.each(data, function(index, item) {
+        $.each(data.data, function(index, item) {
         var createdAt = new Date(item.create_at); // "created_at" 값을 Date 객체로 변환
         var currentTime = new Date(); // 현재 시간
         var timeDiff = Math.floor((currentTime - createdAt) / (1000 * 60)); // 분 단위로 시간 차이 계산
@@ -75,17 +75,11 @@ $(document).ready(function() {
   })}})
   
 
-
-
-
-
   //reply 창으로 넘기기
   $('#wrap_community_box').on('click', '.post-container', function() {
     
     var postid = $(this).data('postid');
-    localStorage.setItem('postid', postid); //이거 메인 커뮤니티 화면에서는 nationId가 없지 않나
-                                                // 나라 드롭박스 부분은 countrySearch 화면인데 그러면 메인 -> reply일 때는 어케해야?
-
+    localStorage.setItem('postid', postid); 
     var is_clicked_post_container = localStorage.getItem('is_clicked_post_container');
 
     if (is_clicked_post_container === null) {
@@ -95,7 +89,9 @@ $(document).ready(function() {
     if(is_clicked_post_container === '1'){
       is_clicked_post_container = '0';
       localStorage.setItem('is_clicked_post_container',is_clicked_post_container);
-      var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_comment.html';
+      // var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_comment.html';
+      var url = '../html/community_comment.html';
+
       window.location.href = url;
 
     }else{

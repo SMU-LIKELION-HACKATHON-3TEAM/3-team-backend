@@ -1,7 +1,10 @@
 package com.grishare.service;
 
 import com.grishare.domain.Post;
+import com.grishare.domain.image.BackImage;
 import com.grishare.domain.image.PostImage;
+import com.grishare.domain.image.UserImage;
+import com.grishare.domain.user.User;
 import com.grishare.exception.CustomBadRequestException;
 import com.grishare.exception.ErrorCode;
 import com.grishare.repository.image.ImageRepository;
@@ -14,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,7 +24,19 @@ import java.util.List;
 public class ImageService {
     private final ImageRepository imageRepository;
 
+    public void saveUserImage(User user, MultipartFile image){
+        if (!image.isEmpty()) {
+            String url = saveImage("user", user.getId(), image);
+            imageRepository.save(new UserImage(user, url));
+        }
+    }
 
+    public void savebackImage(User user, MultipartFile image){
+        if (!image.isEmpty()) {
+            String url = saveImage("user", user.getId(), image);
+            imageRepository.save(new BackImage(user, url));
+        }
+    }
 
     public void savePostImages(Post post, List<MultipartFile> imageList) {
         if (imageList != null) {

@@ -50,4 +50,5 @@ public class Post {
     private List<ReportPost> reportPosts;
     @OneToMany(mappedBy = "post")
     private List<PostImage> postImages;
+
 }

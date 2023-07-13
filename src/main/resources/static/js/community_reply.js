@@ -19,7 +19,6 @@
 
 var postId = localStorage.getItem('postid');
 
-
 $(document).ready(function() {
     var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}`;
     $.ajax({
@@ -30,7 +29,7 @@ $(document).ready(function() {
           console.log("reply connecting");
           console.log(data);
         
-          var createdAt = new Date(data.create_at);
+          var createdAt = new Date(data.data.create_at);
           var currentTime = new Date();
           var timeDiff = Math.floor((currentTime - createdAt) / (1000 * 60));
           var timeText = timeDiff + "분 전";
@@ -244,8 +243,14 @@ $(document).ready(function() {
 
 
 
-           }});
+           },error: function() {
+            // alert('통신 실패시에만 실행');
+            console.log("왜 실패?");
+        }
+          
+          });
     }
+  
   );
 
   
