@@ -10,7 +10,7 @@ $.ajax({
             const email = data.data.email;
             const nick = data.data.nickName;
             const id = data.data.id;
-            const pw = data.data.userPw;
+            const pw = data.data.password;
             const picture = data.data.userImg;
             const backImg = data.data.backgroundImg;
 
@@ -21,7 +21,7 @@ $.ajax({
             if (backImg == "") {
                 backImage.src = "../img/Default_profileBack.png";
             } else {
-                backImage.src = picture;
+                backImage.src = backImage;
             }
 
             /* 프로필 이미지 */
@@ -117,9 +117,9 @@ const submit = () => {
     var backPictureFile = "";
 
     if (backChange == 0) {
-        backPictureFile = "../img/Default_Profile.png";
+        backPictureFile = "../img/Default_profileBack.png";
     } else if (backChange == 1) {
-        backPictureFile = $('#picture_input')[0].files[0];
+        backPictureFile = $('#back_input')[0].files[0];
     }
 
     /* 프로필 */
@@ -140,8 +140,8 @@ const submit = () => {
 
     var updatedDate = {
         "userPw": modify_pw,
-        "userId": $('input_id.value').val(),
-        "picture": profilePictureFile,
+        "userLoginId": $('input_id.value').val(),
+        "userImg": profilePictureFile,
         "backgroundImg": backPictureFile,
         "nickName": $('input_nick.value').val()
     }
