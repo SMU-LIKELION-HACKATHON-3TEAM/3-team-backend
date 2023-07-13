@@ -394,11 +394,13 @@ i.fas.fa-pen {
   .file_only{
     text-align: center;
     height: 250px;
-    background-color: #f4f4f4;
     width:376px;
     height:201px;
     margin-left:30%;
     margin-bottom:30px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   .likes{
     width:24px;

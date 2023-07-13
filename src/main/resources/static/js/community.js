@@ -55,7 +55,9 @@ $(document).ready(function() {
 
         // var $report = $('<div>').attr("id", `report${item.post_id}`).addClass('report').text("신고");
         
-        var $file_only = $('<div>').addClass('file_only').text(item.file1);
+              
+        var $file_only = $('<img>').addClass('file_only').attr('src', item.imageUrl);
+      
   
 
         if (!postsByPostID[item.postId]) {
