@@ -60,6 +60,12 @@ ul.menu>li {
     font-size: 24px;
     margin-right: 114px;
     cursor: pointer;
+    
+}
+
+.a-exchange {
+    padding-bottom: 10px;
+    border-bottom: solid 5px #0029BA;
 }
 
 
@@ -174,19 +180,23 @@ select{
 }
 .main_er > p{
     font-size: 70px;
+    margin-top: 58px;
 }
 .money1>p, .money2>p{
-    font-size: 41px;
+    font-size: 30px;
+    margin-top:47px;
     display:table;
+    font-weight:bolder;
 }
 .main_er input{
     width: 220px;
     height:132px;
     border:none;
     font-size: 35px;
-    margin-left:30px;
+    margin-left:10px;
     background-color: #ebebeb;
 }
+
 .money1, .money2{
     display: flex;
     width: 300px;

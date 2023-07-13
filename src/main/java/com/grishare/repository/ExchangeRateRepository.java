@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ExchangeRateRepository extends JpaRepository<ExchangeRate, Long>{
-    List<ExchangeRate> findByContryNameAndBank(String contryName, Bank bank);
+    List<ExchangeRate> findByCountryNameAndBank(String countryName, Bank bank);
 }

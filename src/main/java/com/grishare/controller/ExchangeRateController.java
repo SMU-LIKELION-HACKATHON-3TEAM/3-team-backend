@@ -16,10 +16,12 @@ public class ExchangeRateController {
     @Autowired
     ExchangeRateServiceImpl exService;
 
+
     @GetMapping("/exchangeRate/{contryName}/{bank}")
     public BaseResponse<ExchangeRateReturnDto> getExchangeRate(@PathVariable("contryName") String contryName, @PathVariable("bank") String bank){
         ExchangeRateReturnDto exReturnDto = exService.findByContryNameAndBank(contryName, bank);
         return BaseResponse.ok(exReturnDto);
+
     }
 
     @GetMapping("/exchangeRate")

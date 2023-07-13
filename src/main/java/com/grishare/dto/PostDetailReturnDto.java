@@ -24,20 +24,22 @@ public class PostDetailReturnDto {
     private String userName;
     private String create_at;
     private long views;
+
     private boolean like;
     private int like_count;
 
     private List<CommentReturnDto> comment;
     private List<String> imgUrl;
 
-    public PostDetailReturnDto(Post post) {
+    public PostDetailReturnDto(Post post, LikeReturnDto likeReturnDto) {
         this.post_id = post.getId();
         this.title = post.getTitle();
         this.contents = post.getContent();
         this.userName = post.getUser().getNickName(); // 글쓰기 닉네임표시
         this.create_at = post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.views = post.getView();
-        this.like_count = post.getLikePosts().size();
+        this.like = likeReturnDto.isLike();
+        this.like_count = likeReturnDto.getLike_count();
         this.comment = post.getComments().stream().map(CommentReturnDto::new).collect(Collectors.toList());
         this.imgUrl = post.getPostImages() == null ? null : post.getPostImages().stream().map(PostImage::getImageUrl).collect(Collectors.toList());
     }

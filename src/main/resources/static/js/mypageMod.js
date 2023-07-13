@@ -1,3 +1,5 @@
+// https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Flag_of_Ghana.svg/22px-Flag_of_Ghana.svg.png
+
 /********** AJAX **********/
 /*** 회원 정보 ***/
 $.ajax({
@@ -12,12 +14,27 @@ $.ajax({
             const id = data.data.userId;
             const pw = data.data.userPw;
             const picture = data.data.picture;
+            const backImg = data.data.backgroundImg;
 
-            let wrap_infor = document.querySelector(".wrap_infor");
+            /* 배경 이미지 */
+            let backImage = document.querySelector(".profileBack");
 
-            /* 이미지 */
-            // let img = document.createElement("img");
-            // img.src = picture;
+            /* 이미지 있어? 없으면 기본 넣어 */
+            if (backImg == "") {
+                backImage.src = "../img/Default_Profile.png";
+            } else {
+                backImage.src = picture;
+            }
+
+            /* 프로필 이미지 */
+            let img = document.querySelector(".profile");
+
+            /* 이미지 있어? 없으면 기본 넣어 */
+            if (picture == "") {
+                img.src = "../img/Default_Profile.png";
+            } else {
+                img.src = picture;
+            }
 
             /* 이름 */
             var input_name = document.querySelector(".input_name");
@@ -31,11 +48,6 @@ $.ajax({
 
             var input_id = document.querySelector(".input_id");
             input_id.setAttribute("value", id)
-
-            var input_pw = document.querySelector(".input_pw");
-            input_pw.setAttribute("value", pw)
-
-            // wrap_infor.appendChild(img); // 없어서 보류
         }
         showData();
     },
@@ -45,19 +57,49 @@ $.ajax({
     }
 });
 
-/* 정보 수정 */
 
+/*** 정보 수정 ***/
+/* 배경 이미지 */
+$('#profileBack').on('click', function() {
+
+    var backChange = 0; // 삭제 0 수정 1
+    var selection = prompt("이미지 수정하시려면 '1', 삭제하시려면 '2'를 입력하세요.");
+
+    if (selection == 1) {
+        backChange = 1;
+        $('#back_input').click();
+    } else if (selection == 2) {
+        backChange = 0;
+        let img = document.querySelector(".profileBack");
+        img.src = "../img/Default_profileBack.png";
+    }
+});
+
+$('#back_input').on('change', function() {
+    var file = this.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#profileBack').attr('src', e.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
+})
+
+/* 프로필 이미지 */
 $('#modify').on('click', function() {
-    $('#picture_input').click();
 
-    // var selection = prompt("이미지 수정하시려면 '1', 삭제하시려면 '2'를 입력하세요.");
+    var pictureChange = 0; // 삭제 0 수정 1
+    var selection = prompt("이미지 수정하시려면 '1', 삭제하시려면 '2'를 입력하세요.");
 
-    // if (selection == 1) {
-    //     $('#picture_input').click();
-    // } else if (selection == 2) {
-    //     // 삭제
-    // }
-
+    if (selection == 1) {
+        pictureChange = 1;
+        $('#picture_input').click();
+    } else if (selection == 2) {
+        pictureChange = 0;
+        let img = document.querySelector(".profile");
+        img.src = "../img/Default_Profile.png";
+    }
 });
 
 $('#picture_input').on('change', function() {
@@ -72,12 +114,36 @@ $('#picture_input').on('change', function() {
 })
 
 const submit = () => {
-    var profilePictureFile = $('#picture_input')[0].files[0];
+    /* 배경 */
+    var backPictureFile = "";
+
+    if (backChange == 0) {
+        backPictureFile = "../img/Default_Profile.png";
+    } else if (backChange == 1) {
+        backPictureFile = $('#picture_input')[0].files[0];
+    }
+
+    /* 프로필 */
+    var profilePictureFile = "";
+
+    if (pictureChange == 0) {
+        profilePictureFile = "../img/Default_Profile.png";
+    } else if (pictureChange == 1) {
+        profilePictureFile = $('#picture_input')[0].files[0];
+    }
+
+    var modify_pw = "";
+    if (input_pw.value == "") {
+        modify_pw = pw;
+    } else {
+        modify_pw = $('input_pw.value').val();
+    }
 
     var updatedDate = {
-        "userPw": $('input_id.value').val(),
-        "userId": $('input_pw.value').val(),
+        "userPw": modify_pw,
+        "userId": $('input_id.value').val(),
         "picture": profilePictureFile,
+        "backgroundImg": backPictureFile,
         "nickName": $('input_nick.value').val()
     }
     sendUpdateRequest(updatedDate);
