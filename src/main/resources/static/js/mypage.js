@@ -274,7 +274,7 @@ $.ajax({
                     p_time.innerHTML = diffM + "년 전";
                 }
 
-                post_infor.appendChild(profilImgge);
+                post_infor.appendChild(profileImage);
                 post_infor.appendChild(p_writer);
                 post_infor.appendChild(p_time);
 
