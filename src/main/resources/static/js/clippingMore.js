@@ -60,11 +60,11 @@ $.ajax({
                 /* infor */
                 /* 유저 프로필 */
                 /* 이미지 있어? 없으면 기본 넣어 */
-                let profilImgge = document.createElement("img");
+                let profileImage = document.createElement("img");
                 if (profileImg == "") {
-                    img.src = "../img/Default_Profile.png";
+                    profileImage.src = "../img/Default_Profile.png";
                 } else {
-                    img.src = profileImg;
+                    profileImage.src = profileImg;
                 }
 
                 let p_writer = document.createElement("p");

@@ -17,8 +17,8 @@ $.ajax({
         for (i = 0; i < forNum; i++) {
             const showData = () => {
                 length = length - 1;
-                const countryName = data.data[length].countryInfo.countryName;
-                const imgUrl = data.data[length].countryInfo.ImageUrl;
+                const countryName = data.data[length].countryName;
+                const imgUrl = data.data[length].imageUrl;
                 const contents = data.data[length].contents;
                 const postID = data.data[length].post_id;
                 var createdAt = data.data[length].created_at;
