@@ -84,7 +84,7 @@ $.ajax({
         }
     },
     error: function() {
-        alert('통신 실패시에만 실행');
+        // alert('통신 실패시에만 실행');
         console.log("왜 실패?");
     }
 });
@@ -128,9 +128,6 @@ dropdownC1.addEventListener("change", function() {
         type: 'GET',
         url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/division/' + selectedOption,
         success: function(data) {
-            alert('통신 성공시에만 실행');
-            console.log("성공");
-
             const length = data.data.length;
 
             var i;
@@ -147,7 +144,7 @@ dropdownC1.addEventListener("change", function() {
             }
         },
         error: function() {
-            alert('통신 실패시에만 실행');
+            // alert('통신 실패시에만 실행');
             console.log("왜 실패?");
         }
     });
@@ -174,7 +171,7 @@ $.ajax({
         }
     },
     error: function() {
-        alert('통신 실패시에만 실행');
+        // alert('통신 실패시에만 실행');
         console.log("왜 실패?");
     }
 });
@@ -218,8 +215,6 @@ dropdownC2.addEventListener("change", function() {
         type: 'GET',
         url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/division/' + selectedOption,
         success: function(data) {
-            alert('통신 성공시에만 실행');
-            console.log("성공");
 
             const length = data.data.length;
 
@@ -237,7 +232,7 @@ dropdownC2.addEventListener("change", function() {
             }
         },
         error: function() {
-            alert('통신 실패시에만 실행');
+            // alert('통신 실패시에만 실행');
             console.log("왜 실패?");
         }
     });
@@ -264,7 +259,7 @@ $.ajax({
         }
     },
     error: function() {
-        alert('통신 실패시에만 실행');
+        // alert('통신 실패시에만 실행');
         console.log("왜 실패?");
     }
 });
@@ -308,8 +303,6 @@ dropdownC3.addEventListener("change", function() {
         type: 'GET',
         url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/division/' + selectedOption,
         success: function(data) {
-            alert('통신 성공시에만 실행');
-            console.log("성공");
 
             const length = data.data.length;
 
@@ -327,7 +320,7 @@ dropdownC3.addEventListener("change", function() {
             }
         },
         error: function() {
-            alert('통신 실패시에만 실행');
+            // alert('통신 실패시에만 실행');
             console.log("왜 실패?");
         }
     });
@@ -357,7 +350,7 @@ dropdownD1.addEventListener("change", function() {
         type: 'GET',
         url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare?division=' + selectedOption,
         success: function(data) {
-            alert('통신 성공시에만 실행');
+            // alert('통신 성공시에만 실행');
             console.log("성공");
 
             var meal = data.data.meal;
@@ -376,7 +369,7 @@ dropdownD1.addEventListener("change", function() {
             averageCalc();
         },
         error: function() {
-            alert('통신 실패시에만 실행');
+            // alert('통신 실패시에만 실행');
             console.log("왜 실패?");
         }
     });
@@ -419,7 +412,7 @@ dropdownD2.addEventListener("change", function() {
             averageCalc();
         },
         error: function() {
-            alert('통신 실패시에만 실행');
+            // alert('통신 실패시에만 실행');
             console.log("왜 실패?");
         }
     });
@@ -462,7 +455,7 @@ dropdownD3.addEventListener("change", function() {
             averageCalc();
         },
         error: function() {
-            alert('통신 실패시에만 실행');
+            // alert('통신 실패시에만 실행');
             console.log("왜 실패?");
         }
     });
