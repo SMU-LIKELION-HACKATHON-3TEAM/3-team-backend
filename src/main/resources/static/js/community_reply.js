@@ -36,7 +36,7 @@ $(document).ready(function() {
           var timeText = timeDiff + "분 전";
           
           var resultElement = $("<span>").text(timeText).addClass("time_comment");
-          
+
 
           var $postIcon = $('<div>').addClass('postIcon_comment');
           var $userName = $('<div>').addClass('userName_comment').text(data.data.userName);
@@ -248,7 +248,7 @@ $(document).ready(function() {
           //여기
           
     $(".comment_commit").click(function() {
-      var comment_post_comment = $('.comment_post_comment').val();  // contents 안들어감.
+      var comment_post_comment = $('.comment_post_comment').val();
       
       console.log(comment_post_comment);  //여기 해보기
 
