@@ -1,5 +1,6 @@
+var uploadFiles = [];
+
 function getImageFiles(e) {
-    var uploadFiles = [];
     const files = e.currentTarget.files;
     const imagePreview = document.querySelector(".image-preview");
     const docFrag = new DocumentFragment();
@@ -125,8 +126,8 @@ function getImageFiles(e) {
           });
         });
         alert('등록되었습니다.');
-        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
-        window.location.href = url;
+        // var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
+        // window.location.href = url;
       }
     });
 

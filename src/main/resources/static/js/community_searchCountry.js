@@ -32,12 +32,39 @@ $(document).ready(function() {
   });
 });
 
+$(document).ready(function() {
+  var nationId = localStorage.getItem('nationId');
 
+  if (nationId) {
+    var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${nationId}/info`;
+    $.ajax({
+      type: 'GET',
+      dataType: 'json',
+      url: url,
+      success: function(data) {
+
+        var $country_banner_box = $("<div>").attr("id", "country_banner_box");
+        var $country_image = $("<img>").attr("id", "country_image").attr("src", data.data.imageUrl);
+        
+        var $country_good_img = $("<img>").attr("src", "../img/icon _thumbs up_.png").attr("id", "country_good_img").text("관심");
+        var $country_good_likes = $("<span>").addClass("country_good_likes").text("관심 " + data.data.likes);
+
+        
+        
+        $('#wrap_country_banner').append($country_banner_box);
+        $country_banner_box.append($country_image);
+        $('#wrap_country_banner').append($country_good_img);
+        $('#wrap_country_banner').append($country_good_likes);
+          
+        
+
+      }
+    })}
+});
   
 
 $(document).ready(function() {
   var nationId = localStorage.getItem('nationId');
-  console.log("nationId",nationId);
 
   if (nationId) {
     var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/nation/${nationId}`;
@@ -70,7 +97,7 @@ $(document).ready(function() {
   
           var $likes = $('<div>').addClass('likes').text(item.like_count);
           var $likes_image = $('<img>').attr("id", `likes_image${item.post_id}`).attr("src","../img/icon _heart_.png").addClass('likes_image');
-          console.log(item.post_id);
+
           var $comment = $('<div>').addClass('comment').text(item.comment_count);
           var $comment_image = $('<div>').addClass('comment_image');
       
@@ -86,7 +113,6 @@ $(document).ready(function() {
         
             
           var $file_only = $('<img>').addClass('file_only').attr('src', item.imgUrl);
-      
       
             
           if (!postsByPostID[item.post_id]) {
