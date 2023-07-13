@@ -30,13 +30,12 @@
 //     // 로그인되지 않은 상태
 //     console.log('로그인되지 않았습니다.');
 // }
-var loggedIn = sessionStorage.getItem('loggedIn');
-// document.addEventListener("DOMContentLoaded", function(){
-    if (loggedIn === 'true') {
-        // 로그인된 상태
+$(document).ready(function(){
+    var loggedIn = sessionStorage.getItem('loggedIn');
+    if (loggedIn=='true') {
+     
         console.log('로그인되었습니다');
-        // window.onload = function() {
-        // 이미지 경로
+  
         var imagePath = "../img/loginLogo.png";
         var imagePath2 = "../img/logoutLogo.png";
     
@@ -46,29 +45,32 @@ var loggedIn = sessionStorage.getItem('loggedIn');
         // 로그인 로고로 대체
         $('.login_logo').html(loginImage);
         $('.logout_logo').html(logoutImage);
-        console.log("아이콘 변경 완료");
-        //로그인 href 마이페이지로 바꾸기 
-        $('.login_logo').prop('href', '../html/mypage.html')
-        $('.logout_logo').prop('href', '../html/mainpage.html');
-        console.log("주소 변경 완료");
+        
+        //마이페이지 누르면 세션아이디삭제되도록
+        $(".login_logo").on('click', function () {
+            location.href = '../html/mypage.html';
+        });
         //로그아웃 누르면 세션아이디삭제되도록
         $(".logout_logo").on('click', function () {
-            setTimeout(function() {
-                $('.login_logo').html("로그인");
-                $('.login_logo').prop('href', '../html/login.html');
-                $('.logout_logo').html("회원가입");
-                $('.logout_logo').prop('href', '../html/signUp.html');
-                console.log("아이콘, 주소 원래대로 변경");
-              }, 3000);
-            loggedIn='false';
-            console.log(loggedIn);
+            sessionStorage.setItem('loggedIn', 'false');
+            location.href = '../html/login.html';
         });
-        
-    // };
-        // });
+
     } else {
         // 로그인되지 않은 상태
         console.log('로그인되지 않았습니다.');
+
+        $('.login_logo').html("로그인");
+        $('.logout_logo').html("회원가입");
+
+        //마이페이지 누르면 세션아이디삭제되도록
+        $(".login_logo").on('click', function () {
+            location.href = '../html/login.html';
+        });
+        //로그아웃 누르면 세션아이디삭제되도록
+        $(".logout_logo").on('click', function () {
+            location.href = '../html/signUp.html';
+        });
     }
-//    });
+    });
    
