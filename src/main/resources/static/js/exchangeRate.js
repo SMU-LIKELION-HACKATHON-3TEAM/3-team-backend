@@ -3,7 +3,7 @@
 $.ajax({
     type: 'GET',
     async: false,
-    url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/exchangeRate/country',
+    url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/exchangeRate',
     dataType: 'json',
     success: function (data) {
         $.each(data, function (index, item) {
@@ -46,8 +46,7 @@ var bank_er;
 $(document).ready(function () {
     $("#country2").on('change', function () {
         var countryName = $("#country2 option:selected").val();
-        // $('#banks').find('option:first').attr('selected', 'selected');
-        $("#banks").find("select").find('option:first').prop('selected', true);
+        $('#banks').find('option:first').attr('selected', 'selected');
         //은행 셀렉 값 초기화 해야함 
         console.log(countryName);
         $("#banks").on('change', function () {
@@ -66,11 +65,6 @@ $(document).ready(function () {
                     bank_er = data.exchangeRate;
                     var code=data.curUnit;
                     $(".curUnit").text(code);
-    
-                    
-
-                    
-
                 },
                 error: function (request, status, error) {
                     alert(

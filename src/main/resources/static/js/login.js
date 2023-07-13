@@ -1,6 +1,3 @@
-
-
-
 function onSubmitLogin(){
   var userLoginId = $('#userId').val();
   var password =$('#userPw').val();
@@ -18,9 +15,8 @@ function onSubmitLogin(){
       password: password,
     }),
     success: function (data) {
-      alert("통신 성공시에만 실행");
       console.log("성공");
-      console.log(data);
+      location.href='../html/mainpage.html';
     },
     error: function (request, status, error) {
       alert(
