@@ -1,5 +1,6 @@
 package com.grishare.controller;
 
+import com.grishare.base.BaseResponse;
 import com.grishare.dto.NationReturnDto;
 import com.grishare.service.NationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ public class NationController {
     NationServiceImpl nationService;
 
     @GetMapping("/exchangeRate/country")
-    public ResponseEntity<List<NationReturnDto>> getNations(){
+    public BaseResponse<List<NationReturnDto>> getNations(){
         List<NationReturnDto> nationReturnDtoList = nationService.findAll();
-        return ResponseEntity.ok(nationReturnDtoList);
+        return BaseResponse.ok(nationReturnDtoList);
     }
 }
