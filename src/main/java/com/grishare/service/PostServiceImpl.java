@@ -41,6 +41,7 @@ public class PostServiceImpl implements PostService {
             throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
         });
 
+
         Post post = postRequestDto.toEntity(user, nation);
         postRepository.save(post);
 

@@ -59,14 +59,15 @@ public class ImageService {
             Path imagePath = Paths.get(entireFilePath);
             Files.write(imagePath, fileBytes);
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             throw new CustomBadRequestException(ErrorCode.BAD_REQUEST);
         }
         return relativePath;
     }
 
     private String getAbsolutePath() {
-        String projectPath = new File(".").getAbsolutePath();
-        return projectPath.substring(0, projectPath.length() - 1) + "src/main/resources/static";
+        String projectPath = new File("").getAbsolutePath();
+        return projectPath + "/src/main/resources/static";
     }
 
     private String makeRelativePath(String domainName, Long domainId, MultipartFile image) {
