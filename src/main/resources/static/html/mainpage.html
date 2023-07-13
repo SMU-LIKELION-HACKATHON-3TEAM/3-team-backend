@@ -189,7 +189,8 @@
                       url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/nation/${item}`,
                       success: function(data) {
                           $.each(data.data, function (index, item) {
-                  
+                                console.log(item);
+                                console.log(item.data)
                               var $nationWarning = $('<div>').addClass('nationWarning').text(item.data.nationWarning)
                               var $nationName = $('<div>').addClass('natioinName').text(item.data.nationName)
                   
