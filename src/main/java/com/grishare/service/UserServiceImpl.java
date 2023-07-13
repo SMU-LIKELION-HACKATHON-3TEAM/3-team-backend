@@ -66,8 +66,6 @@ public class UserServiceImpl implements UserDetailsService , UserService {
                 .userLoginId(registerRequestDto.getUserLoginId())
                 .birthDay(registerRequestDto.getBirthDay())
                 .nickName(registerRequestDto.getNickName())
-                .userImg("")
-                .backgroundImg("")
                 .build();
         UserReturnDto userReturnDto = new UserReturnDto(user); // userReturnDto 수정 필ㅑ
 
@@ -109,12 +107,8 @@ public class UserServiceImpl implements UserDetailsService , UserService {
 
         if(userRequestDto.getNickName() != null) {
             me.setNickName(userRequestDto.getNickName());
-        } else if (userRequestDto.getUserImg() != null) {
-            me.setUserImg(userRequestDto.getUserImg());
-        } else if (userRequestDto.getUserLoginId() != null){
+        } else if (userRequestDto.getUserLoginId() != null) {
             me.setUserLoginId(userRequestDto.getUserLoginId());
-        } else if(userRequestDto.getBackgroundImg() != null) {
-            me.setBackgroundImg(userRequestDto.getBackgroundImg());
         }
 
 
