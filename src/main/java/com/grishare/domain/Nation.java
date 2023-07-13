@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name="nation")
@@ -49,6 +50,8 @@ public class Nation {
     @OneToMany(mappedBy = "nation",orphanRemoval = true)
     private Collection<ExchangeRate> er;
 
+    @OneToMany(mappedBy = "nation",orphanRemoval = true)
+    private List<LikeNation> likeNations;
     public Nation(String iso2, String iso3, int isoN, String countryName, String countryEnName, String continentCode, Integer travelWarning, String warningHistory, String currency) {
         this.iso2 = iso2;
         this.iso3 = iso3;
