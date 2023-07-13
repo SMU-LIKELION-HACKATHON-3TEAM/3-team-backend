@@ -119,7 +119,6 @@ function getImageFiles(e) {
             type: 'POST',
             url: url,
             data: JSON.stringify(postRequestDto),
-            contentType: 'multipart/form-data',
             success: function(response) {
               // console.log(response);
     
