@@ -88,7 +88,9 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         UserReturnDto userReturnDto = UserReturnDto.builder()
                 .email(me.getEmail())
                 .nickName(me.getNickName())
-                .picture(me.getPicture())
+                .userImg(me.getUserImg())
+                .password(me.getPassword())
+                .backgroundImg(me.getBackgroundImg())
                 .build();
 //        if (category.equals("nationLike")){ // 관심 국가 설정은 Post에서 좋아요?
 //        List<NationLike> nationLikes = nationLikeRepository.findAllByuserId(userId);

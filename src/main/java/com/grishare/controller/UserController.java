@@ -83,6 +83,13 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    //회원정보 조회
+    @GetMapping("/myPage")
+    public ResponseEntity<UserReturnDto> getUser(@AuthenticationPrincipal CustomUserDetail customUserDetail){
+        UserReturnDto userReturnDto = userService.getUser(customUserDetail.getUser());
+
+        return ResponseEntity.ok(userReturnDto);
+    }
 
     // 회원정보 수정
     @PutMapping("/myPage")
