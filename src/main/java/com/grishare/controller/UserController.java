@@ -41,7 +41,6 @@ public class UserController {
 
     private final UserServiceImpl userService;
     private final   MailServiceImpl mailService;
-    private final PostServiceImpl postService;
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
