@@ -394,7 +394,7 @@ dropdownD2.addEventListener("change", function() {
     selectedOption = dropdownD2.value;
     $.ajax({
         type: 'GET',
-        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare?division=' + selectedOption,
+        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/' + selectedOption,
         success: function(data) {
             var meal = data.data.meal;
             var taxi = data.data.taxi;
@@ -437,7 +437,7 @@ dropdownD3.addEventListener("change", function() {
     selectedOption = dropdownD3.value;
     $.ajax({
         type: 'GET',
-        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare?division=' + selectedOption,
+        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/' + selectedOption,
         success: function(data) {
             var meal = data.data.meal;
             var transport = data.data.taxi;
