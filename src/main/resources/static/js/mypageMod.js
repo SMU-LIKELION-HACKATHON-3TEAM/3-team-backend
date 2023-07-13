@@ -112,7 +112,9 @@ $('#picture_input').on('change', function() {
 })
 
 const submit = () => {
-
+    console.log($('#input_pw').val());
+    console.log($('#input_id').val());
+    console.log($('#input_nick').val());
     var updatedDate = {
         "userPw": $('#input_pw').val(),
         "userLoginId": $('#input_id').val(),
