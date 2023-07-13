@@ -27,6 +27,6 @@ public class CommentReturnDto {
         this.userName = comment.getUser().getNickName(); // 글쓰기 닉네임표시
         this.contents = comment.getContent();
         this.create_at = comment.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.writerImg = comment.getUser().getUserImg().getImageUrl();
+        this.writerImg = comment.getUser().getUserImg();
     }
 }

@@ -51,7 +51,7 @@ $.ajax({
 /*** 관심국가 ***/
 $.ajax({
     type: 'GET',
-    url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/country/nation/like',
+    url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/nation/like',
     success: function(data) {
         const length = data.data.length;
 
@@ -59,7 +59,7 @@ $.ajax({
         for (i = 0; i < length; i++) {
             const showData = () => {
                 const countryName = data.data[i].countryName;
-                const imgUrl = data.data[i].ImageUrl;
+                const imgUrl = data.data[i].nationImgUrl;
                 const countryCode = data.data[i].countryCode;
 
                 /* 이미지 */
@@ -114,7 +114,7 @@ $.ajax({
             const showData = () => {
                 length = length - 1;
                 const countryName = data.data[length].countryInfo.countryName;
-                const imgUrl = data.data[length].countryInfo.ImageUrl;
+                const imgUrl = data.data[length].countryInfo.nationImgUrl;
                 const contents = data.data[length].contents;
                 const postID = data.data[length].post_id;
                 var createdAt = data.data[length].created_at;
@@ -198,8 +198,8 @@ $.ajax({
                 const writer = data.data[length].userName;
                 // const profileImg = data.data[length].countryInfo.ImageUrl; // 수정 필요
                 const profileImg = "../img/user.png";
-                // const imgUrl = data.data[length].countryInfo.ImageUrl; // 수정 필요
-                const imgUrl = "../img/earth.jpg";
+                const imgUrl = data.data[length].ImageUrl;
+                // const imgUrl = "../img/earth.jpg";
                 const contents = data.data[length].contents;
                 const post_id = data.data[length].post_id;
 

@@ -16,7 +16,7 @@ function onSubmitLogin(){
     }),
     success: function (data) {
       console.log("성공");
-      location.href='../html/mainpage.html';
+      history.back();
       sessionStorage.setItem('loggedIn', 'true');
 
     },
