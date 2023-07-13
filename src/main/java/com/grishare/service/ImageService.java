@@ -55,6 +55,8 @@ public class ImageService {
 
         String relativePath = makeRelativePath(domainName, domainId, image);
         String entireFilePath = getAbsolutePath() + relativePath;
+        System.out.println(entireFilePath);
+        System.out.println(System.getProperty("user.dir"));
         try {
             File convertFile = new File(entireFilePath);
 
