@@ -16,9 +16,9 @@ public class UserReturnDto {
     private String email;
     private String userName;
     private String nickName;
-    private UserImage userImg;
+    private String userImg;
     private String password;
-    private BackImage backgroundImg;
+    private String backgroundImg;
 
 
     // 관심 국가
@@ -28,10 +28,10 @@ public class UserReturnDto {
     public UserReturnDto(User user){
         this.email = user.getEmail();
         this.nickName = user.getNickName();
-        this.userImg = user.getUserImg();
+        this.userImg = user.getUserImg().getImageUrl();
         this.id =user.getId();
         this.userName = user.getUserName();
-        this.backgroundImg = user.getBackgroundImg();
+        this.backgroundImg = user.getBackgroundImg().getImageUrl();
         this.password = user.getPassword();
 
     }
