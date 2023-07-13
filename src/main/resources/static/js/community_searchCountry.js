@@ -209,13 +209,10 @@ $(document).ready(function() {
           if(!is_clicked_likes){
             $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_red.png");
             is_clicked_likes = true;
-            var likesCount = parseInt($likes.text()) + 1;
-            $likes.text(likesCount);
+            
           }else{
             $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_.png");
             is_clicked_likes = false;
-            var likesCount = parseInt($likes.text()) - 1;
-            $likes.text(likesCount);
           }
 
           $.ajax({
@@ -303,7 +300,30 @@ $(document).ready(function() {
           event.stopPropagation();
           $(`#share${id_num}`).click();
         });
+        $(document).ready(function() {
+          var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/nation';
+          $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: url,
+            success: function(data) {
+              
+              for (var i = 0; i < data.data.length; i++) {
+                var nationId = data.data[i].nationId;
+                var nationName = data.data[i].nationName;
+                
+                console.log("nationId:", nationId);
+                console.log("nationName:", nationName);
+                
+                // <select> 요소에 옵션 추가
+                var $select = $('#wrap_search_country');
+                var $option = $("<option>").attr("value", nationId).text(nationName);
+                $select.append($option);
+              }
       
+        
+            }})
+          })
 
 
         

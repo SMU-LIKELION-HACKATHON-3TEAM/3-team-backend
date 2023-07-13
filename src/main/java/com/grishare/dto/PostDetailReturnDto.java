@@ -30,7 +30,7 @@ public class PostDetailReturnDto {
     private int comment_count;
 
     private List<CommentReturnDto> comment;
-    private List<String> imgUrl;
+    private String imgUrl;
 
     public PostDetailReturnDto(Post post, LikeReturnDto likeReturnDto) {
         this.post_id = post.getId();
@@ -43,6 +43,6 @@ public class PostDetailReturnDto {
         this.like_count = likeReturnDto.getLike_count();
         this.comment_count = post.getComments() == null ? 0 : post.getComments().size();
         this.comment = post.getComments().stream().map(CommentReturnDto::new).collect(Collectors.toList());
-        this.imgUrl = post.getPostImages() == null ? null : post.getPostImages().stream().map(PostImage::getImageUrl).collect(Collectors.toList());
+        this.imgUrl = post.getPostImage() == null ? null : post.getPostImage().getImageUrl();
     }
 }

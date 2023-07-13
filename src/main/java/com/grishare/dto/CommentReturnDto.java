@@ -2,7 +2,6 @@ package com.grishare.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.grishare.domain.Comment;
-import com.grishare.domain.image.UserImage;
 import lombok.*;
 
 import java.time.format.DateTimeFormatter;
@@ -17,7 +16,7 @@ public class CommentReturnDto {
     private String contents;
     private String userName;
     private String writerImg;
-    private String create_at;
+    private String created_at;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<CommentReturnDto> childCommentList;
@@ -26,7 +25,7 @@ public class CommentReturnDto {
         this.comment_id = comment.getId();
         this.userName = comment.getUser().getNickName(); // 글쓰기 닉네임표시
         this.contents = comment.getContent();
-        this.create_at = comment.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.writerImg = comment.getUser().getUserImg();
+        this.created_at = comment.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.writerImg = comment.getUser().getUserImg() == null ? "" : comment.getUser().getUserImg().getImageUrl();
     }
 }
