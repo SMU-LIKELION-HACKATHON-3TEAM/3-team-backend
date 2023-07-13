@@ -1,5 +1,30 @@
 var uploadFiles = [];
 
+$(document).ready(function() {
+  var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/nation';
+  $.ajax({
+    type: 'GET',
+    dataType: 'json',
+    url: url,
+    success: function(data) {
+      
+      for (var i = 0; i < data.data.length; i++) {
+        var nationId = data.data[i].nationId;
+        var nationName = data.data[i].nationName;
+        
+        console.log("nationId:", nationId);
+        console.log("nationName:", nationName);
+        
+        // <select> 요소에 옵션 추가
+        var $select = $('#wrap_newPost_country');
+        var $option = $("<option>").attr("value", nationId).text(nationName);
+        $select.append($option);
+      }
+
+
+    }})
+  })
+
 function getImageFiles(e) {
     const files = e.currentTarget.files;
     const imagePreview = document.querySelector(".image-preview");
@@ -126,8 +151,8 @@ function getImageFiles(e) {
           });
         });
         alert('등록되었습니다.');
-        // var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
-        // window.location.href = url;
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
+        window.location.href = url;
       }
     });
 
