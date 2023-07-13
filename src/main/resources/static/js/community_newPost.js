@@ -112,7 +112,7 @@ function getImageFiles(e) {
             title: title,
             content: contents
           };
-          var url = `/api/post/${nationId}`;
+          var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/html/api/post/${nationId}`;
     
           $.ajax({
             type: 'POST',
