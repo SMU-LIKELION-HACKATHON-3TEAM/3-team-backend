@@ -66,6 +66,8 @@ public class UserServiceImpl implements UserDetailsService , UserService {
                 .userLoginId(registerRequestDto.getUserLoginId())
                 .birthDay(registerRequestDto.getBirthDay())
                 .nickName(registerRequestDto.getNickName())
+                .userImg("")
+                .backgroundImg("")
                 .build();
         UserReturnDto userReturnDto = new UserReturnDto(user); // userReturnDto 수정 필ㅑ
 
@@ -84,10 +86,10 @@ public class UserServiceImpl implements UserDetailsService , UserService {
                 .email(me.getEmail())
                 .nickName(me.getNickName())
 //                .userImg(me.getUserImg())
-                .userImg(me.getUserImg().getImageUrl())
+                .userImg(me.getUserImg())
                 .password(me.getPassword())
                 .userName(me.getUserName())
-                .backgroundImg(me.getBackgroundImg().getImageUrl())
+                .backgroundImg(me.getBackgroundImg())
                 .build();
 //        if (category.equals("nationLike")){ // 관심 국가 설정은 Post에서 좋아요?
 //        List<NationLike> nationLikes = nationLikeRepository.findAllByuserId(userId);

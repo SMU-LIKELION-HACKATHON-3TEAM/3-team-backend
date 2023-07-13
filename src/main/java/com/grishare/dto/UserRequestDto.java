@@ -14,8 +14,6 @@ public class UserRequestDto {
     private String password;
     private String nickName;
     private String userLoginId;
-
-
     private String userName;
 
 
