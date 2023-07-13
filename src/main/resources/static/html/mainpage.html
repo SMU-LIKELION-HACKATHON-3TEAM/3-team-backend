@@ -188,15 +188,13 @@
                       type: 'GET',
                       url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/nation/${item}`,
                       success: function(data) {
-                          $.each(data.data, function (index, item) {
-                                console.log(item);
-                                console.log(item.nationName);
-                                console.log(item.nationWarning);
-                              var $nationWarning = $('<div>').addClass('nationWarning').text(item);
-                              var $nationName = $('<div>').addClass('natioinName').text(item.data.nationName);
+                                console.log(data);
+                                console.log(data.data);
+                              var $nationWarning = $('<div>').addClass('nationWarning').text(data.data.nationName);
+                              var $nationName = $('<div>').addClass('natioinName').text(data.data.nationWarning);
                   
                               $('#wrap-danger').append($nationWarning).append($nationName)
-                          });
+                          
                       },
                       error: function() {
                           alert('통신 실패시에만 실행');
