@@ -128,18 +128,27 @@ dropdownC1.addEventListener("change", function() {
         type: 'GET',
         url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/division/' + selectedOption,
         success: function(data) {
-            const length = data.data.length;
 
-            var i;
-            for (i = 0; i < length; i++) {
+            try {
+                const length = data.data.length;
 
-                const ADName = data.data[i].adName;
-                const code = data.data[i].adId;
+                var i;
+                for (i = 0; i < length; i++) {
 
+                    const ADName = data.data[i].adName;
+                    const code = data.data[i].adId;
+
+                    let divisionList = document.querySelector(".division1");
+                    let division = document.createElement("option");
+                    division.setAttribute("value", code);
+                    division.innerHTML = ADName;
+                    divisionList.appendChild(division);
+                }
+            } catch {
                 let divisionList = document.querySelector(".division1");
                 let division = document.createElement("option");
-                division.setAttribute("value", code);
-                division.innerHTML = ADName;
+                division.setAttribute("value", "none");
+                division.innerHTML = "지역 정보가 없습니다.";
                 divisionList.appendChild(division);
             }
         },
@@ -215,19 +224,26 @@ dropdownC2.addEventListener("change", function() {
         type: 'GET',
         url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/division/' + selectedOption,
         success: function(data) {
+            try {
+                const length = data.data.length;
 
-            const length = data.data.length;
+                var i;
+                for (i = 0; i < length; i++) {
 
-            var i;
-            for (i = 0; i < length; i++) {
+                    const ADName = data.data[i].adName;
+                    const code = data.data[i].adId;
 
-                const ADName = data.data[i].adName;
-                const code = data.data[i].adId;
-
+                    let divisionList = document.querySelector(".division2");
+                    let division = document.createElement("option");
+                    division.setAttribute("value", code);
+                    division.innerHTML = ADName;
+                    divisionList.appendChild(division);
+                }
+            } catch {
                 let divisionList = document.querySelector(".division2");
                 let division = document.createElement("option");
-                division.setAttribute("value", code);
-                division.innerHTML = ADName;
+                division.setAttribute("value", "none");
+                division.innerHTML = "지역 정보가 없습니다.";
                 divisionList.appendChild(division);
             }
         },
@@ -303,19 +319,27 @@ dropdownC3.addEventListener("change", function() {
         type: 'GET',
         url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/compare/division/' + selectedOption,
         success: function(data) {
+            try {
+                const length = data.data.length;
 
-            const length = data.data.length;
+                var i;
+                for (i = 0; i < length; i++) {
 
-            var i;
-            for (i = 0; i < length; i++) {
+                    const ADName = data.data[i].adName;
+                    const code = data.data[i].adId;
 
-                const ADName = data.data[i].adName;
-                const code = data.data[i].adId;
+                    let divisionList = document.querySelector(".division3");
+                    let division = document.createElement("option");
+                    division.setAttribute("value", code);
+                    division.innerHTML = ADName;
+                    divisionList.appendChild(division);
+                }
 
+            } catch {
                 let divisionList = document.querySelector(".division3");
                 let division = document.createElement("option");
-                division.setAttribute("value", code);
-                division.innerHTML = ADName;
+                division.setAttribute("value", "none");
+                division.innerHTML = "지역 정보가 없습니다.";
                 divisionList.appendChild(division);
             }
         },
@@ -332,6 +356,7 @@ dropdownC3.addEventListener("change", function() {
 /* 물가 찾기1 */
 var dropdownD1 = document.getElementById("division1");
 dropdownD1.addEventListener("change", function() {
+
     /* 차트, 물가 초기화 */
     barChartData.datasets[0].data[0] = 0;
     barChartData.datasets[0].data[1] = 0;
@@ -339,9 +364,16 @@ dropdownD1.addEventListener("change", function() {
     barChartData.datasets[0].data[3] = 0;
     window.theChart.update();
     average1 = 100000000;
-    averageCalc();
+
+    if (!(((average1 == average2) && (average2 == average3)) && (average1 == 100000000))) {
+        averageCalc();
+    }
 
     if (dropdownD1.selectedIndex == 0) {
+        return;
+    }
+
+    if (dropdownD1.value == "none") {
         return;
     }
 
@@ -385,7 +417,18 @@ dropdownD2.addEventListener("change", function() {
     barChartData.datasets[1].data[3] = 0;
     window.theChart.update();
     average2 = 100000000;
-    averageCalc();
+
+    if (!(((average1 == average2) && (average2 == average3)) && (average1 == 100000000))) {
+        averageCalc();
+    }
+
+    if (dropdownD2.selectedIndex == 0) {
+        return;
+    }
+
+    if (dropdownD2.value == "none") {
+        return;
+    }
 
     if (dropdownD2.selectedIndex == 0) {
         return;
@@ -428,7 +471,18 @@ dropdownD3.addEventListener("change", function() {
     barChartData.datasets[2].data[3] = 0;
     window.theChart.update();
     average3 = 100000000;
-    averageCalc();
+
+    if (!(((average1 == average2) && (average2 == average3)) && (average1 == 100000000))) {
+        averageCalc();
+    }
+
+    if (dropdownD3.selectedIndex == 0) {
+        return;
+    }
+
+    if (dropdownD3.value == "none") {
+        return;
+    }
 
     if (dropdownD3.selectedIndex == 0) {
         return;
@@ -470,6 +524,8 @@ var barChartData = {
     datasets: [{
         label: '나라1',
         backgroundColor: "#F87DC0",
+        maxBarThickness: 50,
+        borderRadius: 10,
         data: [
             0,
             0,
@@ -479,6 +535,8 @@ var barChartData = {
     }, {
         label: '나라2',
         backgroundColor: "#83A07F",
+        maxBarThickness: 50,
+        borderRadius: 10,
         data: [
             0,
             0,
@@ -488,6 +546,8 @@ var barChartData = {
     }, {
         label: '나라3',
         backgroundColor: "#F5D8A0",
+        maxBarThickness: 50,
+        borderRadius: 10,
         data: [
             0,
             0,
@@ -504,28 +564,34 @@ window.onload = function() {
         data: barChartData,
         options: {
             responsive: false,
-            legend: {
-                display: false
+            plugins: {
+                legend: {
+                    display: false
+                }
             },
             scales: {
-                xAxes: [{
+                x: {
                     ticks: {
-                        fontColor: 'rgba(12, 13, 13, 1)',
-                        fontSize: 24
+                        color: 'rgba(12, 13, 13, 1)',
+                        font: {
+                            size: 24
+                        }
                     },
-                    gridLines: {
+                    grid: {
                         display: false
                     }
-                }],
-                yAxes: [{
+                },
+                y: {
                     ticks: {
                         beginAtZero: true,
-                        fontSize: 16
+                        font: {
+                            size: 20
+                        }
                     },
-                    gridLines: {
+                    grid: {
                         display: false
                     }
-                }]
+                }
             }
         }
     });
