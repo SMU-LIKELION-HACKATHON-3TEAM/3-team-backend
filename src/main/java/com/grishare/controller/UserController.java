@@ -122,8 +122,8 @@ public class UserController {
     }
     // 내가 쓴 글 목록 전체 보기
     @GetMapping("/myPost")
-    public BaseResponse<List<PostReturnDto>> getMyPosts (@AuthenticationPrincipal CustomUserDetail customUserDetail){
-        List<PostReturnDto> myPostList = userService.getMyPost(customUserDetail.getUser().getId());
+    public BaseResponse<List<PostReturnDto.naitonInfo>> getMyPosts (@AuthenticationPrincipal CustomUserDetail customUserDetail){
+        List<PostReturnDto.naitonInfo> myPostList = userService.getMyPost(customUserDetail.getUser().getId());
         return BaseResponse.ok(myPostList);
     }
     // 스크랩한 글 조회

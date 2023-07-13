@@ -41,4 +41,19 @@ public class PostReturnDto {
         this.comment_count = post.getComments() == null ? 0 : post.getComments().size();
         this.imgUrl = post.getPostImageUrl();
     }
+
+    @Getter
+    public static class naitonInfo extends PostReturnDto {
+        public String countryName;
+        public String imageUrl;
+
+        public naitonInfo(Post post) {
+            super(post);
+            this.countryName = post.getNation().getCountryName();
+            this.imageUrl = post.getNation().getNationImgUrl();
+        }
+
+    }
+
+
 }
