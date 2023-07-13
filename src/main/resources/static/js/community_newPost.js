@@ -121,7 +121,7 @@ function getImageFiles(e) {
             data: JSON.stringify(postRequestDto),
             contentType: 'application/json',
             success: function(response) {
-              console.log(response);
+              // console.log(response);
     
               // 이미지 첨부
               var imageFile = uploadFiles[0];
@@ -135,7 +135,7 @@ function getImageFiles(e) {
                 contentType: 'multipart/form-data',
                 processData: false,
                 success: function(response) {
-                  console.log(response);
+                  // console.log(response);
                   alert('등록되었습니다.');
                   var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
                   window.location.href = url;

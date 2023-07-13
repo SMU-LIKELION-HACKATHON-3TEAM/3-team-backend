@@ -21,14 +21,14 @@ var postId = localStorage.getItem('postid');
 
 $(document).ready(function() {
     var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}`;
-    console.log(url);
+    // console.log(url);
     $.ajax({
       type: 'GET',
       dataType: 'json',
       url: url,
       success: function(data) {
-          console.log("reply connecting");
-          console.log(data);
+          // console.log("reply connecting");
+          // console.log(data);
         
           var createdAt = new Date(data.data.created_at);
           var currentTime = new Date();
@@ -76,7 +76,7 @@ $(document).ready(function() {
           $comment_box.append($comment_commit);
 
           $.each(data.data.comment, function(index, item) {
-            console.log(item);
+            // console.log(item);
             var $comment_userIcon = $('<div>').addClass('comment_userIcon');
             var $comment_userbox = $('<div>').addClass('comment_userbox');
 
@@ -122,9 +122,9 @@ $(document).ready(function() {
             $.ajax({
               type: 'POST',
               dataType: 'json',
-              url: `/api/posts/${postId}/report`,
+              url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/report`,
               success: function(data) {
-                  console.log("report connecting");
+                  // console.log("report connecting");
               }});
 
           });
@@ -144,7 +144,7 @@ $(document).ready(function() {
           $('.likes_image').click(function(event) {
             var id_num = event.target.id.match(/\d+/)[0];
             var postId = id_num;
-            console.log(postId); // 이따 체크
+            // console.log(postId); // 이따 체크
             
             event.stopPropagation();
 
@@ -162,9 +162,9 @@ $(document).ready(function() {
             $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: `/api/posts/${postId}/like`,
+            url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/like`,
             success: function(data) {
-                console.log("like connecting"); //이부분 필요한건가?
+                // console.log("like connecting"); //이부분 필요한건가?
                 
                 }
             });
@@ -189,10 +189,10 @@ $(document).ready(function() {
             $.ajax({
               type: 'POST',
               dataType: 'json',
-              url: `/api/posts/${postId}/scrap`,
+              url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/scrap`,
               data : { json: JSON.stringify( jsonData ) },
               success: function(data) {
-                  console.log("scrap connecting");
+                  // console.log("scrap connecting");
                 }})
           });
 
@@ -250,7 +250,7 @@ $(document).ready(function() {
     $(".comment_commit").click(function() {
       var comment_post_comment = $('.comment_post_comment').val();
       
-      console.log(comment_post_comment);  //여기 해보기
+      // console.log(comment_post_comment);  //여기 해보기
 
       if (comment_post_comment === ""){
           alert("내용을 입력해 주세요.");
@@ -265,7 +265,7 @@ $(document).ready(function() {
 
         $(document).ready(function() {
 
-          var url = `/api/posts/${postId}/comment`;
+          var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/comment`;
           
           $.ajax({
             type: 'POST',
@@ -273,7 +273,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(commentData),
             success: function(response){
-              console.log(response);
+              // console.log(response);
             },
           }); 
         })}
@@ -281,7 +281,7 @@ $(document).ready(function() {
 
            },error: function() {
             // alert('통신 실패시에만 실행');
-            console.log("왜 실패?");
+            // console.log("왜 실패?");
         }
           
           });
