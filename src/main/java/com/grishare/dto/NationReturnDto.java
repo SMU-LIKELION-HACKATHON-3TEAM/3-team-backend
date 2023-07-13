@@ -33,6 +33,8 @@ public class NationReturnDto {
     private String currency;
     private int like_count;
 
+    private String nationImgUrl;
+
     public NationReturnDto(Nation nation){
         this.id = nation.getId();
         this.iso2 = nation.getIso2();
@@ -45,5 +47,6 @@ public class NationReturnDto {
         this.warningHistory = nation.getWarningHistory();
         this.currency = nation.getCurrency();
         this.like_count = nation.getLikeNations().size();
+        this.nationImgUrl = nation.getNationImgUrl();
     }
 }
