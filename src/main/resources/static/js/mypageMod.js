@@ -1,5 +1,6 @@
 /********** AJAX **********/
 /*** 회원 정보 ***/
+var pw = "";
 $.ajax({
     type: 'GET',
     url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/myPage',
@@ -10,7 +11,7 @@ $.ajax({
             const email = data.data.email;
             const nick = data.data.nickName;
             const id = data.data.id;
-            const pw = data.data.password;
+            pw = data.data.password;
             const picture = data.data.userImg;
             const backImg = data.data.backgroundImg;
 
@@ -151,7 +152,7 @@ const submit = () => {
 const sendUpdateRequest = (updatedDate) => {
     $.ajax({
         type: 'PUT',
-        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/mypage',
+        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/myPage',
         contentType: 'application/json',
         data: JSON.stringify(updatedDate),
         success: function() {
