@@ -119,7 +119,6 @@ function getImageFiles(e) {
             type: 'POST',
             url: url,
             data: JSON.stringify(postRequestDto),
-            contentType: 'application/json',
             success: function(response) {
               // console.log(response);
     
@@ -131,11 +130,10 @@ function getImageFiles(e) {
               $.ajax({
                 type: 'POST',
                 url: url,
-                data: form,
+                data: formData,
                 contentType: false,
                 processData: false,
-                headers: {
-                  'Authorization': 'Bearer ' + yourAccessToken},
+                enctype: 'multipart/form-data',
                 success: function(response) {
                   // console.log(response);
                   alert('등록되었습니다.');
