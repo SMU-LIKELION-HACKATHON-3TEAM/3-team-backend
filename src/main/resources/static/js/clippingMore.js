@@ -6,11 +6,7 @@ $.ajax({
         var length = data.data.length;
 
         /* 최신 2개만 조회 */
-        var forNum;
-        if ((length > 2) || (length == 2))
-            forNum = 2;
-        else
-            forNum = length;
+        var forNum = length;
 
         var i;
         for (i = 0; i < forNum; i++) {
@@ -18,7 +14,7 @@ $.ajax({
                 length = length - 1;
                 const writer = data.data[length].userName;
                 const profileImg = data.data[length].userImg;
-                const imgUrl = data.data[length].ImgUrl;
+                const imgUrl = data.data[length].imgUrl;
                 const contents = data.data[length].contents;
                 const post_id = data.data[length].post_id;
 
@@ -55,16 +51,20 @@ $.ajax({
                 post_content.setAttribute("class", "post_content");
                 clipping.appendChild(post_content);
 
+                let post_func = document.createElement("div");
+                post_func.setAttribute("class", "post_func");
+                clipping.appendChild(post_func);
+
                 /* 데이터 넣기 */
 
                 /* infor */
                 /* 유저 프로필 */
                 /* 이미지 있어? 없으면 기본 넣어 */
-                let profilImgge = document.createElement("img");
+                let profileImage = document.createElement("img");
                 if (profileImg == "") {
-                    img.src = "../img/Default_Profile.png";
+                    profileImage.src = "../img/Default_Profile.png";
                 } else {
-                    img.src = profileImg;
+                    profileImage.src = profileImg;
                 }
 
                 let p_writer = document.createElement("p");
@@ -95,7 +95,7 @@ $.ajax({
                     p_time.innerHTML = diffM + "년 전";
                 }
 
-                post_infor.appendChild(profilImgge);
+                post_infor.appendChild(profileImage);
                 post_infor.appendChild(p_writer);
                 post_infor.appendChild(p_time);
 

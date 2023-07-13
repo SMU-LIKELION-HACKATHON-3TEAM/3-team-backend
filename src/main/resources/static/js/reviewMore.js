@@ -7,18 +7,14 @@ $.ajax({
         var length = data.data.length;
 
         /* 최신 2개만 조회 */
-        var forNum;
-        if ((length > 2) || (length == 2))
-            forNum = 2;
-        else
-            forNum = length;
+        var forNum = length;
 
         var i;
         for (i = 0; i < forNum; i++) {
             const showData = () => {
                 length = length - 1;
-                const countryName = data.data[length].countryInfo.countryName;
-                const imgUrl = data.data[length].countryInfo.ImageUrl;
+                const countryName = data.data[length].countryName;
+                const imgUrl = data.data[length].imageUrl;
                 const contents = data.data[length].contents;
                 const postID = data.data[length].post_id;
                 var createdAt = data.data[length].created_at;

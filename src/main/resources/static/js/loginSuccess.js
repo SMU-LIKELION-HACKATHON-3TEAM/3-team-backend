@@ -53,7 +53,7 @@ $(document).ready(function(){
         //로그아웃 누르면 세션아이디삭제되도록
         $(".logout_logo").on('click', function () {
             sessionStorage.setItem('loggedIn', 'false');
-            location.href = '../html/login.html';
+            location.href = '../html/mainpage.html';
         });
 
     } else {
