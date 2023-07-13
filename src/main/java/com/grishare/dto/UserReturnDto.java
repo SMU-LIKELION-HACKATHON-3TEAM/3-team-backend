@@ -28,10 +28,10 @@ public class UserReturnDto {
     public UserReturnDto(User user){
         this.email = user.getEmail();
         this.nickName = user.getNickName();
-        this.userImg = user.getUserImg().getImageUrl();
+        this.userImg = user.getUserImg();
         this.id =user.getId();
         this.userName = user.getUserName();
-        this.backgroundImg = user.getBackgroundImg().getImageUrl();
+        this.backgroundImg = user.getBackgroundImg();
         this.password = user.getPassword();
 
     }
