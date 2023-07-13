@@ -52,7 +52,7 @@ $(document).ready(function() {
         console.log(data);
 
         $.each(data.data, function(index, item) {
-          var createdAt = new Date(item.create_at);
+          var createdAt = new Date(item.created_at);
           var currentTime = new Date();
           var timeDiff = Math.floor((currentTime - createdAt) / (1000 * 60));
           var timeText = timeDiff + "분 전";
@@ -193,7 +193,7 @@ $(document).ready(function() {
           dataType: 'json',
           url: `/api/posts/${postId}/like`,
           success: function(data) {
-              console.log("like connecting"); //이부분 필요한건가?
+              console.log("like connecting");
               
               }
           });
