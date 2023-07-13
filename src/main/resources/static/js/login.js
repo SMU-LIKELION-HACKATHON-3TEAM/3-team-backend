@@ -18,7 +18,6 @@ function onSubmitLogin(){
       console.log("성공");
       history.back();
       sessionStorage.setItem('loggedIn', 'true');
-
     },
     error: function (request, status, error) {
       alert(
