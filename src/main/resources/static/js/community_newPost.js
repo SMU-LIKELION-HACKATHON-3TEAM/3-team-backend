@@ -131,9 +131,11 @@ function getImageFiles(e) {
               $.ajax({
                 type: 'POST',
                 url: url,
-                data: formData,
-                contentType: 'multipart/form-data',
+                data: form,
+                contentType: false,
                 processData: false,
+                headers: {
+                  'Authorization': 'Bearer ' + yourAccessToken},
                 success: function(response) {
                   // console.log(response);
                   alert('등록되었습니다.');
