@@ -26,7 +26,7 @@ function onSubmitSignup(){
         userName: userName,
         nickName: nickName,
         birthDay: birthDay,
-        picture:"",
+        userImg:"",
         backgroundImg:"",
 
 
@@ -35,7 +35,7 @@ function onSubmitSignup(){
         alert("회원가입 성공");
         console.log("회원가입 성공");
         console.log(data);
-        location.href='../html/mainpage.html';
+        location.href='../html/login.html';
       },
       error: function (request, status, error) {
         alert(
