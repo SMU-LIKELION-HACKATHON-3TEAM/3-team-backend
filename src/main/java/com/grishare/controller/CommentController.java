@@ -1,5 +1,6 @@
 package com.grishare.controller;
 
+import com.grishare.base.BaseResponse;
 import com.grishare.domain.Comment;
 import com.grishare.domain.Post;
 import com.grishare.domain.user.CustomUserDetail;
@@ -20,15 +21,13 @@ public class CommentController {
 
     private final CommentServiceImpl commentService;
     @PostMapping("posts/{nationId}/{postId}/comment")
-    public ResponseEntity<CommentReturnDto> createComment(@PathVariable("postId") Long postId,
-                                                          @RequestBody CommentRequestDto commentDto,
-                                                          @AuthenticationPrincipal CustomUserDetail customUserDetail) {
+    public BaseResponse<CommentReturnDto> createComment(@PathVariable("postId") Long postId,
+                                                        @RequestBody CommentRequestDto commentDto,
+                                                        @AuthenticationPrincipal CustomUserDetail customUserDetail) {
         commentDto.setWriter(customUserDetail.getUser());
         commentDto.setPostId(postId);
         try {
-            ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(commentService.createComment(commentDto));
+            BaseResponse.ok(commentService.createComment(commentDto));
         }catch (Exception e){
             e.printStackTrace();
 
