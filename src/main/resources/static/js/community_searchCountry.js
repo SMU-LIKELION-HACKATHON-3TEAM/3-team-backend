@@ -17,7 +17,10 @@
     });
 
 
-// 메인 API 만들어지면 JSON으로 처리
+
+
+
+
 $(document).ready(function() {
   $("#wrap_search_country").change(function() {
     var nationId = $(this).val();
@@ -94,9 +97,36 @@ $(document).ready(function() {
 
           $postContainer.append($postIcon).append(resultElement).append($userName).append($postContent).append($file_only).append($views).append($likes).append($likes_image).append($comment).append($comment_image).append($scrap).append($scrap_image).append($share).append($share_image).append($report).trigger("create");
         
-          $('#wrap_community').append($postContainer);
+          $('#wrap_country_box').append($postContainer);
           
         });
+
+        //reply 창으로 넘기기
+        $('#wrap_country_box').on('click', '.post-container', function(event) {
+          var postid = $(event.target).attr("data-postid");
+
+          localStorage.setItem('postid', postid); //이거 메인 커뮤니티 화면에서는 nationId가 없지 않나
+                                                      // 나라 드롭박스 부분은 countrySearch 화면인데 그러면 메인 -> reply일 때는 어케해야?
+
+          var is_clicked_post_container = localStorage.getItem('is_clicked_post_container');
+
+          if (is_clicked_post_container === null) {
+            is_clicked_post_container = '1';
+          }
+          
+          if(is_clicked_post_container === '1'){
+            is_clicked_post_container = '0';
+            localStorage.setItem('is_clicked_post_container',is_clicked_post_container);
+            var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_comment.html';
+            window.location.href = url;
+
+          }else{
+            is_clicked_post_container = '1';
+            localStorage.setItem('is_clicked_post_container',is_clicked_post_container);
+          }
+
+        });
+
 
         //신고
         let is_clicked_report = false;
@@ -104,11 +134,12 @@ $(document).ready(function() {
         $('.report').click(function(event) {
           
           var id_num = event.target.id.match(/\d+/)[0];
+          var postId = id_num;
           event.stopPropagation();
         
           if (!is_clicked_report) {
-            var $overlay = $('<div>').addClass('overlay');
-            $('body').append($overlay);
+            // var $overlay = $('<div>').addClass('overlay');
+            // $('body').append($overlay);
             
             var $report_click = $('<div>').addClass('report_click').text("신고하기");
         
@@ -117,13 +148,23 @@ $(document).ready(function() {
 
           } else {
             $(`#report${id_num}`).find('.report_click').remove();
-            $('.overlay').remove();
+            // $('.overlay').remove();
             is_clicked_report = false;
           }
+          
+          $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: `/api/posts/${postId}/report`,
+            success: function(data) {
+                console.log("report connecting");
+            }});
+  
         });
         
         $(document).on('click', '.report_click', function() {
           alert("신고되었습니다.");
+          localStorage.setItem('is_clicked_report',"1");
           var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_searchCountry.html';
         
           window.location.href = url;
@@ -132,9 +173,12 @@ $(document).ready(function() {
 
         // 좋아요
         let is_clicked_likes = false;
-        
-        $('.likes_image').click(function(event){
+
+        $('.likes_image').click(function(event) {
           var id_num = event.target.id.match(/\d+/)[0];
+          var postId = id_num;
+          console.log(postId); // 이따 체크
+          
           event.stopPropagation();
 
           if(!is_clicked_likes){
@@ -144,20 +188,27 @@ $(document).ready(function() {
             $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_.png");
             is_clicked_likes = false;
           }
+
+          $.ajax({
+          type: 'POST',
+          dataType: 'json',
+          url: `/api/posts/${postId}/like`,
+          success: function(data) {
+              console.log("like connecting"); //이부분 필요한건가?
+              
+              }
+          });
         });
 
+      
         //스크랩
         let is_clicked_scrap = false;
           
         $('.scrap_image').click(function(event){
-          
           var id_num = event.target.id.match(/\d+/)[0];
+          var postId = id_num;
           event.stopPropagation();
 
-          
-          // // 이거 뭘로보내야하지
-          // localStorage.setItem('postid', post_id);
-          
           if(!is_clicked_scrap){
             $(`#scrap_image${id_num}`).attr("src", "../img/icon _yellow_star outline_.png");
             is_clicked_scrap = true;
@@ -165,6 +216,15 @@ $(document).ready(function() {
             $(`#scrap_image${id_num}`).attr("src", "../img/icon _star outline_.png");
             is_clicked_scrap = false;
           }
+
+          $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: `/api/posts/${postId}/scrap`,
+            data : { json: JSON.stringify( jsonData ) },
+            success: function(data) {
+                console.log("scrap connecting");
+              }})
         });
 
         

@@ -16,22 +16,22 @@ import java.util.Collection;
 public class ReportPostRequestDto {
 
     private Post post;
-//    private User writer;
+    private User writer;
     private String reason;
 
-//    public ReportPost toEntity(Post post, User writer) {
-//        ReportPost reportPost = new ReportPost(
-//                this.post = post,
-//                this.writer = writer,
-//                this.reason
-//        );
-//        return reportPost;
-//    }
-    public ReportPost toEntity(Post post) {
+    public ReportPost toEntity(Post post, User writer) {
         ReportPost reportPost = new ReportPost(
                 this.post = post,
+                this.writer = writer,
                 this.reason
         );
         return reportPost;
     }
+//    public ReportPost toEntity(Post post) {
+//        ReportPost reportPost = new ReportPost(
+//                this.post = post,
+//                this.reason
+//        );
+//        return reportPost;
+//    }
 }

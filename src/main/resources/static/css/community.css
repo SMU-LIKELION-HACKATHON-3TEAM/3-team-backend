@@ -629,6 +629,9 @@ i.fas.fa-pen {
 
 }
 
+#wrap_country_box{
+  cursor: pointer;
+}
 
 /* search_community나라 배너 (API 나오면) + cm.js, cm_SearchCountry, cm_reply 데이터 받아와야댐 + 좋아요, 댓글 수 업다운, 스크랩 백엔드 상호작용, 공유는?/
 

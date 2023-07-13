@@ -11,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class QuoteADReturnDto {
 
-    public char adCode;
+    public Long adId;
 
-    public char adName;
+    public String adName;
 
 }

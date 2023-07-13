@@ -1,5 +1,5 @@
 function getImageFiles(e) {
-    const uploadFiles = [];
+    var uploadFiles = [];
     const files = e.currentTarget.files;
     const imagePreview = document.querySelector(".image-preview");
     const docFrag = new DocumentFragment();
@@ -31,9 +31,13 @@ function getImageFiles(e) {
         };
         reader.readAsDataURL(file);
       }
+      
     });
+    
+
   }
-  
+
+
   function createElement(e, file) {
     const li = document.createElement("li");
     const img = document.createElement("img");
@@ -50,55 +54,101 @@ function getImageFiles(e) {
   
   upload.addEventListener("click", () => wrap_newPost_file.click());
   wrap_newPost_file.addEventListener("change", getImageFiles);
-  
 
-  $('#wrap_newPost_country').keyup(function(event) {
-    if (event.key === 'Enter') {
-      var url = 'http://127.0.0.1:5500/html/community_searchCountry.html';
-  
-      window.location.href = url;
-    }});
+//  여기부터
 
-  // 값 백엔드로 보내기
-  
   $(document).ready(function() {
-    var title = "제목";
-    var content = "내용";
-  
-    var data = {
-      title: title,
-      content: content
-    };
-  
-    var url = '/api/post/{countryCode}';
-  
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: JSON.stringify(data),
-      success: function(response) {
-        console.log(response);
-      },
+      $("#wrap_newPost_country").change(function() {
+        var nationId = $(this).val();
+        localStorage.setItem('nationId', nationId);
+
+      });
     });
-  });
+
+    // 값 백엔드로 보내기
+    //nationId 를 작성할 때 무조건 선택하게
+
+    $("#wrap_newPost_save").click(function() {
+      var title = $('#wrap_newPost_head').val();
+      var contents = $('#wrap_newPost_content').val();
+      var nationId = localStorage.getItem('nationId');
+
+      if (nationId === "main" || title === "" || contents === ""){
+        if (nationId === "main") {
+          alert("나라를 선택해 주세요.");
+          var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_post.html';
+          window.location.href = url;
+        } else if (title === "") {
+            alert("제목을 입력해 주세요.");
+            var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_post.html';
+            window.location.href = url;
+        } else if (contents === "") {
+            alert("내용을 입력해 주세요.");
+            var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_post.html';
+            window.location.href = url;
+        }
+      } else {
+
+        $(document).ready(function() {    
+          var title = $('#wrap_newPost_head').val();
+          var contents = $('#wrap_newPost_content').val();
+          var postRequertDto = {
+            title: title,
+            content: contents
+          };
+          var url = `/api/post/${nationId}`;
+        
+          $.ajax({
+            type: 'POST',
+            url: url,
+            data: JSON.stringify(postRequertDto),
+            contentType : 'application/json',
+            success: function(response) {
+              console.log(response);
+            },
+          });  
+          // 이미지 첨부
+          var imageFiles = uploadFiles[0];
+          var formData = new FormData();
+          formData.append('file', imageFiles);
+
+          $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            contentType: false,
+            processData: false,
+            enctype : 'multipart/form-data',
+            success: function(response) {
+              console.log(response);
+            },
+          });
+        });
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
+        window.location.href = url;
+      }
+    });
 
 
 
+      // 네비바 이동
+      $('.a-community').click(function() {
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
+        window.location.href = url;
+    });
+      $('.a-exchange').click(function() {
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/exchangeRate.html';
+        window.location.href = url;
+    });
+      $('.a-price').click(function() {
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/pricecomparison.html';
+        window.location.href = url;
+    });
+      $('.a-customer').click(function() {
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/고객지원.html';
+        window.location.href = url;
+    });
 
-    // 네비바 이동
-    $('.a-community').click(function() {
-      var url = 'http://127.0.0.1:5500/html/community.html';
-      window.location.href = url;
-  });
-    $('.a-exchange').click(function() {
-      var url = 'http://127.0.0.1:5500/html/exchangeRate.html';
-      window.location.href = url;
-  });
-    $('.a-price').click(function() {
-      var url = 'http://127.0.0.1:5500/html/pricecomparison.html';
-      window.location.href = url;
-  });
-    $('.a-customer').click(function() {
-      var url = 'http://127.0.0.1:5500/html/고객지원.html';
-      window.location.href = url;
-  });
+
+
+    

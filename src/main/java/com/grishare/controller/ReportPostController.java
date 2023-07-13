@@ -1,11 +1,13 @@
 package com.grishare.controller;
 
+import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.dto.ReportPostRequestDto;
 import com.grishare.service.PostServiceImpl;
 import com.grishare.service.ReportPostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,11 +31,12 @@ public class ReportPostController {
 //    }
 
     @PostMapping("/post/report/{postId}")
-    public ResponseEntity<?> reportPost(@PathVariable("postId") Long postId, @RequestBody ReportPostRequestDto reportPostRequestDto){
+    public ResponseEntity<?> reportPost(@PathVariable("postId") Long postId, @AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody ReportPostRequestDto reportPostRequestDto){
         try {
+//            System.out.println(customUserDetail.getUser().getId()+"one");
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(reportPostService.save(postId, reportPostRequestDto));
+                    .body(reportPostService.save(postId, customUserDetail.getUser().getId(), reportPostRequestDto));
         } catch (Exception e) {
             e.printStackTrace();
         }

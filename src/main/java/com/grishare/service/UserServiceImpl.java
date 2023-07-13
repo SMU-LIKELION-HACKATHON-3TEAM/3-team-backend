@@ -132,7 +132,6 @@ public class UserServiceImpl implements UserDetailsService , UserService {
     // 스크랩한 글 전체 조회
     @Override
     public List<PostReturnDto> getMyScrap(Long userId){ // userId에 로그인한 회원 Id가 들어가야 됨
-            // 여기가 문제임 scrap까지는 생성되는데 이거에 해당하는 postList를 추출하는게 안되는 것 같음
         List<PostReturnDto> myScrapList = scrapRepository.findAllByUserId(userId).stream()
                                     .map(scrap -> new PostReturnDto(scrap.getPost()))
                                     .collect(Collectors.toList());
