@@ -16,9 +16,12 @@ public class ExchangeRateReturnDto {
 
     private Float exchangeRate;
 
+    private String curUnit;
+
     public ExchangeRateReturnDto(ExchangeRate ex){
 
         this.contryName = ex.getContryName();
         this.exchangeRate = ex.getExchangeRate();
+        this.curUnit = ex.getCurUnit();
     }
 }

@@ -10,20 +10,20 @@ import javax.persistence.*;
 @Data
 @Builder
 @Entity
-public class LikePost {
+public class LikeNation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Post post;
+    private Nation nation;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
 
-    public LikePost(Post post, User user){
-        this.post = post;
+
+    public LikeNation(Nation nation, User user){
+        this.nation = nation;
         this.user = user;
     }
-
 }

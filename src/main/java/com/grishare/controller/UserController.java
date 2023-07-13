@@ -85,7 +85,7 @@ public class UserController {
     }
 
     // 회원정보 수정
-    @PutMapping("/mypage")
+    @PutMapping("/myPage")
     public ResponseEntity<UserReturnDto> updateUser(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserRequestDto userRequestDto) {
         User user = userService.updateUser(customUserDetail.getUser(), userRequestDto);
         UserReturnDto userReturn = userService.getUser(user);
