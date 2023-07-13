@@ -22,7 +22,7 @@ public class PostDetailReturnDto {
     private String contents;
 
     private String userName;
-    private String create_at;
+    private String created_at;
     private long views;
 
     private boolean like;
@@ -37,7 +37,7 @@ public class PostDetailReturnDto {
         this.title = post.getTitle();
         this.contents = post.getContent();
         this.userName = post.getUser().getNickName(); // 글쓰기 닉네임표시
-        this.create_at = post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.created_at = post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.views = post.getView();
         this.like = likeReturnDto.isLike();
         this.like_count = likeReturnDto.getLike_count();

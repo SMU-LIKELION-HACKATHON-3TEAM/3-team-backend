@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class LikeController {
     private final LikeServiceImpl likeService;
-    private final UserRepository userRepository;
+
+
     @PostMapping("/posts/{postId}/like")
     public BaseResponse<HttpStatus> Like(@PathVariable Long postId, @AuthenticationPrincipal CustomUserDetail customUserDetail){
         try {
