@@ -30,11 +30,11 @@ main{
     height: 330px;
 }
 
-.nationWarning {
-    content: 국가 위험도-;
+.nationName:before {
+    content: "국가 위험도-";
 }
 
-.nationName {
+.nationWarning {
     margin-top: 10px;
 }
 
