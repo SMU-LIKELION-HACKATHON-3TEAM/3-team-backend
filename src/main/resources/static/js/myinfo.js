@@ -4,12 +4,12 @@ $.ajax({
     success: function(data) {
         
 
-            var $username = $('<div>').addClass('username').text(data.data.username)
+            var $userName = $('<div>').addClass('userName').text(data.data.userName)
             var $email = $('<div>').addClass('email').text(data.data.email)
             var $picture = $('<div>').addClass('picture').text(data.data.picture)
-            var $nickname = $('<div>').addClass('nickname').text(data.data.nickname)
+            var $nickName = $('<div>').addClass('nickName').text(data.data.nickName)
 
-            $('#wrap-myid').append($username).append($email).append($picture).append($nickname)
+            $('#wrap-myid').append($userName).append($email).append($picture).append($nickName)
         
     },
     error: function() {
