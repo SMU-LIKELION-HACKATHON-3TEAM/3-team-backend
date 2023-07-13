@@ -36,16 +36,15 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public PostReturnDto save(User user, Long nationId, PostRequestDto postRequestDto, List<MultipartFile> imageFiles) {
+    public PostReturnDto save(User user, Long nationId, PostRequestDto postRequestDto, MultipartFile imageFile) {
         Nation nation = nationRepository.findById(nationId).orElseThrow(() -> {
             throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
         });
 
-
         Post post = postRequestDto.toEntity(user, nation);
         postRepository.save(post);
 
-        imageService.savePostImages(post, imageFiles);
+        imageService.savePostImage(post, imageFile);
 
         return new PostReturnDto(post);
     }
