@@ -1,14 +1,17 @@
 package com.grishare.service;
 
-import com.grishare.domain.Comment;
+import com.grishare.domain.LikePost;
 import com.grishare.domain.Nation;
 import com.grishare.domain.Post;
+import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
+import com.grishare.dto.LikeReturnDto;
 import com.grishare.dto.PostDetailReturnDto;
 import com.grishare.dto.PostRequestDto;
 import com.grishare.dto.PostReturnDto;
 import com.grishare.exception.CustomNotFoundException;
 import com.grishare.exception.ErrorCode;
+import com.grishare.repository.LikeRepository;
 import com.grishare.repository.NationRepository;
 import com.grishare.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,8 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final NationRepository nationRepository;
     private final ImageService imageService;
+    private final LikeService likeService;
+    private final LikeRepository likeRepository;
 
     @Override
     @Transactional
@@ -52,14 +57,15 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public PostDetailReturnDto findByPostId(Long id) {
+    public PostDetailReturnDto findByPostId(CustomUserDetail customUserDetail, Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> {
             throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
         });
-
+        likeService.checkLike(customUserDetail.getUser().getUserLoginId(), post.getId());
+        boolean like = likeRepository.findByPostIdAndUserId(id, customUserDetail.getUser().getId()).isPresent();
         post.setView(post.getView() + 1);
 
-        return new PostDetailReturnDto(post);
+        return new PostDetailReturnDto(post, new LikeReturnDto(post, like));
     }
 
     @Override
