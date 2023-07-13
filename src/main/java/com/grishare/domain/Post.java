@@ -1,5 +1,6 @@
 package com.grishare.domain;
 
+import com.grishare.domain.image.PostImage;
 import com.grishare.domain.user.User;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -47,4 +48,6 @@ public class Post {
     private List<LikePost> likePosts;
     @OneToMany(mappedBy = "post",orphanRemoval = true)
     private List<ReportPost> reportPosts;
+    @OneToMany(mappedBy = "post")
+    private List<PostImage> postImages;
 }
