@@ -15,12 +15,16 @@ public class UserRequestDto {
     private String nickName;
     private UserImage userImg;
     private String userLoginId;
-    private BackImage backgroundImg;
+
+    private String backgroundImg;
+    private String userName;
+
 
     public UserRequestDto(User user) {
         this.password = password;
         this.nickName = nickName;
         this.userImg = userImg;
+        this.userName = userName;
         this.userLoginId = userLoginId;
         this.backgroundImg = backgroundImg;
     }
