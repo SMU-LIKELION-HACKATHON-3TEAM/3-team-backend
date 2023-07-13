@@ -113,8 +113,8 @@ $.ajax({
         for (i = 0; i < forNum; i++) {
             const showData = () => {
                 length = length - 1;
-                const countryName = data.data[length].countryInfo.countryName;
-                const imgUrl = data.data[length].countryInfo.nationImgUrl;
+                const countryName = data.data[length].countryName;
+                const imgUrl = data.data[length].imageUrl;
                 const contents = data.data[length].contents;
                 const postID = data.data[length].post_id;
                 var createdAt = data.data[length].created_at;
@@ -239,11 +239,11 @@ $.ajax({
                 /* infor */
                 /* 유저 프로필 */
                 /* 이미지 있어? 없으면 기본 넣어 */
-                let profilImgge = document.createElement("img");
+                let profileImage = document.createElement("img");
                 if (profileImg == "") {
-                    img.src = "../img/Default_Profile.png";
+                    profileImage.src = "../img/Default_Profile.png";
                 } else {
-                    img.src = profileImg;
+                    profileImage.src = profileImg;
                 }
 
                 let p_writer = document.createElement("p");
