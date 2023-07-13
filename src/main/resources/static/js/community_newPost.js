@@ -96,6 +96,7 @@ function getImageFiles(e) {
         var title = $('#wrap_newPost_head').val();
         var contents = $('#wrap_newPost_content').val();
         var nationId = localStorage.getItem('nationId');
+
     
         if (nationId === "main" || title === "" || contents === "") {
           if (nationId === "main") {
@@ -112,7 +113,7 @@ function getImageFiles(e) {
             title: title,
             content: contents
           };
-          var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/html/api/posts/${nationId}`;
+          var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${nationId}`;
     
           $.ajax({
             type: 'POST',
