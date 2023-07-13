@@ -129,21 +129,18 @@ public class UserServiceImpl implements UserDetailsService , UserService {
 
         Optional<User> byId = userRepository.findById(user.getId()); // pk값(id) 가져옴
         User me = byId.orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
-        String encryptPassword = passwordEncoder.encode(userRequestDto.getPassword());
 
         if(userRequestDto.getNickName() != null) {
             me.setNickName(userRequestDto.getNickName());
         } else if (userRequestDto.getUserLoginId() != null) {
             me.setUserLoginId(userRequestDto.getUserLoginId());
+        } else if(userRequestDto.getPassword() != null) {
+            String encryptPassword = passwordEncoder.encode(userRequestDto.getPassword());
+            me.updatePassword(encryptPassword);
         }
-
-
         userRepository.save(me);
         imageService.saveUserImage(me, imageFiles);
         imageService.savebackImage(me, backImageFiles);
-        // 비밀번호 변경 -> passwordEncoder 적용
-        me.updatePassword(encryptPassword);
-
         return me;
 
     }
