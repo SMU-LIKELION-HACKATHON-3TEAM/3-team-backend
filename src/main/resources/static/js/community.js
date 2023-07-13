@@ -24,7 +24,7 @@ $(document).ready(function() {
         console.log(data);
       
         $.each(data.data, function(index, item) {
-        var createdAt = new Date(item.create_at); // "created_at" 값을 Date 객체로 변환
+        var createdAt = new Date(item.created_at); // "created_at" 값을 Date 객체로 변환
         var currentTime = new Date(); // 현재 시간
         var timeDiff = Math.floor((currentTime - createdAt) / (1000 * 60)); // 분 단위로 시간 차이 계산
         var timeText = timeDiff + "분 전";

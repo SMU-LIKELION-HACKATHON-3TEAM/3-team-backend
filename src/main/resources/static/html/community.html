@@ -18,9 +18,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
     <style>
-        a:link,
-        a:visited {
+        a:link:not(.a-community),
+        a:visited:not(.a-community) {
             color: black;
+        }
+        .a-community {
+            color: #0029BA;
+            padding-bottom: 10px;
+            border-bottom: solid 5px #0029BA;
         }
     </style>
 </head>
@@ -45,10 +50,10 @@
         <div class="wrap_login-bar">
             <ul class="login-bar">
                 <li>
-                    <a href="../html/login.html">로그인</a></li>
+                    <a class="login_logo" href="../html/login.html">로그인</a></li>
                 <li>
-                    <a href="../html/signUp.html">회원가입</a></li>
-                    
+                    <a class="logout_logo" href="../html/signUp.html">회원가입</a></li>
+            </ul>
         </div>
         <div class="wrap_search">
             <input type="text" placeholder="검색어를 입력해 주세요.">

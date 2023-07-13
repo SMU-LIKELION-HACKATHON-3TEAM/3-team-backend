@@ -1,14 +1,10 @@
 package com.grishare.service;
 
-import com.grishare.domain.LikePost;
 import com.grishare.domain.Nation;
 import com.grishare.domain.Post;
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
-import com.grishare.dto.LikeReturnDto;
-import com.grishare.dto.PostDetailReturnDto;
-import com.grishare.dto.PostRequestDto;
-import com.grishare.dto.PostReturnDto;
+import com.grishare.dto.*;
 import com.grishare.exception.CustomNotFoundException;
 import com.grishare.exception.ErrorCode;
 import com.grishare.repository.LikeRepository;
@@ -16,14 +12,18 @@ import com.grishare.repository.NationRepository;
 import com.grishare.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
@@ -36,16 +36,15 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public PostReturnDto save(User user, Long nationId, PostRequestDto postRequestDto, List<MultipartFile> imageFiles) {
+    public PostReturnDto save(User user, Long nationId, PostRequestDto postRequestDto, MultipartFile imageFile) {
         Nation nation = nationRepository.findById(nationId).orElseThrow(() -> {
             throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
         });
 
-
         Post post = postRequestDto.toEntity(user, nation);
         postRepository.save(post);
 
-        imageService.savePostImages(post, imageFiles);
+        imageService.savePostImage(post, imageFile);
 
         return new PostReturnDto(post);
     }
@@ -105,6 +104,31 @@ public class PostServiceImpl implements PostService {
             postRepository.deleteById(id);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public List<HotPostResponseDto> getHotPosts() {
+        try {
+            List<Object[]> posts = likeRepository.getPostLikesCount();
+
+            List<HotPostResponseDto> hotPosts = new ArrayList<>();
+
+            for (int i = 0; i < posts.size(); i++) {
+                if (i == 3) {
+                    break;
+                }
+
+                Long postId = Long.valueOf(posts.get(i)[0].toString());
+                Integer likes = Integer.valueOf(posts.get(i)[1].toString());
+
+                Optional<Post> post = postRepository.findById(postId);
+                post.ifPresent(value -> hotPosts.add(new HotPostResponseDto(value.getId(),value.getTitle(), value.getContent(), likes)));
+            }
+
+            return hotPosts;
+
+        } catch (Exception e) {
+            throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
         }
     }
 }

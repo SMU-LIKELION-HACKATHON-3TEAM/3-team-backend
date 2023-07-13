@@ -402,6 +402,7 @@ i.fas.fa-pen {
     background-repeat: no-repeat;
     background-size: cover;
   }
+
   .likes{
     width:24px;
     height:18px;
@@ -458,6 +459,7 @@ i.fas.fa-pen {
     cursor: pointer;
     
   }
+  
   .scrap_comment{
     color:#B3B3B3;
     margin-top:-20px;

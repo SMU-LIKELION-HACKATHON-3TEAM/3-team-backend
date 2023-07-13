@@ -268,6 +268,7 @@ $(document).ready(function() {
           $.ajax({
             type: 'POST',
             url: url,
+            contentType: 'application/json',
             data: JSON.stringify(commentData),
             success: function(response){
               console.log(response);
