@@ -51,6 +51,10 @@ $.ajax({
                 post_content.setAttribute("class", "post_content");
                 clipping.appendChild(post_content);
 
+                let post_func = document.createElement("div");
+                post_func.setAttribute("class", "post_func");
+                clipping.appendChild(post_func);
+
                 /* 데이터 넣기 */
 
                 /* infor */
