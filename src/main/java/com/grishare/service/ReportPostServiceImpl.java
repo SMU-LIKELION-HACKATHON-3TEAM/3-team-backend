@@ -27,17 +27,25 @@ public class ReportPostServiceImpl implements ReportPostService{
             try {
 //                System.out.println(userId+"two");
                 List<ReportPost> reportPostList = reportPostRepository.findByPostIdAndUserId(postId, userId);
-                if(reportPostList.isEmpty()){
+                if (reportPostList.isEmpty()) {
                     return reportPostRepository
                             .save(
                                     reportPostRequestDto.toEntity(postRepository.findById(postId).get(), userRepository.findById(userId).get())
-    //                                reportPostRequestDto.toEntity(postRepository.findById(postId).get())
+                                    //                                reportPostRequestDto.toEntity(postRepository.findById(postId).get())
                             );
-            }
+                } else {
+                    reportCheck(postId);
+                }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    private void reportCheck(Long post_id) {
+        if (reportPostRepository.countAllByPost_Id(post_id) >= 3) {
+            postRepository.deleteById(post_id);
+        }
     }
 }
