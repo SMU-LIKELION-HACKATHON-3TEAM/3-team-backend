@@ -1,5 +1,7 @@
 package com.grishare.controller;
 
+import com.grishare.base.BaseResponse;
+import com.grishare.base.SuccessCode;
 import com.grishare.domain.Post;
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.dto.PostDetailReturnDto;
@@ -23,21 +25,21 @@ public class PostController {
     PostServiceImpl postService;
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostReturnDto>> getAllPost() {
+    public BaseResponse<List<PostReturnDto>> getAllPost() {
         List<PostReturnDto> posts = postService.findAll();
 
-        return ResponseEntity.ok(posts);
+        return BaseResponse.ok(posts);
     }
 
     @GetMapping("/posts/nation/{nationId}")
-    public ResponseEntity<List<PostReturnDto>> getPostByNationId(@PathVariable("nationId") long nationId) {
-        return ResponseEntity.ok(postService.findByNationId(nationId));
+    public BaseResponse<List<PostReturnDto>> getPostByNationId(@PathVariable("nationId") long nationId) {
+        return BaseResponse.ok(postService.findByNationId(nationId));
     }
 
     @GetMapping("/posts/{postId}")
-    public ResponseEntity<PostDetailReturnDto> getPostByPostId(@AuthenticationPrincipal CustomUserDetail customUserDetail, @PathVariable("postId") long postId) {
+    public BaseResponse<PostDetailReturnDto> getPostByPostId(@AuthenticationPrincipal CustomUserDetail customUserDetail, @PathVariable("postId") long postId) {
         try {
-            return ResponseEntity.ok(postService.findByPostId(customUserDetail, postId));
+            return BaseResponse.ok(postService.findByPostId(customUserDetail, postId));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,25 +47,22 @@ public class PostController {
     }
 
     @PostMapping("/posts/{nationId}")
-    public ResponseEntity<PostReturnDto> createPost(
+    public BaseResponse<PostReturnDto> createPost(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
             @PathVariable("nationId") long nationId,
             @RequestPart PostRequestDto postRequestDto,
             @RequestPart(required = false) List<MultipartFile> imageFiles) {
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(postService.save(customUserDetail.getUser(), nationId, postRequestDto, imageFiles));
+        return BaseResponse.ok(postService.save(customUserDetail.getUser(), nationId, postRequestDto, imageFiles));
     }
 
     @PutMapping("/posts/{postId}")
-    public ResponseEntity<PostReturnDto> updatePost(
+    public BaseResponse<PostReturnDto> updatePost(
             @PathVariable("postId") long postId,
             @RequestBody PostRequestDto postRequestDto
     ) {
         try {
-            ResponseEntity
-                    .status(HttpStatus.ACCEPTED)
-                    .body(postService.update(postId, postRequestDto));
+            BaseResponse.ok(postService.update(postId, postRequestDto));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,10 +70,10 @@ public class PostController {
     }
 
     @DeleteMapping("/posts/{postId}")
-    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("postId") long postId) {
+    public BaseResponse<HttpStatus> deleteProduct(@PathVariable("postId") long postId) {
         try {
             postService.delete(postId);
-            ResponseEntity.noContent();
+            BaseResponse.ok(null);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package com.grishare.controller;
 
+import com.grishare.base.BaseResponse;
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
 import com.grishare.dto.NationReturnDto;
@@ -21,19 +22,18 @@ public class LikeNationController {
     private final LikeNationServiceImpl likeNationService;
     private final UserRepository userRepository;
     @PostMapping("/nation/{nationId}/like")
-    public ResponseEntity<HttpStatus> LikeNation(@PathVariable Long nationId, @AuthenticationPrincipal CustomUserDetail customUserDetail){
+    public BaseResponse<HttpStatus> LikeNation(@PathVariable Long nationId, @AuthenticationPrincipal CustomUserDetail customUserDetail){
         try {
             User user = customUserDetail.getUser();
             likeNationService.updateOfLikeNation(nationId,user);
-            ResponseEntity
-                    .status(HttpStatus.ACCEPTED);
+            BaseResponse.ok(null);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
     @GetMapping("/nation/like")
-    public ResponseEntity<List<NationReturnDto>> GetLikeNation(@AuthenticationPrincipal CustomUserDetail customUserDetail){
-        return ResponseEntity.ok(likeNationService.findByUserId(customUserDetail.getUser().getId()));
+    public BaseResponse<List<NationReturnDto>> GetLikeNation(@AuthenticationPrincipal CustomUserDetail customUserDetail){
+        return BaseResponse.ok(likeNationService.findByUserId(customUserDetail.getUser().getId()));
     }
 }
