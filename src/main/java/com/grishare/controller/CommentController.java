@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
 
     private final CommentServiceImpl commentService;
-    @PostMapping("posts/{nationId}/{postId}/comment")
+    @PostMapping("posts/{postId}/comment")
     public BaseResponse<CommentReturnDto> createComment(@PathVariable("postId") Long postId,
                                                         @RequestBody CommentRequestDto commentDto,
                                                         @AuthenticationPrincipal CustomUserDetail customUserDetail) {
