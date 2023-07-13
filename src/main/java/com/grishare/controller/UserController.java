@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -93,8 +94,8 @@ public class UserController {
 
     // 회원정보 수정
     @PutMapping("/myPage")
-    public BaseResponse<UserReturnDto> updateUser(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserRequestDto userRequestDto) {
-        User user = userService.updateUser(customUserDetail.getUser(), userRequestDto);
+    public BaseResponse<UserReturnDto> updateUser(@AuthenticationPrincipal CustomUserDetail customUserDetail, @RequestBody UserRequestDto userRequestDto, @RequestPart(required = false) MultipartFile imageFiles, @RequestPart(required = false) MultipartFile backImageFiles) {
+        User user = userService.updateUser(customUserDetail.getUser(), userRequestDto, imageFiles, backImageFiles);
         UserReturnDto userReturn = userService.getUser(user);
 
         return BaseResponse.ok(userReturn);

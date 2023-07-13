@@ -61,7 +61,7 @@ $(document).ready(function() {
           var $report = $('<div>').attr("id", `report${data.post_id}`).addClass('report').text("신고");
         
       
-          var $file_only = $('<div>').addClass('file_only').text(data.file1);
+          var $file_only = $('<img>').addClass('file_only').attr('src', data.imageUrl);
       
 
           $('#wrap_community_box_comment').append(resultElement).append($userName).append($postIcon).append($postContent).append($file_only).append($views).append($likes).append($likes_image).append($scrap).append($scrap_image).append($share).append($share_image).append($report).trigger("create");
@@ -240,8 +240,37 @@ $(document).ready(function() {
             event.stopPropagation();
             $(`#share${id_num}`).click();
           });
+          
+          //여기
+          
+    $(".comment_commit").click(function() {
+      var comment_post_comment = $('.comment_post_comment').val();
 
+      if (comment_post_comment === ""){
+          alert("내용을 입력해 주세요.");
+          var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_comment.html';
+          window.location.href = url;
+      } else {
+        postId = localStorage.getItem("postid");
 
+        var commentData = {
+          comment: comment_post_comment
+        };
+
+        $(document).ready(function() {
+
+          var url = `/api/posts/${postId}/comment`;
+          
+          $.ajax({
+            type: 'POST',
+            url: url,
+            data: JSON.stringify(commentData),
+            success: function(response){
+              console.log(response);
+            },
+          }); 
+        })}
+      });
 
            },error: function() {
             // alert('통신 실패시에만 실행');

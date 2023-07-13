@@ -51,7 +51,7 @@ $(document).ready(function() {
         console.log('searchCountry_connecting');
         console.log(data);
 
-        $.each(data, function(index, item) {
+        $.each(data.data, function(index, item) {
           var createdAt = new Date(item.create_at);
           var currentTime = new Date();
           var timeDiff = Math.floor((currentTime - createdAt) / (1000 * 60));
@@ -70,7 +70,7 @@ $(document).ready(function() {
   
           var $likes = $('<div>').addClass('likes').text(item.like_count);
           var $likes_image = $('<img>').attr("id", `likes_image${item.post_id}`).attr("src","../img/icon _heart_.png").addClass('likes_image');
-  
+          console.log(item.post_id);
           var $comment = $('<div>').addClass('comment').text(item.comment_count);
           var $comment_image = $('<div>').addClass('comment_image');
       
@@ -84,8 +84,9 @@ $(document).ready(function() {
 
           var $report = $('<div>').attr("id", `report${item.post_id}`).addClass('report').text("신고");
         
+            
+          var $file_only = $('<img>').addClass('file_only').attr('src', item.imageUrl);
       
-          var $file_only = $('<div>').addClass('file_only').text(item.file1);
       
             
           if (!postsByPostID[item.post_id]) {
