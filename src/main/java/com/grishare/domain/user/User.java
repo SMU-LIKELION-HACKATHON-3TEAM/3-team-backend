@@ -5,6 +5,8 @@ import com.grishare.domain.LikePost;
 import com.grishare.domain.Post;
 import com.grishare.domain.ReportPost;
 import com.grishare.domain.Scrap;
+import com.grishare.domain.image.BackImage;
+import com.grishare.domain.image.UserImage;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,7 +37,11 @@ public class User {
     @CreatedDate
     private LocalDateTime createdAt; // 가입날짜
     private Integer birthDay; // 회원 생년월일 erd에 없음
-    private String userImg; // 프로필 이미지 -> 배포여부에 따라 -> 일단 배포는 미정 안할
+    @OneToMany(mappedBy = "user")
+    private UserImage userImg; // 프로필 이미지 -> 배포여부에 따라 -> 일단 배포는 미정 안할
+    @OneToMany(mappedBy = "user")
+    private BackImage backgroundImg;
+
     // 이미지 경로를 저장하는 변수
     private String address;
     @OneToMany(mappedBy = "user",orphanRemoval = true)
@@ -48,8 +54,6 @@ public class User {
     private List<Comment> comments;
     @OneToMany(mappedBy = "user",orphanRemoval = true)
     private List<ReportPost> reportPosts;
-    @Column(name = "background_img")
-    private String backgroundImg;
 
     //@Embedded
     //private NotificationSetting notificationSetting; // 알림 설정
