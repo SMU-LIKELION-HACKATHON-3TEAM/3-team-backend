@@ -151,7 +151,7 @@ const submit = () => {
 const sendUpdateRequest = (updatedDate) => {
     $.ajax({
         type: 'PUT',
-        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/mypage',
+        url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/myPage',
         contentType: 'application/json',
         data: JSON.stringify(updatedDate),
         success: function() {
