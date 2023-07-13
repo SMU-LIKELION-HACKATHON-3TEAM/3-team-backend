@@ -6,11 +6,16 @@ $.ajax({
     url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/exchangeRate',
     dataType: 'json',
     success: function (data) {
-        $.each(data, function (index, item) {
-            var newOp = item.countryName;
+        const length = data.data.length;
+        for (var i = 0; i < length; i++) {
+            var newOp=data.data[i].countryName;
             $("#country2").append("<option value=" + newOp + ">" + newOp + "</option>");
+        }
+        // $.each(data, function (index, item) {
+        //     var newOp = item.countryName;
+        //     $("#country2").append("<option value=" + newOp + ">" + newOp + "</option>");
 
-        });
+        // });
         console.log("나라데이터 가져오기 성공")
     },
     error: function (request, status, error) {
@@ -62,8 +67,8 @@ $(document).ready(function () {
                     console.log(data);
                     /*통화코드 가져온 거 p태그 만들어서 넣기 */
                     /*curUnit => 통화코드 */
-                    bank_er = data.exchangeRate;
-                    var code=data.curUnit;
+                    bank_er = data.data.exchangeRate;
+                    var code=data.data.curUnit;
                     $(".curUnit").text(code);
                 },
                 error: function (request, status, error) {
