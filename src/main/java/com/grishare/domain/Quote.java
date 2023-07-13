@@ -15,21 +15,23 @@ import javax.persistence.*;
 public class Quote {
 
     @Id
-    @Column(name = "Quote_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int Quote_id;
+    private Long id;
 
-    @Column(name = "price")
-    private int price;
+    @Column(name = "meal")
+    private Float meal;
+
+    @Column(name = "taxi")
+    private Float taxi;
+
+    @Column(name = "coffee")
+    private Float coffee;
+
+    @Column(name = "rice")
+    private Float rice;
 
     @OneToOne
-    @JoinColumn (name = "ISO_3166_2")
+    @JoinColumn(name = "ad_id")
     private AdministrativeDivision administrativeDivision;
-
-
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
-
 
 }

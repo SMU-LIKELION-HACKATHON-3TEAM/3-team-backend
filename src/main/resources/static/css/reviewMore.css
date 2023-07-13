@@ -155,122 +155,74 @@ ul.login-bar>li:hover {
 
 /********** section **********/
 
-.wrap_content {
-    width: 1513px;
-    margin: 0 auto;
-    overflow: hidden;
-}
-
-.wrap_img {
-    margin: 0 auto;
-    margin-top: 58px;
-    margin-bottom: 82px;
+.wrap_review {
     width: 940px;
-    height: 303px;
-}
-
-.wrap_img img {
-    width: 940px;
-    height: 303px;
-}
-
-.wrap_memberInfor {
-    width: 940px;
-    height: 316px;
+    height: 100%;
     margin: 0 auto;
-    margin-top: 78px;
-    margin-bottom: 91px;
-    position: relative;
-    overflow: hidden;
+    margin-top: 51px;
+    margin-bottom: 50px;
 }
 
-.modify {
-    position: absolute;
-    margin-left: 69px;
-    margin-top: 45px;
-}
-
-.modify:hover {
-    cursor: pointer;
-}
-
-#picture_input {
-    opacity: 0;
-}
-
-.profile {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-}
-
-.wrap_title {
-    position: absolute;
-    margin-left: 132px;
-    margin-top: -20px;
-}
-
-.wrap_title p {
-    font-size: 20px;
+.wrap_review .review_title {
+    font-size: 24px;
     margin: 0px;
-    margin-bottom: 5px;
-    font-weight: 600;
+    margin-bottom: 70px;
 }
 
-.wrap_infor {
-    margin-top: -18px;
-    margin-left: 221px;
+.review {
+    width: 940px;
+    margin-bottom: 42px;
 }
 
-.wrap_pen {
-    position: absolute;
-    width: 15px;
-    margin-left: 215px;
-    margin-top: 65px;
+.review_contents {
+    width: 940px;
+    height: auto;
+    overflow: hidden;
 }
 
-.pen {
-    margin-bottom: 13px;
+.review_contents a:link,
+.review_contents a:visited {
+    color: black;
 }
 
-.wrap_infor p {
-    font-size: 20px;
-    width: 100%;
-    height: 22px;
-    border: none;
-    margin-top: 1px;
-    margin-bottom: 8.5px;
-    color: #868686;
+.review_infor {
+    width: 940px;
+    height: 25px;
 }
 
-.wrap_infor input {
-    display: block;
-    font-size: 20px;
-    width: 214px;
-    height: 22px;
-    border: none;
-    margin-top: 10px;
-    margin-bottom: 8.5px;
-    color: #868686;
+.review_infor img {
+    float: left;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
-.wrap_infor input:focus {
-    outline: none;
+.review_infor p {
+    margin: 0;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 2px;
 }
 
-.infor_modify {
+.review_content {
+    margin-top: 7px;
+    width: 920px;
+}
+
+.review_content p {
+    font-size: 16px;
+    margin: 0px;
+    white-space: normal;
+    word-wrap: break-word;
+    width: 925px;
+}
+
+.review_date {
+    margin: 0px;
+    font-size: 12px;
+    color: #989898;
     float: right;
-    margin-top: 120px;
-    width: 104px;
-    height: 33px;
-    background-color: #0029BA;
-    border: none;
-    border-radius: 10px;
-}
-
-.infor_modify a {
-    color: white;
 }
 
 
