@@ -33,7 +33,7 @@ $(document).ready(function() {
 
         var $postIcon = $('<div>').addClass('postIcon');
         var $userName = $('<div>').addClass('userName').text(item.userName); 
-        var $postContent = $('<div>').addClass('postContent').attr('spellcheck', 'false').text(item.content);
+        var $postContent = $('<div>').addClass('postContent').attr('spellcheck', 'false').text(item.contents);
         
 
         var $views = $('<div>').addClass('views');
@@ -41,7 +41,7 @@ $(document).ready(function() {
         var $likes = $('<div>').addClass('likes').text(item.like_count);
         var $likes_image = $('<img>').attr("id", `likes_image${item.post_id}`).attr("src","../img/icon _heart_.png").addClass('likes_image');
 
-        
+
         var $comment = $('<div>').addClass('comment').text(item.comment_count);
         var $comment_image = $('<div>').addClass('comment_image');
 
@@ -124,49 +124,6 @@ $(document).ready(function() {
     });
 
 
-    //신고
-    let is_clicked_report = false;
-
-    $('.report').click(function(event) {
-      
-      var id_num = event.target.id.match(/\d+/)[0];
-      var postId = id_num;
-      event.stopPropagation();
-    
-      if (!is_clicked_report) {
-        // var $overlay = $('<div>').addClass('overlay');
-        // $('body').append($overlay);
-        
-        var $report_click = $('<div>').addClass('report_click').text("신고하기");
-    
-        $(`#report${id_num}`).append($report_click);
-        is_clicked_report = true;
-
-      } else {
-        $(`#report${id_num}`).find('.report_click').remove();
-        // $('.overlay').remove();
-        is_clicked_report = false;
-      }
-      
-      $.ajax({
-        type: 'POST',
-        dataType: 'json',
-        url: `/api/posts/${postId}/report`,
-        success: function(data) {
-            console.log("report connecting");
-        }});
-
-    });
-    
-    $(document).on('click', '.report_click', function() {
-      alert("신고되었습니다.");
-      localStorage.setItem('is_clicked_report',"1");
-      var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_searchCountry.html';
-    
-      window.location.href = url;
-    });
-        
-
     // 좋아요
     let is_clicked_likes = false;
 
@@ -190,7 +147,7 @@ $(document).ready(function() {
       dataType: 'json',
       url: `/api/posts/${postId}/like`,
       success: function(data) {
-          console.log("like connecting"); //이부분 필요한건가?
+          console.log("like connecting");
           
           }
       });
