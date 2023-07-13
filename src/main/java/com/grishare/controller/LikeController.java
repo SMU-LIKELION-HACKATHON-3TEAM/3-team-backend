@@ -1,6 +1,7 @@
 package com.grishare.controller;
 
 import com.amazonaws.Response;
+import com.grishare.base.BaseResponse;
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
 import com.grishare.repository.UserRepository;
@@ -19,12 +20,11 @@ public class LikeController {
     private final LikeServiceImpl likeService;
     private final UserRepository userRepository;
     @PostMapping("/posts/{postId}/like")
-    public ResponseEntity<HttpStatus> Like(@PathVariable Long postId, @AuthenticationPrincipal CustomUserDetail customUserDetail){
+    public BaseResponse<HttpStatus> Like(@PathVariable Long postId, @AuthenticationPrincipal CustomUserDetail customUserDetail){
         try {
             User user = customUserDetail.getUser();
             likeService.updateOfLikePost(postId,user);
-            ResponseEntity
-                    .status(HttpStatus.ACCEPTED);
+            BaseResponse.ok(null);
         } catch (Exception e) {
             e.printStackTrace();
         }
