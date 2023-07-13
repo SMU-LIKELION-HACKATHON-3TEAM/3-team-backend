@@ -17,7 +17,7 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserImage extends Image{
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 

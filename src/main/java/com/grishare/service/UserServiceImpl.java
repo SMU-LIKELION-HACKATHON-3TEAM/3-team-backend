@@ -84,9 +84,9 @@ public class UserServiceImpl implements UserDetailsService , UserService {
                 .email(me.getEmail())
                 .nickName(me.getNickName())
 //                .userImg(me.getUserImg())
-                .userImg(me.getUserImg())
+                .userImg(me.getUserImg().getImageUrl())
                 .password(me.getPassword())
-                .backgroundImg(me.getBackgroundImg())
+                .backgroundImg(me.getBackgroundImg().getImageUrl())
 //                .backgroundImg(me.getBackgroundImg())
                 .build();
 //        if (category.equals("nationLike")){ // 관심 국가 설정은 Post에서 좋아요?

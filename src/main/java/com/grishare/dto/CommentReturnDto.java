@@ -16,7 +16,7 @@ public class CommentReturnDto {
     private Long comment_id;
     private String contents;
     private String userName;
-    private UserImage writerImg;
+    private String writerImg;
     private String create_at;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -27,6 +27,6 @@ public class CommentReturnDto {
         this.userName = comment.getUser().getNickName(); // 글쓰기 닉네임표시
         this.contents = comment.getContent();
         this.create_at = comment.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.writerImg = comment.getUser().getUserImg();
+        this.writerImg = comment.getUser().getUserImg().getImageUrl();
     }
 }
