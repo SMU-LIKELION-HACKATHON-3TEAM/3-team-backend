@@ -2,6 +2,7 @@ package com.grishare.dto;
 
 import com.grishare.domain.LikePost;
 import com.grishare.domain.Post;
+import com.grishare.domain.image.PostImage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,9 +24,10 @@ public class PostReturnDto {
     private String userName;
     private String create_at;
     private long views;
-    private boolean like;
+    private int like_count;
+    private int comment_count;
 
-    private List<CommentReturnDto> comment;
+    private List<String> imgUrl;
 
     public PostReturnDto(Post post) {
         this.post_id = post.getId();
@@ -34,6 +36,8 @@ public class PostReturnDto {
         this.userName = post.getUser().getNickName(); // 글쓰기 닉네임표시
         this.create_at = post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.views = post.getView();
-        this.comment = post.getComments().stream().map(CommentReturnDto::new).collect(Collectors.toList());
+        this.like_count = post.getLikePosts() == null ? 0 : post.getLikePosts().size();
+        this.comment_count = post.getComments() == null ? 0 : post.getComments().size();
+        this.imgUrl = post.getPostImages() == null ? null : post.getPostImages().stream().map(PostImage::getImageUrl).collect(Collectors.toList());
     }
 }

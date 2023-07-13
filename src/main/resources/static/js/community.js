@@ -6,7 +6,7 @@ $(document).ready(function() {
     var nationId = $(this).val();
     localStorage.setItem('nationId', nationId);
     if (nationId !== "") {
-      window.location.href = 'http://127.0.0.1:5500/html/community_searchCountry.html';
+      window.location.href = `http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_searchCountry.html`;
     }
   });
 });
@@ -20,6 +20,7 @@ $(document).ready(function() {
     url: url,
     success: function(data) {
         console.log("mainPage connecting");
+        console.log(data);
       
         $.each(data, function(index, item) {
         var createdAt = new Date(item.created_at); // "created_at" 값을 Date 객체로 변환
@@ -38,21 +39,22 @@ $(document).ready(function() {
 
         var $views = $('<div>').addClass('views');
         
-        var $likes = $('<div>').addClass('likes').text(item.like);
-        var $likes_image = $('<img>').attr("id", `likes_image${item.post_id}`).attr("src","../img/🦆\ icon\ _heart_.png").addClass('likes_image');
+        var $likes = $('<div>').addClass('likes').text(item.like_count);
+        var $likes_image = $('<img>').attr("id", `likes_image${item.post_id}`).attr("src","../img/icon _heart_.png").addClass('likes_image');
 
-        var $comment = $('<div>').addClass('comment').text(item.comment);
+        //css
+        var $comment = $('<div>').addClass('comment').text(item.comment_count);
         var $comment_image = $('<div>').addClass('comment_image');
 
 
 
         var $scrap = $('<div>').addClass('scrap').text("스크랩");
-        var $scrap_image = $('<img>').attr("id", `scrap_image${item.post_id}`).attr("src","../img/🦆 icon _star outline_.png").addClass('scrap_image');
+        var $scrap_image = $('<img>').attr("id", `scrap_image${item.post_id}`).attr("src","../img/icon _star outline_.png").addClass('scrap_image');
 
         var $share = $("<div>").addClass("share").attr("id", `share${item.post_id}`).text("공유");
         var $share_image = $('<div>').attr("id", `share${item.post_id}`).addClass('share_image');
 
-        var $report = $('<div>').attr("id", `report${item.post_id}`).addClass('report').text("신고");
+        // var $report = $('<div>').attr("id", `report${item.post_id}`).addClass('report').text("신고");
         
         var $file_only = $('<div>').addClass('file_only').text(item.file1);
         // 이미지 데이터는 어떻게 처리하나요
@@ -64,7 +66,7 @@ $(document).ready(function() {
         var $postContainer = $('<div>').addClass('post-container').attr('data-postid', item.post_id);
         // ID값 다르게 주기
 
-        $postContainer.append($postIcon, resultElement, $postId, $userName, $postContent, $file_only, $views, $likes, $likes_image, $comment, $comment_image, $scrap, $scrap_image, $share, $share_image, $report);
+        $postContainer.append($postIcon, resultElement, $postId, $userName, $postContent, $file_only, $views, $likes, $likes_image, $comment, $comment_image, $scrap, $scrap_image, $share, $share_image,);//report 없임
 
         // wrap_community_box에 게시물 컨테이너 추가
         $('#wrap_community_box').append($postContainer);
@@ -94,40 +96,41 @@ $(document).ready(function() {
     if(is_clicked_post_container === '1'){
       is_clicked_post_container = '0';
       localStorage.setItem('is_clicked_post_container',is_clicked_post_container);
-      var url = 'http://127.0.0.1:5500/html/community_comment.html';
+      var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_comment.html';
       window.location.href = url;
 
     }else{
       is_clicked_post_container = '1';
       localStorage.setItem('is_clicked_post_container',is_clicked_post_container);
-      var url = 'http://127.0.0.1:5500/html/community.html';
+      var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
       window.location.href = url;
     }
 
   });
-    // 네비바 이동
-    $('.a-community').click(function() {
-      var url = 'http://127.0.0.1:5500/html/community.html';
-      window.location.href = url;
-  });
-    $('.a-exchange').click(function() {
-      var url = 'http://127.0.0.1:5500/html/exchangeRate.html';
-      window.location.href = url;
-  });
-    $('.a-price').click(function() {
-      var url = 'http://127.0.0.1:5500/html/pricecomparison.html';
-      window.location.href = url;
-  });
-    $('.a-customer').click(function() {
-      var url = 'http://127.0.0.1:5500/html/고객지원.html';
-      window.location.href = url;
-  });
+      // 네비바 이동
+      $('.a-community').click(function() {
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
+        window.location.href = url;
+    });
+      $('.a-exchange').click(function() {
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/exchangeRate.html';
+        window.location.href = url;
+    });
+      $('.a-price').click(function() {
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/pricecomparison.html';
+        window.location.href = url;
+    });
+      $('.a-customer').click(function() {
+        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/고객지원.html';
+        window.location.href = url;
+    });
+
 
   //신고
   let is_clicked_report = false;
 
   $('.report').click(function(event) {
-    var id_num = event.target.id.substring(event.target.id.length - 1);
+    var id_num = event.target.id.match(/\d+/)[0];
     event.stopPropagation();
   
     if (!is_clicked_report) {
@@ -145,10 +148,10 @@ $(document).ready(function() {
       is_clicked_report = false;
     }
   });
-    //이거 왜안되징
+
   $(document).on('click', '.report_click', function() {
     alert("신고되었습니다.");
-    var url = 'http://127.0.0.1:5500/html/community.html';
+    var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
   
     window.location.href = url;
   });
@@ -158,17 +161,15 @@ $(document).ready(function() {
   let is_clicked_likes = false;
   
   $('.likes_image').click(function(event){
-    var id_num = event.target.id.substring(event.target.id.length - 1);
+    var id_num = event.target.id.match(/\d+/)[0];
     event.stopPropagation();
 
-    // 이거 뭘로보내야하지
-      localStorage.setItem('postid', postId);
     
     if(!is_clicked_likes){
-      $(`#likes_image${id_num}`).attr("src", "../img/🦆 icon _heart_red.png");
+      $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_red.png");
       is_clicked_likes = true;
     }else{
-      $(`#likes_image${id_num}`).attr("src", "../img/🦆 icon _heart_.png");
+      $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_.png");
       is_clicked_likes = false;
     }
   });
@@ -177,26 +178,28 @@ $(document).ready(function() {
   let is_clicked_scrap = false;
     
   $('.scrap_image').click(function(event){
-    var id_num = event.target.id.substring(event.target.id.length - 1);
+    var id_num = event.target.id.match(/\d+/)[0];
     event.stopPropagation();
 
     
-    // 이거 뭘로보내야하지
-    localStorage.setItem('postid', postId);
+    // // 이거 뭘로보내야하지
+    // localStorage.setItem('postid', postId);
     
     if(!is_clicked_scrap){
-      $(`#scrap_image${id_num}`).attr("src", "../img/🦆 icon _yellow_star outline_.png");
+      $(`#scrap_image${id_num}`).attr("src", "../img/icon _yellow_star outline_.png");
       is_clicked_scrap = true;
     }else{
-      $(`#scrap_image${id_num}`).attr("src", "../img/🦆 icon _star outline_.png");
+      $(`#scrap_image${id_num}`).attr("src", "../img/icon _star outline_.png");
       is_clicked_scrap = false;
     }
   });
+
   // 공유
   let is_clicked_share = false;
   
   $(".share").click(function (event) {
-    var id_num = event.target.id.substring(event.target.id.length - 1);
+
+    var id_num = event.target.id.match(/\d+/)[0];
     event.stopPropagation();
 
     if (!is_clicked_share) {
@@ -206,6 +209,7 @@ $(document).ready(function() {
       var $share_image_kakao = $("<img>").attr("src", "../img/kakao.png");
       var $share_image_Vector = $("<img>").addClass("Vector").attr("src", "../img/Vector.png");
       var $share_link = $("<div>").addClass("share_link");
+
       var $share_click = $("<div>").addClass("share_click");
       var $share_copy = $("<div>").addClass("share_copy").text("복사");
       var $share_emoji_box = $("<div>").addClass("share_emoji_box");
@@ -233,7 +237,7 @@ $(document).ready(function() {
   });
 
   $(".share_image").click(function (event) {
-    var id_num = event.target.id.substring(event.target.id.length - 1);
+    var id_num = event.target.id.match(/\d+/)[0];
     event.stopPropagation();
     $(`#share${id_num}`).click();
   });
@@ -248,7 +252,7 @@ $(document).ready(function() {
   //   }});
 
     $(document).ready(function() {
-      $('#wrap_newPostMade').click(function() {
+      $('#wrap_newPostMade').click(function() {// 이부분
         window.location.href = 'http://127.0.0.1:5500/html/community_post.html';
       });
     });

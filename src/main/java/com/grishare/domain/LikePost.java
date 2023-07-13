@@ -20,13 +20,10 @@ public class LikePost {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @Column(nullable = false)
-    private boolean status; // true = 좋아요, false = 좋아요 취소
 
     public LikePost(Post post, User user){
         this.post = post;
         this.user = user;
-        this.status = true;
     }
 
 }

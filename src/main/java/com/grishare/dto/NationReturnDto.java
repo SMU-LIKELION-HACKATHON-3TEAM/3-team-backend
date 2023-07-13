@@ -31,6 +31,9 @@ public class NationReturnDto {
     private String warningHistory;
 
     private String currency;
+    private int like_count;
+
+    private String nationImgUrl;
 
     public NationReturnDto(Nation nation){
         this.id = nation.getId();
@@ -43,5 +46,7 @@ public class NationReturnDto {
         this.travelWarning = nation.getTravelWarning();
         this.warningHistory = nation.getWarningHistory();
         this.currency = nation.getCurrency();
+        this.like_count = nation.getLikeNations().size();
+        this.nationImgUrl = nation.getNationImgUrl();
     }
 }

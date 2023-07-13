@@ -88,7 +88,9 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         UserReturnDto userReturnDto = UserReturnDto.builder()
                 .email(me.getEmail())
                 .nickName(me.getNickName())
-                .picture(me.getPicture())
+                .userImg(me.getUserImg())
+                .password(me.getPassword())
+                .backgroundImg(me.getBackgroundImg())
                 .build();
 //        if (category.equals("nationLike")){ // 관심 국가 설정은 Post에서 좋아요?
 //        List<NationLike> nationLikes = nationLikeRepository.findAllByuserId(userId);
@@ -106,7 +108,8 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         User me = byId.orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
         String encryptPassword = passwordEncoder.encode(userRequestDto.getPassword());
         me.setNickName(userRequestDto.getNickName());
-        me.setPicture(userRequestDto.getPicture());
+        me.setUserImg(userRequestDto.getUserImg());
+        me.setBackgroundImg(userRequestDto.getBackgroundImg());
         me.setUserLoginId(userRequestDto.getUserLoginId());
 
         userRepository.save(me);
@@ -132,7 +135,6 @@ public class UserServiceImpl implements UserDetailsService , UserService {
     // 스크랩한 글 전체 조회
     @Override
     public List<PostReturnDto> getMyScrap(Long userId){ // userId에 로그인한 회원 Id가 들어가야 됨
-            // 여기가 문제임 scrap까지는 생성되는데 이거에 해당하는 postList를 추출하는게 안되는 것 같음
         List<PostReturnDto> myScrapList = scrapRepository.findAllByUserId(userId).stream()
                                     .map(scrap -> new PostReturnDto(scrap.getPost()))
                                     .collect(Collectors.toList());

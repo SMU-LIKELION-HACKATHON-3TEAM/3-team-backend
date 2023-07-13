@@ -2,20 +2,19 @@ package com.grishare.controller;
 
 import com.grishare.domain.Post;
 import com.grishare.domain.user.CustomUserDetail;
+import com.grishare.dto.PostDetailReturnDto;
 import com.grishare.dto.PostRequestDto;
 import com.grishare.dto.PostReturnDto;
-import com.grishare.service.PostService;
 import com.grishare.service.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
 public class PostController {
@@ -30,13 +29,13 @@ public class PostController {
         return ResponseEntity.ok(posts);
     }
 
-    @GetMapping("/posts/{nationId}")
+    @GetMapping("/posts/nation/{nationId}")
     public ResponseEntity<List<PostReturnDto>> getPostByNationId(@PathVariable("nationId") long nationId) {
         return ResponseEntity.ok(postService.findByNationId(nationId));
     }
 
-    @GetMapping("/posts/{nationId}/{postId}")
-    public ResponseEntity<PostReturnDto> getPostByPostId(@PathVariable("postId") long postId) {
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity<PostDetailReturnDto> getPostByPostId(@PathVariable("postId") long postId) {
         try {
             return ResponseEntity.ok(postService.findByPostId(postId));
         } catch (Exception e) {
@@ -46,18 +45,14 @@ public class PostController {
     }
 
     @PostMapping("/posts/{nationId}")
-    public ResponseEntity<Post> createPost(
+    public ResponseEntity<PostReturnDto> createPost(
             @AuthenticationPrincipal CustomUserDetail customUserDetail,
             @PathVariable("nationId") long nationId,
-            @RequestBody PostRequestDto postRequestDto) {
-        try {
-            ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(postService.save(customUserDetail.getUser(), nationId, postRequestDto));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+            @RequestPart PostRequestDto postRequestDto,
+            @RequestPart(required = false) List<MultipartFile> imageFiles) {
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(postService.save(customUserDetail.getUser(), nationId, postRequestDto, imageFiles));
     }
 
     @PutMapping("/posts/{postId}")

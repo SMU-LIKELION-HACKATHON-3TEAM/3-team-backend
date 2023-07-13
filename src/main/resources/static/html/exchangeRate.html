@@ -10,7 +10,7 @@
     <script src="https://kit.fontawesome.com/fe66068d41.js" crossorigin="anonymous"></script>
 
     <!-- css -->
-    <link rel="stylesheet" href="/css/exchangeRate.css">
+    <link rel="stylesheet" href="../css/exchangeRate.css">
 
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,16 +28,16 @@
 <body>
     <nav>
         <div class="wrap_logo">
-            <a href="html/mainpage.html"><img src="/img/logo.png" alt=""></a>
+            <a href="../html/mainpage.html"><img src="../img/logo.png" alt=""></a>
         </div>
         <div class="wrap_menu">
             <ul class="menu">
                 <li>
-                    <a href="/html/community.html" class="a-community">커뮤니티</a></li>
-                <li>
-                    <a href="/html/exchangeRate.html" class="a-exchange">환율</a></li>
+                    <a href="../html/community.html" class="a-community">커뮤니티</a></li>
+                <li class="menu-exchange">
+                    <a href="../html/exchangeRate.html" class="a-exchange">환율</a></li>
                 <li class="menu-price">
-                    <a href="/html/pricecomparison.html" class="a-price">가격비교</a></li>
+                    <a href="../html/pricecomparison.html" class="a-price">가격비교</a></li>
                 <li class="menu-customer">
                     <a href="#" class="a-customer">고객지원</a></li>
             </ul>
@@ -45,9 +45,9 @@
         <div class="wrap_login-bar">
             <ul class="login-bar">
                 <li>
-                    <a href="/html/login.html">로그인</a></li>
+                    <a href="../html/login.html">로그인</a></li>
                 <li>
-                    <a href="/html/signUp.html">회원가입</a></li>
+                    <a href="../html/signUp.html">회원가입</a></li>
             </ul>
         </div>
         <div class="wrap_search">
@@ -62,29 +62,29 @@
                     <option value="대한민국">대한민국</option>
                     <!--대한민국고정-->
                 </select>
-                <form class="wrap_country">
-                <select name="country2" id="country2" >
-                    <option disabled selected >비교할 나라 선택</option>
+                <div class="wrap_country">
+                <select name="country2" id="country2">
+                    <option disabled >비교할 나라 선택</option>
                 </select>
-                <!-- <input id = "country_submit" type = "submit" style = "display:none"> -->
-                </form>
-                <form class="wrap_bank">
+                </div>
+                <div class="wrap_bank">
                 <select name="banks" id="banks">
-                    <option disabled selected >은행 선택</option>
+                    <option disabled>은행 선택</option>
+                    <option>은행 선택</option>
                 </select>
-                <!-- <input id = "bank_submit" type = "submit" style = "display:none"> -->
-                </form>
+                </div>
             </section>
             <section class="main_er">
                 <div class="money1">
+                    <!-- <input type="number" id="money1"/> -->
                     <input type="number" id="money1" onkeyup="calculate()"/>
-                    <p>₩</p>
-                    <!--화폐단위 구현-->
+                    <p>KRW</p>
+                    
                 </div>
                 <p><b>=</b></p>
                 <div class="money2">
                 <input type="number" id="money2"></input>
-                <!-- <p>EUR</p> -->
+                <p class="curUnit">KRW</p>
                 <!--화폐단위 구현-->
                 </div>
 
@@ -104,8 +104,8 @@
             <p style="font-size: 14px;">-주말 및 공휴일, 점심시간(12:00~13:00) 제외</p>
         </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="/js/exchangeRate.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/exchangeRate.js"></script>
 </body>
 
 </html>
