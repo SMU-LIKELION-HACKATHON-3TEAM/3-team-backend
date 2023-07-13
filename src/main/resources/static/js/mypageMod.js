@@ -19,7 +19,7 @@ $.ajax({
 
             /* 이미지 있어? 없으면 기본 넣어 */
             if (backImg == "") {
-                backImage.src = "../img/Default_Profile.png";
+                backImage.src = "../img/Default_profileBack.png";
             } else {
                 backImage.src = picture;
             }
