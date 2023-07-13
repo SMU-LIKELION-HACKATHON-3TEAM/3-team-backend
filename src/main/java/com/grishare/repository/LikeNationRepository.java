@@ -15,4 +15,6 @@ public interface LikeNationRepository extends JpaRepository<LikeNation,Long > {
     Optional<LikeNation> findByNationIdAndUserId(Long nationId, Long userId);
 
     List<LikeNation> findAllByUserId(Long userId);
+
+    Integer countAllByNation_Id(Long nation_Id);
 }
