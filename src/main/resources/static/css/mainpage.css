@@ -20,6 +20,11 @@ body {
    margin-left: 50px;
 }
 
+#wrap-danger {
+    width: 330px;
+    height: 330px;
+}
+
 .map-sub {
     background-color: rgb(245, 245, 245);
     width: 348px;
@@ -45,7 +50,6 @@ body {
 
 .button {
     text-align: center;
-    padding-top: 170px;
 }
 
 .wrap-infotorate {

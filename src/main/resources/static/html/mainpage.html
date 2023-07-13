@@ -63,14 +63,158 @@
     </nav>
     <div class="wrap-map">
         <div class="map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d121866693.79577167!2d104.04626221372179!3d9.043335541786922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sko!2skr!4v1689150658038!5m2!1sko!2skr" width="989" height="589" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <canvas id="myChart"></canvas>
+        
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/chartjs-chart-geo@3.5.1/build/index.umd.min.js"></script>
+        
+        <script>
+          var valueArray =[];
+          // CSV 파일 불러오기
+          function readCSVFile(path) {
+            return new Promise((resolve, reject) => {
+              const xhr = new XMLHttpRequest();
+      
+              xhr.onload = (event) => {
+                if (xhr.status === 200) {
+                  const csvData = xhr.responseText;
+                  resolve(csvData);
+                } else {
+                  reject(new Error('Failed to load CSV file'));
+                }
+              };
+      
+              xhr.onerror = (event) => {
+                reject(new Error('Failed to load CSV file'));
+              };
+      
+              xhr.open('GET', path, true);
+              xhr.send();
+            });
+          }
+      
+          // CSV 데이터 가공
+          function processCSVData(csvData) {
+            const rows = csvData.split('\n');
+            const result = [];
+      
+            for (let i = 0; i < rows.length; i++) {
+              const row = rows[i].trim();
+              if (row !== '') {
+                const columns = row.split(',');
+                result.push(columns);
+              }
+            }
+      
+            return result;
+          }
+      
+          // CSV 파일 경로
+          const csvFilePath = '../assets/data.csv';
+      
+          // CSV 파일 불러오기 및 처리
+          readCSVFile(csvFilePath)
+            .then((csvData) => {
+              // CSV 데이터 가공
+              const processedData = processCSVData(csvData);
+      
+              // 배열 항목 출력
+              processedData.forEach((item) => {
+                valueArray.push(item);
+              });
+              console.log(valueArray)
+            })
+            .catch((error) => {
+              console.error('CSV 파일 읽기 오류:', error);
+            });
+       
+
+            const url = 'https://unpkg.com/world-atlas@2.0.2/countries-50m.json'
+
+            fetch(url).then((result) => result.json()).then((datapoint) => {
+                const countries = ChartGeo.topojson.feature(datapoint, datapoint.objects.countries).features;
+
+                console.log()
+
+                const data = {
+                  labels: countries.map((country) => country.properties.name),
+                  datasets: [
+                    {
+                      label: 'Countries',
+                      data: countries.map((country) => {
+                        const matchedItem = valueArray.find((item) => item[0] === country.properties.name);
+                        console.log(matchedItem)
+                        const value = matchedItem ? matchedItem[2] : null;
+                        console.log(value)
+                        return { feature: country, value: Math.random(), item:value };
+                      }),
+                    },
+                  ],
+                };
+
+                const config = {
+                    type: 'choropleth',
+                    data,
+                    options: {
+                        //showGraticule: true,
+                        scales: {
+                            xy: {
+                                projection : 'naturalEarth1'
+                            },
+                            
+                        },
+                        plugins: {
+                            legend: {
+                                display : false
+                            }
+                        }
+                    }
+                };
+
+                const myChart = new Chart(
+                    document.getElementById('myChart'),
+                    config
+                )
+                document.getElementById("myChart").onclick = function (evt) {
+                  var activePoints = myChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+          
+                  if (activePoints.length > 0) {
+                    var clickedElementIndex = activePoints[0].index;
+          
+                    var label = myChart.data.labels[clickedElementIndex];
+          
+                    var item = myChart.data.datasets[0].data[clickedElementIndex].item;
+                        console.log(item)
+                    $.ajax({
+                      type: 'GET',
+                      url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/nation/${item}`,
+                      success: function(data) {
+                          $.each(data.data, function (index, item) {
+                  
+                              var $nationWarning = $('<div>').addClass('nationWarning').text(item.nationWarning)
+                              var $nationName = $('<div>').addClass('natioinName').text(item.nationName)
+                  
+                              $('#wrap-danger').append($nationWarning).append($nationName)
+                          });
+                      },
+                      error: function() {
+                          alert('통신 실패시에만 실행');
+                          console.log("실패");
+                      }
+                  });
+                  }
+                };
+            })
+            
+        
+        </script>
         </div>
         <div class="map-sub">
             <div class="map-text">
                 <div id="wrap-danger"></div>
             </div>
             <div class="button">
-                <button class="button-map" type="button">아프리카 관련 커뮤니티 가기</button>
+                <button class="button-map" type="button"><a href="#">관련 커뮤니티 가기</a></button>
             </div>
         </div>
     </div>
