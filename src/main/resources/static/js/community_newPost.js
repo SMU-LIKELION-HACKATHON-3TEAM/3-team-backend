@@ -12,10 +12,7 @@ $(document).ready(function() {
         var nationId = data.data[i].nationId;
         var nationName = data.data[i].nationName;
         
-        console.log("nationId:", nationId);
-        console.log("nationName:", nationName);
         
-        // <select> 요소에 옵션 추가
         var $select = $('#wrap_newPost_country');
         var $option = $("<option>").attr("value", nationId).text(nationName);
         $select.append($option);
@@ -94,67 +91,61 @@ function getImageFiles(e) {
     // 값 백엔드로 보내기
     //nationId 를 작성할 때 무조건 선택하게
 
-    $("#wrap_newPost_save").click(function() {
-      var title = $('#wrap_newPost_head').val();
-      var contents = $('#wrap_newPost_content').val();
-      var nationId = localStorage.getItem('nationId');
-
-      if (nationId === "main" || title === "" || contents === ""){
-        if (nationId === "main") {
-          alert("나라를 선택해 주세요.");
+    $(document).ready(function() {
+      $("#wrap_newPost_save").click(function() {
+        var title = $('#wrap_newPost_head').val();
+        var contents = $('#wrap_newPost_content').val();
+        var nationId = localStorage.getItem('nationId');
+    
+        if (nationId === "main" || title === "" || contents === "") {
+          if (nationId === "main") {
+            alert("나라를 선택해 주세요.");
+          } else if (title === "") {
+            alert("제목을 입력해 주세요.");
+          } else if (contents === "") {
+            alert("내용을 입력해 주세요.");
+          }
           var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_post.html';
           window.location.href = url;
-        } else if (title === "") {
-            alert("제목을 입력해 주세요.");
-            var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_post.html';
-            window.location.href = url;
-        } else if (contents === "") {
-            alert("내용을 입력해 주세요.");
-            var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_post.html';
-            window.location.href = url;
-        }
-      } else {
-
-        $(document).ready(function() {    
-          var title = $('#wrap_newPost_head').val();
-          var contents = $('#wrap_newPost_content').val();
-          var postRequertDto = {
+        } else {
+          var postRequestDto = {
             title: title,
             content: contents
           };
           var url = `/api/post/${nationId}`;
-        
+    
           $.ajax({
             type: 'POST',
             url: url,
-            data: JSON.stringify(postRequertDto),
-            contentType : 'application/json',
+            data: JSON.stringify(postRequestDto),
+            contentType: 'application/json',
             success: function(response) {
               console.log(response);
-            },
-          });  
-          // 이미지 첨부
-          var imageFiles = uploadFiles[0];
-          var formData = new FormData();
-          formData.append('file', imageFiles);
-
-          $.ajax({
-            type: 'POST',
-            url: url,
-            data: formData,
-            contentType: false,
-            processData: false,
-            enctype : 'multipart/form-data',
-            success: function(response) {
-              console.log(response);
+    
+              // 이미지 첨부
+              var imageFiles = uploadFiles[0];
+              var formData = new FormData();
+              formData.append('file', imageFiles);
+    
+              $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                contentType: 'multipart/form-data',
+                processData: false,
+                success: function(response) {
+                  console.log(response);
+                  alert('등록되었습니다.');
+                  var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
+                  window.location.href = url;
+                },
+              });
             },
           });
-        });
-        alert('등록되었습니다.');
-        var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
-        window.location.href = url;
-      }
+        }
+      });
     });
+    
 
 
 
