@@ -101,7 +101,7 @@ body {
     padding-right: 20px;
 }
 
-.my-img {
+.picture {
     padding-right: 30px;
 }
 
@@ -159,7 +159,7 @@ body {
 }
 
 .likes_image{
-    background-image: url(../img/🦆\ icon\ _heart_border_red.png);
+    background-image: url(../img/icon\ _heart_border_red.png);
     width: 24px;
     height: 18px;
     margin-left: 570px;
