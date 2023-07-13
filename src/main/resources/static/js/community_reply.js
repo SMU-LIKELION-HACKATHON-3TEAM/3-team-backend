@@ -246,7 +246,12 @@ $(document).ready(function() {
           });
           
           //여기
-          
+          $(".share_copy").click(function (event) {
+            var id_num = event.target.id.match(/\d+/)[0];
+            event.stopPropagation();
+            url=`http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${id_num}/share`;
+            localStorage.setItem('url',url);
+          });
     $(".comment_commit").click(function() {
       var comment_post_comment = $('.comment_post_comment').val();
       
