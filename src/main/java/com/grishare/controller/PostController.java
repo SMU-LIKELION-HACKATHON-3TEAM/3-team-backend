@@ -35,9 +35,9 @@ public class PostController {
     }
 
     @GetMapping("/posts/{postId}")
-    public ResponseEntity<PostDetailReturnDto> getPostByPostId(@PathVariable("postId") long postId) {
+    public ResponseEntity<PostDetailReturnDto> getPostByPostId(@AuthenticationPrincipal CustomUserDetail customUserDetail, @PathVariable("postId") long postId) {
         try {
-            return ResponseEntity.ok(postService.findByPostId(postId));
+            return ResponseEntity.ok(postService.findByPostId(customUserDetail, postId));
         } catch (Exception e) {
             e.printStackTrace();
         }

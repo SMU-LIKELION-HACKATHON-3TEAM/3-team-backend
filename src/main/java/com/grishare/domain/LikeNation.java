@@ -20,8 +20,6 @@ public class LikeNation {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-
-
     public LikeNation(Nation nation, User user){
         this.nation = nation;
         this.user = user;

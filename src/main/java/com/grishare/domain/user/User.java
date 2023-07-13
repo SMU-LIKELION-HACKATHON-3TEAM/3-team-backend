@@ -35,7 +35,7 @@ public class User {
     @CreatedDate
     private LocalDateTime createdAt; // 가입날짜
     private Integer birthDay; // 회원 생년월일 erd에 없음
-    private String picture; // 프로필 이미지 -> 배포여부에 따라 -> 일단 배포는 미정 안할
+    private String userImg; // 프로필 이미지 -> 배포여부에 따라 -> 일단 배포는 미정 안할
     // 이미지 경로를 저장하는 변수
     private String address;
     @OneToMany(mappedBy = "user",orphanRemoval = true)
@@ -48,6 +48,8 @@ public class User {
     private List<Comment> comments;
     @OneToMany(mappedBy = "user",orphanRemoval = true)
     private List<ReportPost> reportPosts;
+    @Column(name = "background_img")
+    private String backgroundImg;
 
     //@Embedded
     //private NotificationSetting notificationSetting; // 알림 설정
@@ -56,6 +58,7 @@ public class User {
         password = passwordEncoder.encode(password);
         return this;
     }
+
 
     public  void updatePassword(String password){
         this.password = password;

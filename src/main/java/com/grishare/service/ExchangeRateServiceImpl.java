@@ -64,7 +64,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService{
                 }
                 ExchangeRate exchangeRate = ExchangeRate.builder()
                         .bank(Bank.ECA)
-                        .contryCode(contryName)
+                        .countryCode(contryName)
                         .curUnit((curUnit))
                         .exchangeRate(1000 / rate)
                         .build();
@@ -72,11 +72,11 @@ public class ExchangeRateServiceImpl implements ExchangeRateService{
             }
             //for문 (데이터 유무 구분)
             for (int i = 0; i < exList.size(); i++) {
-                List<Nation> nationList = nationRepository.findByIso2(exList.get(i).getContryCode());
+                List<Nation> nationList = nationRepository.findByIso2(exList.get(i).getCountryCode());
                 if (!nationList.isEmpty()) {
-                    List<ExchangeRate> erList = exRepository.findByContryNameAndBank(nationList.get(0).getCountryName(), exList.get(i).getBank());
+                    List<ExchangeRate> erList = exRepository.findByCountryNameAndBank(nationList.get(0).getCountryName(), exList.get(i).getBank());
                     ExchangeRate ex = exList.get(i);
-                    ex.setContryName(nationList.get(0).getCountryName());
+                    ex.setCountryName(nationList.get(0).getCountryName());
                     if (!erList.isEmpty()) {
                         ExchangeRate er = erList.get(0);
                         er.setExchangeRate(ex.getExchangeRate());
@@ -101,8 +101,8 @@ public class ExchangeRateServiceImpl implements ExchangeRateService{
     }
 
     @Override
-    public ExchangeRateReturnDto findByContryNameAndBank(String contryName, String bank) {
-        List<ExchangeRate> ex = exRepository.findByContryNameAndBank(contryName, Bank.valueOf(bank));
+    public ExchangeRateReturnDto findByCountryNameAndBank(String countryName, String bank) {
+        List<ExchangeRate> ex = exRepository.findByCountryNameAndBank(countryName, Bank.valueOf(bank));
         if(!ex.isEmpty()){
             return new ExchangeRateReturnDto(ex.get(0));
         }

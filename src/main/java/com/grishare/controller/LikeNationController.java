@@ -2,6 +2,7 @@ package com.grishare.controller;
 
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
+import com.grishare.dto.NationReturnDto;
 import com.grishare.repository.UserRepository;
 import com.grishare.service.LikeNationServiceImpl;
 import com.grishare.service.LikeServiceImpl;
@@ -9,10 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -31,5 +31,9 @@ public class LikeNationController {
             e.printStackTrace();
         }
         return null;
+    }
+    @GetMapping("/nation/like")
+    public ResponseEntity<List<NationReturnDto>> GetLikeNation(@AuthenticationPrincipal CustomUserDetail customUserDetail){
+        return ResponseEntity.ok(likeNationService.findByUserId(customUserDetail.getUser().getId()));
     }
 }

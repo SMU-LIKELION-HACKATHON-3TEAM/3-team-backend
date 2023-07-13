@@ -34,7 +34,7 @@
             <ul class="menu">
                 <li>
                     <a href="../html/community.html" class="a-community">커뮤니티</a></li>
-                <li>
+                <li class="menu-exchange">
                     <a href="../html/exchangeRate.html" class="a-exchange">환율</a></li>
                 <li class="menu-price">
                     <a href="../html/pricecomparison.html" class="a-price">가격비교</a></li>
@@ -64,12 +64,13 @@
                 </select>
                 <div class="wrap_country">
                 <select name="country2" id="country2">
-                    <option disabled  >비교할 나라 선택</option>
+                    <option disabled >비교할 나라 선택</option>
                 </select>
                 </div>
                 <div class="wrap_bank">
                 <select name="banks" id="banks">
-                    <option disabled selected >은행 선택</option>
+                    <option disabled>은행 선택</option>
+                    <option>은행 선택</option>
                 </select>
                 </div>
             </section>
@@ -77,13 +78,13 @@
                 <div class="money1">
                     <!-- <input type="number" id="money1"/> -->
                     <input type="number" id="money1" onkeyup="calculate()"/>
-                    <p>₩</p>
-                    <!--화폐단위 구현-->
+                    <p>KRW</p>
+                    
                 </div>
                 <p><b>=</b></p>
                 <div class="money2">
                 <input type="number" id="money2"></input>
-                <!-- <p>EUR</p> -->
+                <p class="curUnit">KRW</p>
                 <!--화폐단위 구현-->
                 </div>
 
