@@ -7,11 +7,7 @@ $.ajax({
         var length = data.data.length;
 
         /* 최신 2개만 조회 */
-        var forNum;
-        if ((length > 2) || (length == 2))
-            forNum = 2;
-        else
-            forNum = length;
+        var forNum = length;
 
         var i;
         for (i = 0; i < forNum; i++) {
