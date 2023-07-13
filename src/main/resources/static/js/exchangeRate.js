@@ -1,4 +1,4 @@
-
+$(".a-exchange").css("color","#0029BA");
 /*나라 선택*/
 $.ajax({
     type: 'GET',
@@ -46,7 +46,7 @@ var bank_er;
 $(document).ready(function () {
     $("#country2").on('change', function () {
         var countryName = $("#country2 option:selected").val();
-        $('#banks').find('option:first').attr('selected', 'selected');
+        $("#banks option:eq(0)").prop("selected", true);
         //은행 셀렉 값 초기화 해야함 
         console.log(countryName);
         $("#banks").on('change', function () {
@@ -88,13 +88,20 @@ $(document).ready(function () {
 
 /*계산 */
 function calculate() {
-    let input_value = document.getElementById("money1").value;
-    if (input_value.length >= 4) { //1000원 단위
-        let output_value = (input_value/1000) * bank_er; //가져온 환율값
+    let input_krw = document.getElementById("money1").value;
+    if (input_krw.length >= 4) { //1000원 단위
+        let output_value = (input_krw/1000) * bank_er; //가져온 환율값
         console.log(output_value);
 
         document.getElementById("money2").value = (output_value).toFixed(2);
     }
+    // let input_another = document.getElementById("money2").value;
+    // if (input_another.length >= 4) { //1000원 단위
+    //     let output_value = input_another/bank_er*1000; //가져온 환율값
+    //     console.log(output_value);
+
+    //     document.getElementById("money1").value = (output_value).toFixed(2);
+    // }
 }
 
 

@@ -60,10 +60,9 @@ ul.menu>li {
     font-size: 24px;
     margin-right: 114px;
     cursor: pointer;
+    
 }
-.menu_exchange{
-    color:#0029BA;
-}
+
 .a-exchange {
     padding-bottom: 10px;
     border-bottom: solid 5px #0029BA;
@@ -197,6 +196,7 @@ select{
     margin-left:10px;
     background-color: #ebebeb;
 }
+
 .money1, .money2{
     display: flex;
     width: 300px;
