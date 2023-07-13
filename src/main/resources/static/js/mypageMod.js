@@ -21,7 +21,7 @@ $.ajax({
             if (backImg == "") {
                 backImage.src = "../img/Default_profileBack.png";
             } else {
-                backImage.src = picture;
+                backImage.src = backImage;
             }
 
             /* 프로필 이미지 */
@@ -117,9 +117,9 @@ const submit = () => {
     var backPictureFile = "";
 
     if (backChange == 0) {
-        backPictureFile = "../img/Default_Profile.png";
+        backPictureFile = "../img/Default_profileBack.png";
     } else if (backChange == 1) {
-        backPictureFile = $('#picture_input')[0].files[0];
+        backPictureFile = $('#back_input')[0].files[0];
     }
 
     /* 프로필 */
