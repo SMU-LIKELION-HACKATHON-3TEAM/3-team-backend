@@ -59,6 +59,7 @@ public class User {
         return this;
     }
 
+
     public  void updatePassword(String password){
         this.password = password;
     }

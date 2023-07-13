@@ -108,7 +108,8 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         User me = byId.orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
         String encryptPassword = passwordEncoder.encode(userRequestDto.getPassword());
         me.setNickName(userRequestDto.getNickName());
-        me.setUserImg(userRequestDto.getPicture());
+        me.setUserImg(userRequestDto.getUserImg());
+        me.setBackgroundImg(userRequestDto.getBackgroundImg());
         me.setUserLoginId(userRequestDto.getUserLoginId());
 
         userRepository.save(me);
