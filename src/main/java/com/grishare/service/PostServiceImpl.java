@@ -45,6 +45,7 @@ public class PostServiceImpl implements PostService {
             throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
         });
 
+        System.out.println("파일 전달은 받음");
         Post post = postRequestDto.toEntity(user, nation);
         postRepository.save(post);
 

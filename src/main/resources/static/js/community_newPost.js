@@ -119,13 +119,14 @@ function getImageFiles(e) {
             type: 'POST',
             url: url,
             data: JSON.stringify(postRequestDto),
+            contentType: 'application/json',
             success: function(response) {
               // console.log(response);
     
               // 이미지 첨부
               var imageFile = uploadFiles[0];
               var formData = new FormData();
-              formData.append('image', imageFile);
+              formData.append('file', imageFile);
     
               $.ajax({
                 type: 'POST',
@@ -133,6 +134,7 @@ function getImageFiles(e) {
                 data: formData,
                 contentType: false,
                 processData: false,
+                enctype: 'multipart/form-data',
                 success: function(response) {
                   // console.log(response);
                   alert('등록되었습니다.');
