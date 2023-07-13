@@ -71,6 +71,8 @@ public class UserServiceImpl implements UserDetailsService , UserService {
                 .userLoginId(registerRequestDto.getUserLoginId())
                 .birthDay(registerRequestDto.getBirthDay())
                 .nickName(registerRequestDto.getNickName())
+                .userImg("")
+                .backgroundImg("")
                 .build();
         UserReturnDto userReturnDto = new UserReturnDto(user); // userReturnDto 수정 필ㅑ
 
@@ -90,6 +92,7 @@ public class UserServiceImpl implements UserDetailsService , UserService {
                 .nickName(me.getNickName())
                 .userImg(me.getUserImg())
                 .password(me.getPassword())
+                .userName(me.getUserName())
                 .backgroundImg(me.getBackgroundImg())
                 .build();
 //        if (category.equals("nationLike")){ // 관심 국가 설정은 Post에서 좋아요?
@@ -107,10 +110,15 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         Optional<User> byId = userRepository.findById(user.getId()); // pk값(id) 가져옴
         User me = byId.orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
         String encryptPassword = passwordEncoder.encode(userRequestDto.getPassword());
-        me.setNickName(userRequestDto.getNickName());
-        me.setUserImg(userRequestDto.getUserImg());
-        me.setBackgroundImg(userRequestDto.getBackgroundImg());
-        me.setUserLoginId(userRequestDto.getUserLoginId());
+        if(userRequestDto.getNickName() != null) {
+            me.setNickName(userRequestDto.getNickName());
+        } else if (userRequestDto.getUserImg() != null) {
+            me.setUserImg(userRequestDto.getUserImg());
+        } else if (userRequestDto.getUserLoginId() != null){
+            me.setUserLoginId(userRequestDto.getUserLoginId());
+        } else if(userRequestDto.getBackgroundImg() != null) {
+            me.setBackgroundImg(userRequestDto.getBackgroundImg());
+        }
 
         userRepository.save(me);
         // 비밀번호 변경 -> passwordEncoder 적용
