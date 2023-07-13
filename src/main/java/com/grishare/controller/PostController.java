@@ -79,4 +79,10 @@ public class PostController {
         }
         return null;
     }
+
+    @GetMapping("/post/hotview")
+    public BaseResponse<?> getHotPosts() {
+        return BaseResponse.ok(postService.getHotPosts());
+    }
+
 }
