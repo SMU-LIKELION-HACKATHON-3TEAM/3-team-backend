@@ -235,6 +235,13 @@ ul.login-bar>li:hover {
     margin-left: 282px;
 }
 
+.post_func {
+    margin-top: 25px;
+    background-color: #444444;
+    width: 940px;
+    height: 20px;
+}
+
 
 /********** footer **********/
 
