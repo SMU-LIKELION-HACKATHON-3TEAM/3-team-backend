@@ -105,9 +105,7 @@ $(document).ready(function() {
         $('#wrap_country_box').on('click', '.post-container', function(event) {
           var postid = $(event.target).attr("data-postid");
 
-          localStorage.setItem('postid', postid); //이거 메인 커뮤니티 화면에서는 nationId가 없지 않나
-                                                      // 나라 드롭박스 부분은 countrySearch 화면인데 그러면 메인 -> reply일 때는 어케해야?
-
+          localStorage.setItem('postid', postid);
           var is_clicked_post_container = localStorage.getItem('is_clicked_post_container');
 
           if (is_clicked_post_container === null) {
