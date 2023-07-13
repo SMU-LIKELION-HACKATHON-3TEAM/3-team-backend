@@ -1,5 +1,4 @@
 
-  
   function onSubmitsearchPw(){
     // var userLoginId = $('#userId').val();
     var email =$('#email').val();
@@ -19,7 +18,7 @@
           alert("이메일로 임시 비밀번호를 전송했습니다.")
         },
         error: function(request, status, error){
-          console.error(error);
+          console.log("error");
           alert("이메일 오류");
         }
     })

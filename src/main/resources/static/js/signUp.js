@@ -28,9 +28,10 @@ function onSubmitSignup(){
         birthDay: birthDay,
       }),
       success: function (data) {
-        alert("통신 성공시에만 실행");
-        console.log("성공");
+        alert("회원가입 성공");
+        console.log("회원가입 성공");
         console.log(data);
+        window.location.href("../html/mainpage.html")
       },
       error: function (request, status, error) {
         alert(
