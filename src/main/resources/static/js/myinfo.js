@@ -2,7 +2,7 @@ $.ajax({
     type: 'GET',
     url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/mypage',
     success: function() {
-        $.each(data, function (index, item) {
+        $.each(data.data, function (index, item) {
 
             var $username = $('<div>').addClass('username').text(item.username)
             var $email = $('<div>').addClass('email').text(item.email)

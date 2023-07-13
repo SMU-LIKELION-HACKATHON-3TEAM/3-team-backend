@@ -2,7 +2,7 @@ $.ajax({
     type: 'GET',
     url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/nation/like',
     success: function(data) {
-        $.each(data, function (index, item) {
+        $.each(data.data, function (index, item) {
 
             var $a = $("<a>").addClass("per-intnation");
 
