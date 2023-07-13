@@ -17,7 +17,7 @@
     type: 'GET',
     url: 'http://grishare.ap-northeast-2.elasticbeanstalk.com/api/exchangeRate',
     success: function(data) {
-      $.each(data, function (index, item) {
+      $.each(data.data, function (index, item) {
         console.log(item.countryName)
         var $div = $("<div>").addClass("wrap");
         var $countryName = $("<div>")
