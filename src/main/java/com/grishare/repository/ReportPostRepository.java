@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ReportPostRepository extends JpaRepository<ReportPost, Long> {
-//    List<ReportPost> findByPostIdAndUserId(Long postId, Long userId);
-    List<ReportPost> findByPostId(Long postId);
+    List<ReportPost> findByPostIdAndUserId(Long postId, Long userId);
 }

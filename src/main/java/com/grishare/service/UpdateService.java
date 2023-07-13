@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Currency;
 
 @Service
 public class UpdateService {
@@ -16,6 +17,7 @@ public class UpdateService {
 //    @Scheduled(cron = "0 * * * * 1-5", zone = "Asia/Seoul")
     public void updateExchangeRate() throws IOException {
         exService.update();
+//        Currency c = new Currency
     }
 
 }
