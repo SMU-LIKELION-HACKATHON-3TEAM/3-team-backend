@@ -197,7 +197,7 @@ $.ajax({
                 length = length - 1;
                 const writer = data.data[length].userName;
                 const profileImg = data.data[length].userImg;
-                const imgUrl = data.data[length].ImgUrl;
+                const imgUrl = data.data[length].imgUrl;
                 const contents = data.data[length].contents;
                 const post_id = data.data[length].post_id;
 
