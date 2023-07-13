@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         UserImage userImage = new UserImage(user, userStandardImg.get(randomNumber));
 
         List<String> userStandardBackImg = new ArrayList<>();
-        userStandardBackImg.add("https://elasticbeanstalk-ap-northeast-2-670982426569.s3.ap-northeast-2.amazonaws.com/post/279_3ab430a4-27de-4b93-8f98-b8dc8da95c7c_back1.webp");
+        userStandardBackImg.add("https://elasticbeanstalk-ap-northeast-2-670982426569.s3.ap-northeast-2.amazonaws.com/post/299_de58ea3d-913a-4abe-80ec-94b1a56d6584_back4.jpeg");
         userStandardBackImg.add("https://elasticbeanstalk-ap-northeast-2-670982426569.s3.ap-northeast-2.amazonaws.com/post/280_4d8a2bd5-132e-493b-9322-38bd62e32e95_back2.jpeg");
         userStandardBackImg.add("https://elasticbeanstalk-ap-northeast-2-670982426569.s3.ap-northeast-2.amazonaws.com/post/281_4d503de2-7753-474d-94e7-5f0530e69728_back3.jpeg");
 
