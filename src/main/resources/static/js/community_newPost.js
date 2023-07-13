@@ -125,7 +125,7 @@ function getImageFiles(e) {
               // 이미지 첨부
               var imageFile = uploadFiles[0];
               var formData = new FormData();
-              formData.append('imageFile', imageFile);
+              formData.append('image', imageFile);
     
               $.ajax({
                 type: 'POST',
