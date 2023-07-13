@@ -40,8 +40,7 @@ $.ajax({
 
                 let clipping = document.createElement("div");
                 clipping.setAttribute("class", "clipping");
-                link.appendChild(clipping);
-                clipping_content.appendChild(link);
+                clipping_content.appendChild(clipping);
 
                 let post_infor = document.createElement("div");
                 post_infor.setAttribute("class", "post_infor");
@@ -49,7 +48,9 @@ $.ajax({
 
                 let post_content = document.createElement("div");
                 post_content.setAttribute("class", "post_content");
-                clipping.appendChild(post_content);
+
+                link.appendChild(post_content);
+                clipping.appendChild(link);
 
                 let post_func = document.createElement("div");
                 post_func.setAttribute("class", "post_func");
@@ -135,7 +136,7 @@ $.ajax({
                 var scrap_image = document.createElement("img");
                 scrap_image.setAttribute("id", "scrap_image" + post_id);
                 scrap_image.setAttribute("class", "scrap_image");
-                scrap_image.src = "../img/icon _star outline_.png";
+                scrap_image.src = "../img/icon _yellow_star outline_.png";
 
                 var scrap = document.createElement("div");
                 scrap.setAttribute("class", "scrap");
@@ -167,6 +168,73 @@ $.ajax({
                 post_func.appendChild(report);
 
                 /* 기능은 추후 추가 */
+
+                $(document).on('click', '.report_click', function() {
+                    alert("신고되었습니다.");
+                    localStorage.setItem('is_clicked_report', "1");
+                    var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_searchCountry.html';
+
+                    window.location.href = url;
+                });
+
+
+                // 좋아요
+                let is_clicked_likes = false;
+
+                $('.likes_image').click(function(event) {
+                    var id_num = event.target.id.match(/\d+/)[0];
+                    var postId = id_num;
+                    // console.log(postId); // 이따 체크
+
+                    event.stopPropagation();
+
+                    if (!is_clicked_likes) {
+                        $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_red.png");
+                        is_clicked_likes = true;
+
+                    } else {
+                        $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_.png");
+                        is_clicked_likes = false;
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/like`,
+                        success: function(data) {
+                            // console.log("like connecting");
+
+                        }
+                    });
+                });
+
+
+                //스크랩
+                let is_clicked_scrap = true;
+
+                $('.scrap_image').click(function(event) {
+                    var id_num = event.target.id.match(/\d+/)[0];
+                    var postId = id_num;
+                    event.stopPropagation();
+
+                    if (!is_clicked_scrap) {
+                        $(`#scrap_image${id_num}`).attr("src", "../img/icon _yellow_star outline_.png");
+                        is_clicked_scrap = true;
+                    } else {
+                        $(`#scrap_image${id_num}`).attr("src", "../img/icon _star outline_.png");
+                        is_clicked_scrap = false;
+                    }
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/scrap`,
+                        success: function(data) {
+                            // console.log("scrap connecting");
+                        }
+                    })
+                });
+
             }
             showData();
         }
@@ -181,7 +249,6 @@ $.ajax({
 /*** 스크랩 게시물 ***/
 // var jsonLocation = "../json/clipping.json";
 // $.getJSON(jsonLocation, function(data) {
-
 //     var length = data.data.length;
 
 //     /* 최신 2개만 조회 */
@@ -192,10 +259,8 @@ $.ajax({
 //         const showData = () => {
 //             length = length - 1;
 //             const writer = data.data[length].userName;
-//             // const profileImg = data.data[length].countryInfo.ImageUrl; // 수정 필요
-//             const profileImg = "../img/user.png";
-//             // const imgUrl = data.data[length].countryInfo.ImageUrl; // 수정 필요
-//             const imgUrl = "../img/earth.jpg";
+//             const profileImg = data.data[length].userImg;
+//             const imgUrl = data.data[length].imgUrl;
 //             const contents = data.data[length].contents;
 //             const post_id = data.data[length].post_id;
 
@@ -221,8 +286,7 @@ $.ajax({
 
 //             let clipping = document.createElement("div");
 //             clipping.setAttribute("class", "clipping");
-//             link.appendChild(clipping);
-//             clipping_content.appendChild(link);
+//             clipping_content.appendChild(clipping);
 
 //             let post_infor = document.createElement("div");
 //             post_infor.setAttribute("class", "post_infor");
@@ -230,7 +294,9 @@ $.ajax({
 
 //             let post_content = document.createElement("div");
 //             post_content.setAttribute("class", "post_content");
-//             clipping.appendChild(post_content);
+
+//             link.appendChild(post_content);
+//             clipping.appendChild(link);
 
 //             let post_func = document.createElement("div");
 //             post_func.setAttribute("class", "post_func");
@@ -239,8 +305,14 @@ $.ajax({
 //             /* 데이터 넣기 */
 
 //             /* infor */
-//             let profilImgge = document.createElement("img");
-//             profilImgge.src = profileImg;
+//             /* 유저 프로필 */
+//             /* 이미지 있어? 없으면 기본 넣어 */
+//             let profileImage = document.createElement("img");
+//             if (profileImg == "") {
+//                 profileImage.src = "../img/Default_Profile.png";
+//             } else {
+//                 profileImage.src = profileImg;
+//             }
 
 //             let p_writer = document.createElement("p");
 //             p_writer.setAttribute("class", "writer");
@@ -270,7 +342,7 @@ $.ajax({
 //                 p_time.innerHTML = diffM + "년 전";
 //             }
 
-//             post_infor.appendChild(profilImgge);
+//             post_infor.appendChild(profileImage);
 //             post_infor.appendChild(p_writer);
 //             post_infor.appendChild(p_time);
 
@@ -310,7 +382,7 @@ $.ajax({
 //             var scrap_image = document.createElement("img");
 //             scrap_image.setAttribute("id", "scrap_image" + post_id);
 //             scrap_image.setAttribute("class", "scrap_image");
-//             scrap_image.src = "../img/icon _star outline_.png";
+//             scrap_image.src = "../img/icon _yellow_star outline_.png";
 
 //             var scrap = document.createElement("div");
 //             scrap.setAttribute("class", "scrap");
@@ -342,6 +414,73 @@ $.ajax({
 //             post_func.appendChild(report);
 
 //             /* 기능은 추후 추가 */
+
+//             $(document).on('click', '.report_click', function() {
+//                 alert("신고되었습니다.");
+//                 localStorage.setItem('is_clicked_report', "1");
+//                 var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community_searchCountry.html';
+
+//                 window.location.href = url;
+//             });
+
+
+//             // 좋아요
+//             let is_clicked_likes = false;
+
+//             $('.likes_image').click(function(event) {
+//                 var id_num = event.target.id.match(/\d+/)[0];
+//                 var postId = id_num;
+//                 // console.log(postId); // 이따 체크
+
+//                 event.stopPropagation();
+
+//                 if (!is_clicked_likes) {
+//                     $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_red.png");
+//                     is_clicked_likes = true;
+
+//                 } else {
+//                     $(`#likes_image${id_num}`).attr("src", "../img/icon _heart_.png");
+//                     is_clicked_likes = false;
+//                 }
+
+//                 $.ajax({
+//                     type: 'POST',
+//                     dataType: 'json',
+//                     url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/like`,
+//                     success: function(data) {
+//                         // console.log("like connecting");
+
+//                     }
+//                 });
+//             });
+
+
+//             //스크랩
+//             let is_clicked_scrap = true;
+
+//             $('.scrap_image').click(function(event) {
+//                 var id_num = event.target.id.match(/\d+/)[0];
+//                 var postId = id_num;
+//                 event.stopPropagation();
+
+//                 if (!is_clicked_scrap) {
+//                     $(`#scrap_image${id_num}`).attr("src", "../img/icon _yellow_star outline_.png");
+//                     is_clicked_scrap = true;
+//                 } else {
+//                     $(`#scrap_image${id_num}`).attr("src", "../img/icon _star outline_.png");
+//                     is_clicked_scrap = false;
+//                 }
+
+//                 $.ajax({
+//                     type: 'POST',
+//                     dataType: 'json',
+//                     url: `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${postId}/scrap`,
+//                     success: function(data) {
+//                         // console.log("scrap connecting");
+//                     }
+//                 })
+//             });
+
 //         }
 //         showData();
 //     }
