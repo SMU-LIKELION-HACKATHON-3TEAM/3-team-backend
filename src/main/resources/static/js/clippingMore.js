@@ -224,35 +224,62 @@ $.getJSON(jsonLocation, function(data) {
             }
             img.src = imgUrl;
 
-            // /* function */
-            // const like_count = data.data[length].like_count;
-            // const comment_count = data.data[length].comment_count;
+            /* function */
+            const like_count = data.data[length].like_count;
+            const comment_count = data.data[length].comment_count;
 
-            // let likes = document.createElement("div");
-            // likes.setAttribute("class", "likes");
-            // likes.innerText = like_count;
+            var likes_image = document.createElement("img");
+            likes_image.setAttribute("id", "likes_image" + post_id);
+            likes_image.setAttribute("class", "likes_image");
+            likes_image.src = "../img/icon _heart_.png";
 
-            // let likes_img = document.createElement("img");
-            // likes_img.setAttribute("id", post_id);
+            var likes = document.createElement("div");
+            likes.setAttribute("class", "likes");
+            likes.innerText = like_count;
 
+            var comment_image = document.createElement("img");
+            comment_image.setAttribute("class", "comment_image");
+            comment_image.src = "../img/icon _message_.png";
 
+            var comment = document.createElement("div");
+            comment.setAttribute("class", "comment")
+            comment.innerText = comment_count;
 
-            // var $likes = $('<div>').addClass('likes').text(item.like_count);
-            // var $likes_image = $('<img>').attr("id", `likes_image${item.post_id}`).attr("src", "../img/icon _heart_.png").addClass('likes_image');
-            // console.log(item.post_id);
+            var scrap_image = document.createElement("img");
+            scrap_image.setAttribute("id", "scrap_image" + post_id);
+            scrap_image.setAttribute("class", "scrap_image");
+            scrap_image.src = "../img/icon _star outline_.png";
 
-            // var $comment = $('<div>').addClass('comment').text(item.comment_count);
-            // var $comment_image = $('<div>').addClass('comment_image');
+            var scrap = document.createElement("div");
+            scrap.setAttribute("class", "scrap");
+            scrap.innerText = "스크랩";
 
-            // var $scrap = $('<div>').addClass('scrap').text("스크랩");
-            // var $scrap_image = $('<img>').attr("id", `scrap_image${item.post_id}`).attr("src", "../img/icon _star outline_.png").addClass('scrap_image');
+            var share_image = document.createElement("img");
+            share_image.setAttribute("id", "share_image" + post_id);
+            share_image.setAttribute("class", "share_image");
+            share_image.src = "../img/icon _share ios_.png"
 
-            // var $share = $("<div>").addClass("share").attr("id", `share${item.post_id}`).text("공유");
-            // var $share_image = $('<div>').attr("id", `share${item.post_id}`).addClass('share_image');
+            var share = document.createElement("div");
+            share.setAttribute("id", "share" + post_id);
+            share.setAttribute("class", "share");
+            share.innerText = "공유";
 
-            // var $report = $('<div>').attr("id", `report${item.post_id}`).addClass('report').text("신고");
+            var report = document.createElement("div");
+            report.setAttribute("id", "report" + post_id);
+            report.setAttribute("class", "report");
+            report.innerText = "신고";
 
+            post_func.appendChild(likes_image);
+            post_func.appendChild(likes);
+            post_func.appendChild(comment_image);
+            post_func.appendChild(comment);
+            post_func.appendChild(scrap_image);
+            post_func.appendChild(scrap);
+            post_func.appendChild(share_image);
+            post_func.appendChild(share);
+            post_func.appendChild(report);
 
+            /* 기능은 추후 추가 */
         }
         showData();
     }
