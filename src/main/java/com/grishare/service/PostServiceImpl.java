@@ -5,8 +5,10 @@ import com.grishare.domain.Post;
 import com.grishare.domain.user.CustomUserDetail;
 import com.grishare.domain.user.User;
 import com.grishare.dto.*;
+import com.grishare.exception.CustomException;
 import com.grishare.exception.CustomNotFoundException;
 import com.grishare.exception.ErrorCode;
+import com.grishare.repository.LikeNationRepository;
 import com.grishare.repository.LikeRepository;
 import com.grishare.repository.NationRepository;
 import com.grishare.repository.PostRepository;
@@ -33,6 +35,8 @@ public class PostServiceImpl implements PostService {
     private final ImageService imageService;
     private final LikeService likeService;
     private final LikeRepository likeRepository;
+
+    private final LikeNationRepository likeNationRepository;
 
     @Override
     @Transactional
@@ -131,4 +135,19 @@ public class PostServiceImpl implements PostService {
             throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
         }
     }
+
+    public NationInfoResponseDto getNationInfo(Long nation_id) {
+        try {
+            Nation nation = nationRepository.findById(nation_id).orElseThrow(() -> {
+                throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
+            });
+
+            Integer likes = likeNationRepository.countAllByNation_Id(nation_id);
+
+            return new NationInfoResponseDto(nation.getCountryName() + " (" + nation.getCountryEnName()+")",
+                    likes, nation.getNationImgUrl());
+            } catch (Exception e) {
+                throw new CustomException(ErrorCode.NOT_FOUND);
+            }
+        }
 }
