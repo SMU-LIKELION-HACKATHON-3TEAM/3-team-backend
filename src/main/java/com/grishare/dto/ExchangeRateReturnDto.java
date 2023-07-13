@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ExchangeRateReturnDto {
 
-    private String contryName;
+    private String countryName;
 
     private Float exchangeRate;
 
@@ -20,7 +20,7 @@ public class ExchangeRateReturnDto {
 
     public ExchangeRateReturnDto(ExchangeRate ex){
 
-        this.contryName = ex.getContryName();
+        this.countryName = ex.getCountryName();
         this.exchangeRate = ex.getExchangeRate();
         this.curUnit = ex.getCurUnit();
     }

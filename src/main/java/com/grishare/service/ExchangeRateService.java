@@ -12,6 +12,6 @@ public interface ExchangeRateService {
     public ExchangeRate save(ExchangeRateRequestDto exRequestDto);
     public void update() throws IOException;
     public List<ExchangeRateReturnDto> findAll();
-    public ExchangeRateReturnDto findByContryNameAndBank(String contryName, String bank);
+    public ExchangeRateReturnDto findByCountryNameAndBank(String countryName, String bank);
 
 }

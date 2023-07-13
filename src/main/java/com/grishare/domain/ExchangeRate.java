@@ -16,8 +16,8 @@ public class ExchangeRate {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "contry_name")
-    private String contryName;
+    @Column(name = "country_name")
+    private String countryName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "bank")
@@ -27,8 +27,8 @@ public class ExchangeRate {
     @JoinColumn(name = "nation_id")
     private Nation nation;
 
-    @Column(name = "contry_code")
-    private String contryCode;
+    @Column(name = "country_code")
+    private String countryCode;
 
     @Column(name = "cur_unit")
     private String curUnit;
@@ -36,10 +36,10 @@ public class ExchangeRate {
     @Column(name = "exchange_rate")
     private Float exchangeRate;
 
-    public ExchangeRate(String contryName, Bank bank, String contryCode, String curUnit, Float exchangeRate) {
-        this.contryName = contryName;
+    public ExchangeRate(String countryName, Bank bank, String countryCode, String curUnit, Float exchangeRate) {
+        this.countryName = countryName;
         this.bank = bank;
-        this.contryCode = contryCode;
+        this.countryCode = countryCode;
         this.curUnit = curUnit;
         this.exchangeRate = exchangeRate;
     }
