@@ -114,28 +114,39 @@ function getImageFiles(e) {
             content: contents
           };
           var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${nationId}`;
-        
-          // 이미지 첨부
-          var imageFile = uploadFiles[0];
-          var form = new FormData();
-        
-          form.append("title", new Blob([JSON.stringify(postRequestDto)], { type: "application/json" }));
-          form.append("imageFile", imageFile);
-        
+    
           $.ajax({
             type: 'POST',
             url: url,
-            data: form,
-            contentType: false,
-            processData: false,
+            data: JSON.stringify(postRequestDto),
+            contentType: 'application/json',
             success: function(response) {
               // console.log(response);
-              alert('등록되었습니다.');
-              var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
-              window.location.href = url;
+    
+              // 이미지 첨부
+              var imageFile = uploadFiles[0];
+              var formData = new FormData();
+              formData.append('file', imageFile);
+    
+              $.ajax({
+                type: 'POST',
+                url: url,
+                data: formData,
+                contentType: false,
+                processData: false,
+                enctype: 'multipart/form-data',
+                success: function(response) {
+                  // console.log(response);
+                  alert('등록되었습니다.');
+                  var url = 'http://grishare.ap-northeast-2.elasticbeanstalk.com/html/community.html';
+                  window.location.href = url;
+                },
+              });
             },
           });
         }
+      });
+    });
     
 
 
