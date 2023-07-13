@@ -2,6 +2,7 @@ package com.grishare.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.grishare.domain.Comment;
+import com.grishare.domain.image.UserImage;
 import lombok.*;
 
 import java.time.format.DateTimeFormatter;
@@ -15,7 +16,7 @@ public class CommentReturnDto {
     private Long comment_id;
     private String contents;
     private String userName;
-    private String writerImg;
+    private UserImage writerImg;
     private String create_at;
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)

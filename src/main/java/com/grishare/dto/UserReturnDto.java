@@ -1,5 +1,7 @@
 package com.grishare.dto;
 
+import com.grishare.domain.image.BackImage;
+import com.grishare.domain.image.UserImage;
 import com.grishare.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,9 +16,9 @@ public class UserReturnDto {
     private String email;
     private String userName;
     private String nickName;
-    private String userImg;
+    private UserImage userImg;
     private String password;
-    private String backgroundImg;
+    private BackImage backgroundImg;
 
 
     // 관심 국가
