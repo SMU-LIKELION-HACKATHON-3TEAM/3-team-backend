@@ -116,7 +116,7 @@ const submit = () => {
     console.log($('#input_id').val());
     console.log($('#input_nick').val());
     var updatedDate = {
-        "userPw": $('#input_pw').val(),
+        "password": $('#input_pw').val(),
         "userLoginId": $('#input_id').val(),
         "nickName": $('#input_nick').val()
     }
@@ -143,6 +143,7 @@ const sendUpdateRequest = (updatedDate) => {
 
 
 ////////////////////
+
 
 // 이미지 넣는 ver
 // var pw = "";
