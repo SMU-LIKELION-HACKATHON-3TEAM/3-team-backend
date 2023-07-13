@@ -196,10 +196,8 @@ $.ajax({
             const showData = () => {
                 length = length - 1;
                 const writer = data.data[length].userName;
-                // const profileImg = data.data[length].countryInfo.ImageUrl; // 수정 필요
-                const profileImg = "../img/user.png";
-                const imgUrl = data.data[length].ImageUrl;
-                // const imgUrl = "../img/earth.jpg";
+                const profileImg = data.data[length].userImg;
+                const imgUrl = data.data[length].ImgUrl;
                 const contents = data.data[length].contents;
                 const post_id = data.data[length].post_id;
 
@@ -239,8 +237,14 @@ $.ajax({
                 /* 데이터 넣기 */
 
                 /* infor */
+                /* 유저 프로필 */
+                /* 이미지 있어? 없으면 기본 넣어 */
                 let profilImgge = document.createElement("img");
-                profilImgge.src = profileImg;
+                if (profileImg == "") {
+                    img.src = "../img/Default_Profile.png";
+                } else {
+                    img.src = profileImg;
+                }
 
                 let p_writer = document.createElement("p");
                 p_writer.setAttribute("class", "writer");
