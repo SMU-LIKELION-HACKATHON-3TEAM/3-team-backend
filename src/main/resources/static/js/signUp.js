@@ -26,6 +26,10 @@ function onSubmitSignup(){
         userName: userName,
         nickName: nickName,
         birthDay: birthDay,
+        picture:"",
+        backgroundImg:"",
+
+
       }),
       success: function (data) {
         alert("회원가입 성공");
