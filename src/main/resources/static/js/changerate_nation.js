@@ -29,8 +29,6 @@
         $div.append($contryName).append($exchangeRate);
         $("#today-exchangeRate").append($div);
       });
-        alert('통신 성공시에만 실행');
-        console.log("성공");
     },
     error: function() {
         alert('통신 실패시에만 실행');
