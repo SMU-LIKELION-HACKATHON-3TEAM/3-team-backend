@@ -55,12 +55,12 @@ $.ajax({
     }
 });
 
-
+var backChange = 0; // 삭제 0 수정 1
 /*** 정보 수정 ***/
 /* 배경 이미지 */
 $('#profileBack').on('click', function() {
 
-    var backChange = 0; // 삭제 0 수정 1
+    backChange = 0;
     var selection = prompt("이미지 수정하시려면 '1', 삭제하시려면 '2'를 입력하세요.");
 
     if (selection == 1) {
@@ -84,10 +84,11 @@ $('#back_input').on('change', function() {
     }
 })
 
+var pictureChange = 0; // 삭제 0 수정 1
 /* 프로필 이미지 */
 $('#modify').on('click', function() {
 
-    var pictureChange = 0; // 삭제 0 수정 1
+    pictureChange = 0;
     var selection = prompt("이미지 수정하시려면 '1', 삭제하시려면 '2'를 입력하세요.");
 
     if (selection == 1) {
