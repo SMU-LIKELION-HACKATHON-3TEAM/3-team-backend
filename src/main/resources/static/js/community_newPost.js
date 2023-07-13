@@ -112,7 +112,7 @@ function getImageFiles(e) {
             title: title,
             content: contents
           };
-          var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/html/api/post/${nationId}`;
+          var url = `http://grishare.ap-northeast-2.elasticbeanstalk.com/html/api/posts/${nationId}`;
     
           $.ajax({
             type: 'POST',
@@ -123,9 +123,9 @@ function getImageFiles(e) {
               console.log(response);
     
               // 이미지 첨부
-              var imageFiles = uploadFiles[0];
+              var imageFile = uploadFiles[0];
               var formData = new FormData();
-              formData.append('file', imageFiles);
+              formData.append('file', imageFile);
     
               $.ajax({
                 type: 'POST',
