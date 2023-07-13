@@ -73,6 +73,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PostReturnDto> findAll() {
         List<Post> posts = postRepository.findAll();
 

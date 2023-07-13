@@ -27,7 +27,7 @@ public class PostReturnDto {
     private int comment_count;
     // 유저 프로필 이미지 일단 string 으로 넣을게요!
     private String userImg;
-    private List<String> imgUrl;
+    private String imgUrl;
 
     public PostReturnDto(Post post) {
         this.post_id = post.getId();
@@ -36,9 +36,9 @@ public class PostReturnDto {
         this.userName = post.getUser().getNickName(); // 글쓰기 닉네임표시
         this.created_at = post.getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.views = post.getView();
-        this.userImg = post.getUser().getUserImg();
+        this.userImg = post.getUser().getUserImg() == null ? "" : post.getUser().getUserImg().getImageUrl();
         this.like_count = post.getLikePosts() == null ? 0 : post.getLikePosts().size();
         this.comment_count = post.getComments() == null ? 0 : post.getComments().size();
-        this.imgUrl = post.getPostImages() == null ? null : post.getPostImages().stream().map(PostImage::getImageUrl).collect(Collectors.toList());
+        this.imgUrl = post.getPostImageUrl();
     }
 }
