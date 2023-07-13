@@ -13,8 +13,9 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     @EntityGraph(attributePaths = {"user", "postImage"})
-    @Query("select p from Post as p order by p.createdAt DESC") // 게시글 최신 순서로 정렬하는 query문
+    @Query("select p from Post as p order by p.createdAt DESC")
     List<Post> findAll();
+    @Query("select p from Post as p where p.nation.id = ?1 order by p.createdAt DESC")
     public List<Post> findAllByNationId(long nationId);
 
     List<Post> findAllByUserId(Long userId);
