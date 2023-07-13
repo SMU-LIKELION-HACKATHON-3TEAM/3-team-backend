@@ -9,13 +9,19 @@ $.ajax({
             const userName = data.data.userName;
             const email = data.data.email;
             const nickName = data.data.nickName;
-            const picture = data.data.picture;
+            const picture = data.data.userImg;
 
             let wrap_infor = document.querySelector(".wrap_infor");
 
             /* 이미지 */
             let img = document.createElement("img");
-            img.src = picture;
+
+            /* 이미지 있어? 없으면 기본 넣어 */
+            if (picture == "") {
+                img.src = "../img/Default_Profile.png";
+            } else {
+                img.src = picture;
+            }
 
             /* 이름 */
             let p_name = document.createElement("p");

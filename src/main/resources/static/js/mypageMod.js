@@ -13,7 +13,7 @@ $.ajax({
             const nick = data.data.nickName;
             const id = data.data.userId;
             const pw = data.data.userPw;
-            const picture = data.data.picture;
+            const picture = data.data.userUmg;
             const backImg = data.data.backgroundImg;
 
             /* 배경 이미지 */
