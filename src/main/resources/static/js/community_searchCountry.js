@@ -278,8 +278,8 @@ $(document).ready(function() {
             var $share_image_twitter = $("<img>").attr("src", "../img/twitter.png");
             var $share_image_kakao = $("<img>").attr("src", "../img/kakao.png");
             var $share_image_Vector = $("<img>").addClass("Vector").attr("src", "../img/Vector.png");
-            var $share_link = $("<div>").addClass("share_link")
-            // 링크 추가
+            var $share_link = $("<div>").addClass("share_link").text(`http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${id_num}/share`);
+
             var $share_click = $("<div>").addClass("share_click");
             var $share_copy = $("<div>").addClass("share_copy").text("복사");
             var $share_emoji_box = $("<div>").addClass("share_emoji_box");
@@ -304,6 +304,12 @@ $(document).ready(function() {
             // $('.overlay').remove();
             is_clicked_share = false;
           }
+        });
+        $(".share_copy").click(function (event) {
+          var id_num = event.target.id.match(/\d+/)[0];
+          event.stopPropagation();
+          url=`http://grishare.ap-northeast-2.elasticbeanstalk.com/api/posts/${id_num}/share`;
+          localStorage.setItem('url',url);
         });
         $(".share_image").click(function (event) {
           var id_num = event.target.id.match(/\d+/)[0];
