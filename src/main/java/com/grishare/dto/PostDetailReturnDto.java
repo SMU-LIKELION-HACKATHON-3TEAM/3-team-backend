@@ -2,6 +2,7 @@ package com.grishare.dto;
 
 import com.grishare.domain.LikePost;
 import com.grishare.domain.Post;
+import com.grishare.domain.image.PostImage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class PostDetailReturnDto {
     private int like_count;
 
     private List<CommentReturnDto> comment;
+    private List<String> imgUrl;
 
     public PostDetailReturnDto(Post post) {
         this.post_id = post.getId();
@@ -37,5 +39,6 @@ public class PostDetailReturnDto {
         this.views = post.getView();
         this.like_count = post.getLikePosts().size();
         this.comment = post.getComments().stream().map(CommentReturnDto::new).collect(Collectors.toList());
+        this.imgUrl = post.getPostImages() == null ? null : post.getPostImages().stream().map(PostImage::getImageUrl).collect(Collectors.toList());
     }
 }
