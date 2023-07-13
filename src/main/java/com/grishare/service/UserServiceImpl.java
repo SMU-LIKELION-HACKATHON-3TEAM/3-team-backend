@@ -74,6 +74,7 @@ public class UserServiceImpl implements UserDetailsService , UserService {
     @Transactional
     public UserReturnDto saveUser(RegisterRequestDto registerRequestDto){
         User user = User.builder()
+                .userLoginId(registerRequestDto.getUserLoginId())
                 .userName(registerRequestDto.getUserName())
                 .email(registerRequestDto.getEmail())
                 .password(registerRequestDto.getPassword())
