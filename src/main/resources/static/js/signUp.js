@@ -35,7 +35,7 @@ function onSubmitSignup(){
         alert("회원가입 성공");
         console.log("회원가입 성공");
         console.log(data);
-        window.location.href("../html/mainpage.html")
+        location.href='../html/mainpage.html';
       },
       error: function (request, status, error) {
         alert(
