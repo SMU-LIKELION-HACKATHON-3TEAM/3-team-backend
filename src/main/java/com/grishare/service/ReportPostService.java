@@ -7,5 +7,7 @@ import com.grishare.dto.ReportPostRequestDto;
 
 public interface ReportPostService {
 
-    public ReportPost save(Long postId, ReportPostRequestDto reportPostRequestDto);
+//    public ReportPost save(Long postId, ReportPostRequestDto reportPostRequestDto);
+
+    public ReportPost save(Long postId, Long userId, ReportPostRequestDto reportPostRequestDto);
 }

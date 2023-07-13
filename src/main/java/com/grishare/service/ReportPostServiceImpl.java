@@ -23,18 +23,16 @@ public class ReportPostServiceImpl implements ReportPostService{
     private UserRepository userRepository;
 
     @Override
-    public ReportPost save(Long postId, ReportPostRequestDto reportPostRequestDto) {
-        try {
-//            Long userId = postRepository.findById(postId).get().getId();
-//            System.out.println(userId);
-//            List<ReportPost> reportPostList = reportPostRepository.findByPostIdAndUserId(postId, userId);
-            List<ReportPost> reportPostList = reportPostRepository.findByPostId(postId);
-            if(reportPostList.isEmpty()){
-                return reportPostRepository
-                        .save(
-//                                reportPostRequestDto.toEntity(postRepository.findById(postId).get(), userRepository.findById(userId).get())
-                                reportPostRequestDto.toEntity(postRepository.findById(postId).get())
-                        );
+    public ReportPost save(Long postId, Long userId, ReportPostRequestDto reportPostRequestDto) {
+            try {
+//                System.out.println(userId+"two");
+                List<ReportPost> reportPostList = reportPostRepository.findByPostIdAndUserId(postId, userId);
+                if(reportPostList.isEmpty()){
+                    return reportPostRepository
+                            .save(
+                                    reportPostRequestDto.toEntity(postRepository.findById(postId).get(), userRepository.findById(userId).get())
+    //                                reportPostRequestDto.toEntity(postRepository.findById(postId).get())
+                            );
             }
         } catch (Exception e) {
             e.printStackTrace();
