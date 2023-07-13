@@ -190,9 +190,10 @@
                       success: function(data) {
                           $.each(data.data, function (index, item) {
                                 console.log(item);
-                                console.log(item.data)
-                              var $nationWarning = $('<div>').addClass('nationWarning').text(item.data.nationWarning)
-                              var $nationName = $('<div>').addClass('natioinName').text(item.data.nationName)
+                                console.log(item.nationName);
+                                console.log(item.nationWarning);
+                              var $nationWarning = $('<div>').addClass('nationWarning').text(item);
+                              var $nationName = $('<div>').addClass('natioinName').text(item.data.nationName);
                   
                               $('#wrap-danger').append($nationWarning).append($nationName)
                           });
