@@ -9,7 +9,7 @@ $.ajax({
             const userName = data.data.userName;
             const email = data.data.email;
             const nick = data.data.nickName;
-            const id = data.data.userId;
+            const id = data.data.id;
             const pw = data.data.userPw;
             const picture = data.data.userImg;
             const backImg = data.data.backgroundImg;
