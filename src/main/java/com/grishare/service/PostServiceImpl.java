@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,16 +27,21 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final NationRepository nationRepository;
+    private final ImageService imageService;
 
     @Override
-    public Post save(User user, Long nationId, PostRequestDto postRequestDto) {
+    @Transactional
+    public PostReturnDto save(User user, Long nationId, PostRequestDto postRequestDto, List<MultipartFile> imageFiles) {
         Nation nation = nationRepository.findById(nationId).orElseThrow(() -> {
             throw new CustomNotFoundException(ErrorCode.NOT_FOUND);
         });
-        return postRepository
-                .save(
-                        postRequestDto.toEntity(user, nation, Comment.builder().build())
-                );
+
+        Post post = postRequestDto.toEntity(user, nation);
+        postRepository.save(post);
+
+        imageService.savePostImages(post, imageFiles);
+
+        return new PostReturnDto(post);
     }
 
     @Override

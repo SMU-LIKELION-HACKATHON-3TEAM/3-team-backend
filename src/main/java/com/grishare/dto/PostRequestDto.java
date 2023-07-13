@@ -21,14 +21,13 @@ public class PostRequestDto {
     private String content;
 
 
-    public Post toEntity(User user, Nation nation, Comment comment) {
+    public Post toEntity(User user, Nation nation) {
         Post post = Post.builder()
                 .title(title)
                 .content(content)
                 .user(user)
                 .nation(nation)
                 .view(0L)
-                .comments((List<Comment>) comment)
                 .build();
 
         return post;
