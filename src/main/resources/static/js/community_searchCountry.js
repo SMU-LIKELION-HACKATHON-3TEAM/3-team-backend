@@ -85,7 +85,7 @@ $(document).ready(function() {
           var $report = $('<div>').attr("id", `report${item.post_id}`).addClass('report').text("신고");
         
             
-          var $file_only = $('<img>').addClass('file_only').attr('src', item.imageUrl);
+          var $file_only = $('<img>').addClass('file_only').attr('src', item.imgUrl);
       
       
             
@@ -220,7 +220,6 @@ $(document).ready(function() {
             type: 'POST',
             dataType: 'json',
             url: `/api/posts/${postId}/scrap`,
-            data : { json: JSON.stringify( jsonData ) },
             success: function(data) {
                 console.log("scrap connecting");
               }})
