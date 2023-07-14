@@ -68,7 +68,7 @@ public class PostController {
     }
 
     @DeleteMapping("/posts/{postId}")
-    public BaseResponse<HttpStatus> deleteProduct(@PathVariable("postId") long postId) {
+    public BaseResponse<HttpStatus> deletePost(@PathVariable("postId") long postId) {
         try {
             postService.delete(postId);
             BaseResponse.ok(null);
