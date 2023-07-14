@@ -47,7 +47,7 @@ function onSubmitSignup(){
             "\n" +
             "error:" +
             error
-        );
+        // );
       },
     });
 }
